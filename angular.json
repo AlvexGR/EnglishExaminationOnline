@@ -23,7 +23,8 @@
               "projects/user-app/src/assets"
             ],
             "styles": [
-              "projects/user-app/src/styles.css"
+              "projects/user-app/src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -80,7 +81,8 @@
             "tsConfig": "projects/user-app/tsconfig.spec.json",
             "karmaConfig": "projects/user-app/karma.conf.js",
             "styles": [
-              "projects/user-app/src/styles.css"
+              "projects/user-app/src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [],
             "assets": [
@@ -96,9 +98,7 @@
               "projects/user-app/tsconfig.app.json",
               "projects/user-app/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -124,9 +124,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "projects/user-app-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
