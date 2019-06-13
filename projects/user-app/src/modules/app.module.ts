@@ -2,7 +2,6 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ClarityModule } from "@clr/angular";
 
 import { HomeComponent } from "../components/home/home.component";
 import { MainComponent } from "../components/main/main.component";
@@ -28,7 +27,6 @@ import { AdminComponent } from "../components/admin/admin.component";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ClarityModule
   ],
   providers: [],
   bootstrap: [MainComponent]
