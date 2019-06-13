@@ -1,0 +1,12 @@
+.container {
+  height: 100%;
+}
+
+.formContainer {
+  margin: auto;
+  width: 40%;
+}
+
+.inputField {
+  margin-top: 20px;
+}

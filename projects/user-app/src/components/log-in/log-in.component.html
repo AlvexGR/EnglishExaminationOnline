@@ -1,3 +1,42 @@
-<p>
-  log-in works!
-</p>
+<div class="container">
+  <form class="formContainer" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+    <h3 style="text-align: center">Đăng nhập</h3>
+    <div class="inputField">
+      <label>Tài khoản:</label>
+      <input
+        formControlName="username"
+        type="text"
+        class="form-control"
+        placeholder="Vd: Beast_Master69"
+      />
+      <!-- <p *ngIf="form.username.errors.required" class="text-danger">
+        You must enter your Username
+      </p> -->
+    </div>
+    <div class="inputField">
+      <label>Mật khẩu:</label>
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Vd: !Pass_quen_ROI.1234"
+      />
+      <!-- <p *ngIf="form.password.errors.required" class="text-danger">You must enter your Password</!--> -->
+    </div>
+    <div class="inputField form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" value="" />Ghi nhớ tôi
+      </label>
+    </div>
+    <div class="inputField">
+      <button *ngIf="!waitingForResponse" type="button" class="btn btn-primary btn-block">Đăng Nhập</button>
+      <button *ngIf="waitingForResponse" class="btn btn-primary btn-block" disabled>
+        <span class="spinner-border spinner-border-sm"></span>
+        Đang chờ
+      </button>
+    </div>
+    <div class="inputField" style="text-align: center;" s>
+      Bạn chưa có tài khoản? <a [routerLink]="['/signUp']">Đăng kí</a>
+    </div>
+  </form>
+</div>
