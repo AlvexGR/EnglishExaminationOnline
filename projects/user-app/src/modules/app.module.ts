@@ -12,6 +12,7 @@ import { HeaderComponent } from "../components/header/header.component";
 import { FooterComponent } from "../components/footer/footer.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { AdminComponent } from "../components/admin/admin.component";
+import { ErrorFieldComponent } from '../components/notification/error-field/error-field.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AdminComponent } from "../components/admin/admin.component";
     HeaderComponent,
     FooterComponent,
     SignUpComponent,
-    AdminComponent
+    AdminComponent,
+    ErrorFieldComponent
   ],
   imports: [
     BrowserModule,

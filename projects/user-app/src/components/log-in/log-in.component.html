@@ -9,9 +9,9 @@
         class="form-control"
         placeholder="Vd: Beast_Master69"
       />
-      <!-- <p *ngIf="form.username.errors.required" class="text-danger">
+      <p *ngIf="form.get('username').invalid && form.get('username').touched" class="text-danger">
         You must enter your Username
-      </p> -->
+      </p>
     </div>
     <div class="inputField">
       <label>Mật khẩu:</label>
@@ -21,7 +21,9 @@
         class="form-control"
         placeholder="Vd: !Pass_quen_ROI.1234"
       />
-      <!-- <p *ngIf="form.password.errors.required" class="text-danger">You must enter your Password</!--> -->
+      <p *ngIf="form.get('password').invalid && form.get('password').touched" class="text-danger">
+        You must enter your Password
+      </p>
     </div>
     <div class="inputField form-check">
       <label class="form-check-label">
@@ -29,10 +31,20 @@
       </label>
     </div>
     <div class="inputField">
-      <button *ngIf="!waitingForResponse" type="button" class="btn btn-primary btn-block">Đăng Nhập</button>
-      <button *ngIf="waitingForResponse" class="btn btn-primary btn-block" disabled>
+      <button
+        *ngIf="!waitingForResponse"
+        type="button"
+        class="btn btn-primary btn-block"
+      >
+        Đăng Nhập
+      </button>
+      <button
+        *ngIf="waitingForResponse"
+        class="btn btn-primary btn-block"
+        disabled
+      >
         <span class="spinner-border spinner-border-sm"></span>
-        Đang chờ
+        Đang chờ...
       </button>
     </div>
     <div class="inputField" style="text-align: center;" s>

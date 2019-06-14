@@ -19,7 +19,7 @@
             "polyfills": "projects/user-app/src/polyfills.ts",
             "tsConfig": "projects/user-app/tsconfig.app.json",
             "assets": [
-              "projects/user-app/src/favicon.ico",
+              "projects/user-app/src/assets/images/favicon.ico",
               "projects/user-app/src/assets"
             ],
             "styles": [
@@ -82,11 +82,11 @@
             "karmaConfig": "projects/user-app/karma.conf.js",
             "styles": [
               "projects/user-app/src/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
             "assets": [
-              "projects/user-app/src/favicon.ico",
+              "projects/user-app/src/assets/images/favicon.ico",
               "projects/user-app/src/assets"
             ]
           }

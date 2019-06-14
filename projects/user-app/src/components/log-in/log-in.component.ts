@@ -17,8 +17,8 @@ export class LogInComponent {
     });
   }
 
-  get myForm() {
-    return this.logInForm.controls;
+  get form() {
+    return this.logInForm;
   }
 
   onSubmit(): void {}
