@@ -4,6 +4,17 @@ import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
 
+import {
+  MatInputModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatButtonModule,
+  MatCardModule,
+  MatToolbarModule,
+} from '@angular/material';
+
 // Services
 import { AuthenticationService } from "../services/authentication.service";
 
@@ -34,7 +45,9 @@ import { ErrorFieldComponent } from "../components/notification/error-field/erro
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatButtonModule
   ],
   providers: [AuthenticationService],
   bootstrap: [MainComponent]

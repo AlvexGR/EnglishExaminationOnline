@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
@@ -23,11 +28,15 @@ export class LogInComponent {
     });
   }
 
-  get form() {
-    return this.logInForm;
+  get username(): AbstractControl {
+    return this.logInForm.get("username");
   }
 
-  async onSubmit(): Promise<void> {
+  get password(): AbstractControl {
+    return this.logInForm.get("password");
+  }
+
+  async logIn(): Promise<void> {
     this.waitingForResponse = true;
     const result = await this.authService.logIn();
     await new Promise(resolve => setTimeout(resolve, 5000));

@@ -1,12 +1,6 @@
-p {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 img {
-  height: 16px;
-  width: 16px;
+  height: 15px;
+  width: 15px;
 }
 
 .container {

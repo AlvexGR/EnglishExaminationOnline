@@ -1,0 +1,13 @@
+.signUpContainer {
+  height: 120%;
+}
+
+.formContainer {
+  margin: auto;
+  width: 30%;
+  margin-top: 30px;
+}
+
+.inputField {
+  margin-top: 20px;
+}

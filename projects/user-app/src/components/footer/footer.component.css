@@ -1,0 +1,14 @@
+.footerContainer {
+  background-color: #4252af;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+p {
+  text-align: center;
+  color: white;
+}

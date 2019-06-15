@@ -1,8 +1,12 @@
-<div class="container">
-  <form class="formContainer" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+<div class="logInContainer">
+  <form
+    class="formContainer form-group"
+    [formGroup]="logInForm"
+    (ngSubmit)="logIn()"
+  >
     <h3 style="text-align: center">Đăng nhập</h3>
     <div class="inputField">
-      <label>Tài khoản:</label>
+      <label>Tên đăng nhập</label>
       <input
         formControlName="username"
         type="text"
@@ -10,12 +14,12 @@
         placeholder="Vd: Beast_Master69"
       />
       <app-error-field
-        *ngIf="form.get('username').invalid && form.get('username').touched"
-        [errorMessage]="'Bạn phải nhập tài khoản của bạn vào đây'"
+        *ngIf="username.invalid && username.touched"
+        [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
       ></app-error-field>
     </div>
     <div class="inputField">
-      <label>Mật khẩu:</label>
+      <label>Mật khẩu</label>
       <input
         formControlName="password"
         type="password"
@@ -23,13 +27,14 @@
         placeholder="Vd: !Pass_quen_ROI.1234"
       />
       <app-error-field
-        *ngIf="form.get('password').invalid && form.get('password').touched"
-        [errorMessage]="'Bạn phải nhập mật khẩu của bạn vào đây'"
+        *ngIf="password.invalid && password.touched"
+        [errorMessage]="'Hãy nhập vào Mật khẩu'"
       ></app-error-field>
     </div>
     <div class="inputField form-check">
       <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" value="" />Ghi nhớ tôi
+        <input type="checkbox" class="form-check-input" value="rememberMe" />Ghi
+        nhớ tôi
       </label>
     </div>
     <div class="inputField">
@@ -47,7 +52,7 @@
         disabled
       >
         <span class="spinner-border spinner-border-sm"></span>
-        Kiểm tra thông tin...
+        Kiểm tra tài khoản đăng nhập...
       </button>
     </div>
     <app-error-field

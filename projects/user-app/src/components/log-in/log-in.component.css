@@ -1,10 +1,10 @@
-.container {
+.logInContainer {
   height: 50%;
 }
 
 .formContainer {
   margin: auto;
-  width: 40%;
+  width: 30%;
 }
 
 .inputField {
