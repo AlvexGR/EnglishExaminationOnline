@@ -1,68 +1,66 @@
-<div class="logInContainer">
-  <form
-    class="formContainer form-group"
-    [formGroup]="logInForm"
-    (ngSubmit)="logIn()"
-  >
-    <h3 style="text-align: center">Đăng nhập</h3>
-    <div class="inputField">
-      <label>Tên đăng nhập</label>
-      <input
-        formControlName="username"
-        type="text"
-        class="form-control"
-        placeholder="Vd: Beast_Master69"
-      />
-      <app-error-field
-        *ngIf="username.invalid && username.touched"
-        [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Mật khẩu</label>
-      <input
-        formControlName="password"
-        type="password"
-        class="form-control"
-        placeholder="Vd: !Pass_quen_ROI.1234"
-      />
-      <app-error-field
-        *ngIf="password.invalid && password.touched"
-        [errorMessage]="'Hãy nhập vào Mật khẩu'"
-      ></app-error-field>
-    </div>
-    <div class="inputField form-check">
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input" value="rememberMe" />Ghi
-        nhớ tôi
-      </label>
-    </div>
-    <div class="inputField">
-      <button
-        *ngIf="!waitingForResponse"
-        type="submit"
-        class="btn btn-primary btn-block"
-        [disabled]="logInForm.invalid"
-      >
-        Đăng Nhập
-      </button>
-      <button
-        *ngIf="waitingForResponse"
-        class="btn btn-primary btn-block"
-        disabled
-      >
-        <span class="spinner-border spinner-border-sm"></span>
-        Kiểm tra tài khoản đăng nhập...
-      </button>
-    </div>
+<form
+  class="formContainer form-group"
+  [formGroup]="logInForm"
+  (ngSubmit)="logIn()"
+>
+  <h3 style="text-align: center">Đăng nhập</h3>
+  <div class="inputField">
+    <label>Tên đăng nhập</label>
+    <input
+      formControlName="username"
+      type="text"
+      class="form-control"
+      placeholder="Vd: Beast_Master69"
+    />
     <app-error-field
-      class="inputField"
-      *ngIf="error"
-      style="text-align: center;"
-      [errorMessage]="errorMessage"
+      *ngIf="username.invalid && username.touched"
+      [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
     ></app-error-field>
-    <div class="inputField" style="text-align: center;">
-      Bạn chưa có tài khoản? <a [routerLink]="['/signUp']">Đăng kí</a>
-    </div>
-  </form>
-</div>
+  </div>
+  <div class="inputField">
+    <label>Mật khẩu</label>
+    <input
+      formControlName="password"
+      type="password"
+      class="form-control"
+      placeholder="Vd: !Pass_quen_ROI.1234"
+    />
+    <app-error-field
+      *ngIf="password.invalid && password.touched"
+      [errorMessage]="'Hãy nhập vào Mật khẩu'"
+    ></app-error-field>
+  </div>
+  <div class="inputField form-check">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input" value="rememberMe" />Ghi
+      nhớ tôi
+    </label>
+  </div>
+  <div class="inputField">
+    <button
+      *ngIf="!waitingForResponse"
+      type="submit"
+      class="btn btn-primary btn-block"
+      [disabled]="logInForm.invalid"
+    >
+      Đăng Nhập
+    </button>
+    <button
+      *ngIf="waitingForResponse"
+      class="btn btn-primary btn-block"
+      disabled
+    >
+      <span class="spinner-border spinner-border-sm"></span>
+      Kiểm tra tài khoản đăng nhập...
+    </button>
+  </div>
+  <app-error-field
+    class="inputField"
+    *ngIf="error"
+    style="text-align: center;"
+    [errorMessage]="errorMessage"
+  ></app-error-field>
+  <div class="inputField" style="text-align: center;">
+    Bạn chưa có tài khoản? <a [routerLink]="['/signUp']">Đăng kí</a>
+  </div>
+</form>

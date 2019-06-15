@@ -1,161 +1,159 @@
-<div class="signUpContainer">
-  <h2 style="text-align: center;">
-    Chào mừng bạn đến với English Online Testing!
-  </h2>
-  <form
-    class="formContainer form-group"
-    [formGroup]="signUpForm"
-    (ngSubmit)="signUp()"
-  >
-    <h3 style="text-align: center;">Đăng kí</h3>
-    <div class="inputField">
-      <label>Tên</label>
-      <input
-        formControlName="firstName"
-        type="text"
-        class="form-control"
-        placeholder="Vd: Nhân"
-      />
-      <app-error-field
-        *ngIf="firstName.invalid && firstName.touched"
-        [errorMessage]="'Hãy nhập vào Tên của bạn'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Họ</label>
-      <input
-        formControlName="lastName"
-        type="text"
-        class="form-control"
-        placeholder="Vd: Nguyễn"
-      />
-      <app-error-field
-        *ngIf="lastName.invalid && lastName.touched"
-        [errorMessage]="'Hãy nhập vào Họ của bạn'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Tên tài khoản</label>
-      <input
-        formControlName="username"
-        type="text"
-        class="form-control"
-        placeholder="Vd: Beast_Master69"
-      />
-      <app-error-field
-        *ngIf="username.invalid && username.touched"
-        [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Mật khẩu</label>
-      <input
-        formControlName="password"
-        type="password"
-        class="form-control"
-        placeholder="Vd: !Pass_quen_ROI.1234"
-      />
-      <app-error-field
-        *ngIf="password.hasError('required') && password.touched"
-        [errorMessage]="'Hãy nhập vào Mật khẩu'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="password.hasError('pattern') && password.touched"
-        [errorMessage]="
-          'Độ dài từ 8 kí tự và có ít nhất 1 chữ thường, chữ hoa, số, kí tự đặc biệt'
-        "
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Xác nhận mật khẩu</label>
-      <input
-        formControlName="passwordConfirm"
-        type="password"
-        class="form-control"
-        placeholder="Vd: !Pass_quen_ROI.1234"
-        pattern="{{ password.value }}"
-      />
-      <app-error-field
-        *ngIf="passwordConfirm.hasError('required') && passwordConfirm.touched"
-        [errorMessage]="'Hãy nhập vào Mật khẩu'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="passwordConfirm.hasError('pattern') && passwordConfirm.touched"
-        [errorMessage]="'Mật khẩu không trùng khớp'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Địa chỉ Email</label>
-      <input
-        formControlName="email"
-        type="email"
-        class="form-control"
-        placeholder="Vd: Beast_Master69@gmail.com"
-      />
-      <app-error-field
-        *ngIf="email.hasError('required') && email.touched"
-        [errorMessage]="'Hãy nhập vào địa chỉ Email'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="email.hasError('email') && email.touched"
-        [errorMessage]="'Địa chỉ Email không đúng định dạng'"
-      ></app-error-field>
-    </div>
-    <div class="inputField form-check-inline">
-      <label class="form-check-label">
-        <input
-          type="radio"
-          class="form-check-input"
-          formControlName="gender"
-          value="male"
-        />Nam
-      </label>
-    </div>
-    <div class="form-check-inline">
-      <label class="form-check-label">
-        <input
-          type="radio"
-          class="form-check-input"
-          formControlName="gender"
-          value="female"
-        />Nữ
-      </label>
-    </div>
-    <div class="inputField">
-      <label>Ngày sinh</label>
-      <input
-        class="form-control"
-        id="datePicker"
-        type="date"
-        formControlName="dateOfBirth"
-      />
-    </div>
-    <div class="inputField">
-      <button
-        *ngIf="!waitingForResponse"
-        type="submit"
-        class="btn btn-primary btn-block"
-        [disabled]="signUpForm.invalid"
-      >
-        Đăng Kí
-      </button>
-      <button
-        *ngIf="waitingForResponse"
-        class="btn btn-primary btn-block"
-        disabled
-      >
-        <span class="spinner-border spinner-border-sm"></span>
-        Kiểm tra tài khoản đăng kí...
-      </button>
-    </div>
+<h2 style="text-align: center;">
+  Chào mừng bạn đến với English Online Testing!
+</h2>
+<form
+  class="formContainer form-group"
+  [formGroup]="signUpForm"
+  (ngSubmit)="signUp()"
+>
+  <h3 style="text-align: center;">Đăng kí</h3>
+  <div class="inputField">
+    <label>Tên</label>
+    <input
+      formControlName="firstName"
+      type="text"
+      class="form-control"
+      placeholder="Vd: Nhân"
+    />
     <app-error-field
-      class="inputField"
-      *ngIf="error"
-      style="text-align: center;"
-      [errorMessage]="errorMessage"
+      *ngIf="firstName.invalid && firstName.touched"
+      [errorMessage]="'Hãy nhập vào Tên của bạn'"
     ></app-error-field>
-    <div class="inputField" style="text-align: center;">
-      Bạn đã có tài khoản? <a [routerLink]="['/logIn']">Đăng nhập</a>
-    </div>
-  </form>
-</div>
+  </div>
+  <div class="inputField">
+    <label>Họ</label>
+    <input
+      formControlName="lastName"
+      type="text"
+      class="form-control"
+      placeholder="Vd: Nguyễn"
+    />
+    <app-error-field
+      *ngIf="lastName.invalid && lastName.touched"
+      [errorMessage]="'Hãy nhập vào Họ của bạn'"
+    ></app-error-field>
+  </div>
+  <div class="inputField">
+    <label>Tên tài khoản</label>
+    <input
+      formControlName="username"
+      type="text"
+      class="form-control"
+      placeholder="Vd: Beast_Master69"
+    />
+    <app-error-field
+      *ngIf="username.invalid && username.touched"
+      [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
+    ></app-error-field>
+  </div>
+  <div class="inputField">
+    <label>Mật khẩu</label>
+    <input
+      formControlName="password"
+      type="password"
+      class="form-control"
+      placeholder="Vd: !Pass_quen_ROI.1234"
+    />
+    <app-error-field
+      *ngIf="password.hasError('required') && password.touched"
+      [errorMessage]="'Hãy nhập vào Mật khẩu'"
+    ></app-error-field>
+    <app-error-field
+      *ngIf="password.hasError('pattern') && password.touched"
+      [errorMessage]="
+        'Độ dài từ 8 kí tự và có ít nhất 1 chữ thường, chữ hoa, số, kí tự đặc biệt'
+      "
+    ></app-error-field>
+  </div>
+  <div class="inputField">
+    <label>Xác nhận mật khẩu</label>
+    <input
+      formControlName="passwordConfirm"
+      type="password"
+      class="form-control"
+      placeholder="Vd: !Pass_quen_ROI.1234"
+      pattern="{{ password.value }}"
+    />
+    <app-error-field
+      *ngIf="passwordConfirm.hasError('required') && passwordConfirm.touched"
+      [errorMessage]="'Hãy nhập vào Mật khẩu'"
+    ></app-error-field>
+    <app-error-field
+      *ngIf="passwordConfirm.hasError('pattern') && passwordConfirm.touched"
+      [errorMessage]="'Mật khẩu không trùng khớp'"
+    ></app-error-field>
+  </div>
+  <div class="inputField">
+    <label>Địa chỉ Email</label>
+    <input
+      formControlName="email"
+      type="email"
+      class="form-control"
+      placeholder="Vd: Beast_Master69@gmail.com"
+    />
+    <app-error-field
+      *ngIf="email.hasError('required') && email.touched"
+      [errorMessage]="'Hãy nhập vào địa chỉ Email'"
+    ></app-error-field>
+    <app-error-field
+      *ngIf="email.hasError('email') && email.touched"
+      [errorMessage]="'Địa chỉ Email không đúng định dạng'"
+    ></app-error-field>
+  </div>
+  <div class="inputField form-check-inline">
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        formControlName="gender"
+        value="male"
+      />Nam
+    </label>
+  </div>
+  <div class="form-check-inline">
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        formControlName="gender"
+        value="female"
+      />Nữ
+    </label>
+  </div>
+  <div class="inputField">
+    <label>Ngày sinh</label>
+    <input
+      class="form-control"
+      id="datePicker"
+      type="date"
+      formControlName="dateOfBirth"
+    />
+  </div>
+  <div class="inputField">
+    <button
+      *ngIf="!waitingForResponse"
+      type="submit"
+      class="btn btn-primary btn-block"
+      [disabled]="signUpForm.invalid"
+    >
+      Đăng Kí
+    </button>
+    <button
+      *ngIf="waitingForResponse"
+      class="btn btn-primary btn-block"
+      disabled
+    >
+      <span class="spinner-border spinner-border-sm"></span>
+      Kiểm tra tài khoản đăng kí...
+    </button>
+  </div>
+  <app-error-field
+    class="inputField"
+    *ngIf="error"
+    style="text-align: center;"
+    [errorMessage]="errorMessage"
+  ></app-error-field>
+  <div class="inputField" style="text-align: center;">
+    Bạn đã có tài khoản? <a [routerLink]="['/logIn']">Đăng nhập</a>
+  </div>
+</form>
