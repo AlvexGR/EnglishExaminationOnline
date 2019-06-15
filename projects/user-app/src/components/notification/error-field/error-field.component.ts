@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-error-field',
-  templateUrl: './error-field.component.html',
-  styleUrls: ['./error-field.component.css']
+  selector: "app-error-field",
+  templateUrl: "./error-field.component.html",
+  styleUrls: ["./error-field.component.css"]
 })
-export class ErrorFieldComponent implements OnInit {
+export class ErrorFieldComponent {
+  _errorMessage: string;
 
-  constructor() { }
-
-  ngOnInit() {
+  @Input()
+  set errorMessage(errorMessage: string) {
+    this._errorMessage = "<No error>";
+    if (errorMessage) {
+      this._errorMessage = errorMessage;
+    }
   }
 
+  get errorMessage() {
+    return this._errorMessage;
+  }
 }

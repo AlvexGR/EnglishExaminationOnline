@@ -23,8 +23,7 @@
               "projects/user-app/src/assets"
             ],
             "styles": [
-              "projects/user-app/src/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.css"
+              "projects/user-app/src/styles.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
