@@ -28,7 +28,7 @@ router.post(
         statusResponse: verifyResult.statusResponse,
         user: null
       };
-      return res.status(500).json({ response });
+      return res.status(500).json(response);
     }
 
     if (!verifyResult.hasUser) {
@@ -37,7 +37,7 @@ router.post(
         statusResponse: verifyResult.statusResponse,
         user: null
       };
-      return res.status(400).json({ response });
+      return res.status(400).json(response);
     }
 
     const getByResult = await userHandler.getBy(
@@ -50,7 +50,7 @@ router.post(
         statusResponse: getByResult.statusResponse,
         user: null
       };
-      return res.status(500).json({ response });
+      return res.status(500).json(response);
     }
     const logInUser = getByResult.users[0];
     if (!logInUser) {
@@ -62,7 +62,7 @@ router.post(
         },
         user: null
       };
-      return res.status(500).json({ response });
+      return res.status(500).json(response);
     }
 
     (req as ILogInExpressRequest).user = logInUser;
@@ -78,7 +78,7 @@ router.post(
         message: "Đăng nhập thành công"
       }
     };
-    return res.status(200).json({ result });
+    return res.status(200).json(result);
   }
 );
 

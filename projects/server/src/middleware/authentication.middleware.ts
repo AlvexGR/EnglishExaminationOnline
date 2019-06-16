@@ -7,22 +7,27 @@ const userLogInPrivateKey =
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const headers = req.headers;
-  const token: string = headers.authorization as string;
+  const token = headers.authorization as string;
 
   if (!token) {
     return res.sendStatus(403).json({
-      message: "You don't have the authorization to perform this action",
-      status: "Not Ok"
+      statusResponse: {
+        message: "Đã có lỗi xảy ra, xin hãy thử lại",
+        status: false
+      }
     });
   }
+
   jwt.verify(
     token,
     userLogInPrivateKey,
     (err: jwt.VerifyErrors, authData: string | object) => {
       if (err) {
         return res.sendStatus(403).json({
-          message: "You're token is incorrect",
-          status: "Not Ok"
+          statusResponse: {
+            message: "Đã có lỗi xảy ra, xin hãy thử lại",
+            status: false
+          }
         });
       }
     }
@@ -34,8 +39,10 @@ export function signToken(req: Request, res: Response, next: NextFunction) {
   jwt.sign({}, userLogInPrivateKey, (err, token) => {
     if (err) {
       return res.sendStatus(500).json({
-        message: "Something went wrong. Please try again!",
-        status: "Not Ok"
+        statusResponse: {
+          message: "Đã có lỗi xảy ra, xin hãy thử lại",
+          status: false
+        }
       });
     }
     (req as ILogInExpressRequest).accessToken = token;

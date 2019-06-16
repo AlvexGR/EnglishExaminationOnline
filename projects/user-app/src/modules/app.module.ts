@@ -7,7 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AngularMaterialModule } from "./angular-material.module";
 
 // Services
-import { UserService } from "../services/user.service";
+import { UserService } from '../services/user/user.service';
 
 // Components
 import { HomeComponent } from "../components/home/home.component";

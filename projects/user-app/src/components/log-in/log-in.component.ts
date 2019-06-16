@@ -5,7 +5,7 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { UserService } from '@app/src/services/user.service';
+import { UserService } from "@app/src/services/user/user.service";
 
 @Component({
   selector: "app-log-in",
@@ -51,7 +51,7 @@ export class LogInComponent {
     this.waitingForResponse = true;
     const result = await this.userService.logIn(username, password);
     this.waitingForResponse = false;
-    this.hasError = result.status;
+    this.hasError = !result.status;
     if (!result.status) {
       this.errorMessage = result.message;
     }

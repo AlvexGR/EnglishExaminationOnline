@@ -9,14 +9,63 @@ export class BaseRepo<T extends BaseModel> {
     this.collectionName = collectionName;
   }
 
+  async getById(
+    _id: string
+  ): Promise<{
+    doc: T;
+    statusResponse: IStatusResponse;
+  }> {
+    if (!_id) {
+      return {
+        doc: null,
+        statusResponse: {
+          status: true,
+          message: "Id không hợp lệ"
+        }
+      };
+    }
+
+    let result: T = null;
+    const client = MongoDbHelper.getMongoClient();
+
+    try {
+      // Connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+
+      result = await collection.findOne<T>({ _id });
+    } catch (err) {
+      return {
+        doc: null,
+        statusResponse: {
+          status: false,
+          message: "Đã có lỗi xảy ra, xin hãy thử lại"
+        }
+      };
+    } finally {
+      client.close();
+    }
+
+    return {
+      doc: result,
+      statusResponse: {
+        status: true,
+        message: "Thành công"
+      }
+    };
+  }
+
   async getBy(
     query: FilterQuery<any>,
     limit: number = 50
   ): Promise<{
-    docs: Array<any>;
+    docs: Array<T>;
     statusResponse: IStatusResponse;
   }> {
-    let results: Array<any> = null;
+    let results: Array<T> = null;
     const client = MongoDbHelper.getMongoClient();
     try {
       // Connect to Mongo server
@@ -25,7 +74,7 @@ export class BaseRepo<T extends BaseModel> {
       const collection = client
         .db(MongoDbHelper.databaseName)
         .collection(this.collectionName);
-      const cursor = await collection.find(query);
+      const cursor = await collection.find<T>(query);
 
       if (limit) {
         cursor.limit(limit);
@@ -70,7 +119,6 @@ export class BaseRepo<T extends BaseModel> {
         .db(MongoDbHelper.databaseName)
         .collection(this.collectionName);
       result = await collection.countDocuments(query);
-
     } catch (err) {
       return {
         total: result,

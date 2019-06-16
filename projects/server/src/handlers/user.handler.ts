@@ -2,7 +2,7 @@ import { User } from "@lib/models/user.model";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { FilterQuery } from "mongodb";
 import { UserBuilder } from "@lib/builders/user.builder";
-import { UserRepo } from '../repo/user.repo';
+import { UserRepo } from "../repo/user.repo";
 
 export class UserHandler {
   private userRepo: UserRepo;
@@ -51,30 +51,8 @@ export class UserHandler {
         statusResponse: getResult.statusResponse
       };
     }
-    const results = new Array<User>();
-    let userBuilder: UserBuilder;
-    getResult.docs.forEach(doc => {
-      if (!doc) {
-        return;
-      }
-
-      userBuilder = new UserBuilder(doc._id);
-
-      userBuilder
-        .withUsername(doc.username)
-        .withPassword(doc.password)
-        .withEmail(doc.email)
-        .withFirstName(doc.firstName)
-        .withLastName(doc.lastName)
-        .withGender(doc.gender)
-        .withRole(doc.role)
-        .withDateOfBirth(doc.dateOfBirth);
-
-      results.push(userBuilder.build());
-    });
-
     return {
-      users: results,
+      users: getResult.docs,
       statusResponse: getResult.statusResponse
     };
   }
