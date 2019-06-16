@@ -5,7 +5,7 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { UserService } from "../../services/user.service";
+import { UserService } from "@app/src/services/user.service";
 
 @Component({
   selector: "app-sign-up",

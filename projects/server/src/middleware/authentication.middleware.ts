@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { ILogInExpressRequest } from "../../../lib/interfaces/express.interface";
+import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
 
 const userLogInPrivateKey =
   "!EnglishOnlineTesting_UserLogIn_Authentication_PrivateKey!";

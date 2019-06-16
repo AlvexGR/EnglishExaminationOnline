@@ -1,4 +1,4 @@
-import { User } from "../models/user.model";
+import { User } from '@lib/models/user.model';
 import { IStatusResponse } from './base.interface';
 
 export interface ILogInResponse {

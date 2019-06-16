@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
-import { ILogInExpressRequest } from "./../../../lib/interfaces/express.interface";
-import { ILogInResponse } from "./../../../lib/interfaces/user.interface";
+import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
+import { ILogInResponse } from "@lib/interfaces/user.interface";
 
 import { UserHandler } from "../handlers/user.handler";
 import {

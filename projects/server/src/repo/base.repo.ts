@@ -1,7 +1,7 @@
-import { BaseModel } from "../../../../projects/lib/models/base.model";
+import { BaseModel } from "@lib/models/base.model";
 import { FilterQuery } from "mongodb";
-import { IStatusResponse } from "../../../../projects/lib/interfaces/base.interface";
-import { MongoDbHelper } from "../../../lib/helpers/mongoDb.helper";
+import { IStatusResponse } from "@lib/interfaces/base.interface";
+import { MongoDbHelper } from "@lib/helpers/mongoDb.helper";
 
 export class BaseRepo<T extends BaseModel> {
   protected readonly collectionName: string;

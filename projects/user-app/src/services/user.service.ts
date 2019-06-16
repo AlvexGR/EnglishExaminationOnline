@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { User } from "projects/lib/models/user.model";
+import { User } from "@lib/models/user.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { ILogInResponse } from "projects/lib/interfaces/user.interface";
-import { IStatusResponse } from "projects/lib/interfaces/base.interface";
-import { HttpHelper } from 'projects/lib/helpers/http.helper';
+import { ILogInResponse } from "@lib/interfaces/user.interface";
+import { IStatusResponse } from "@lib/interfaces/base.interface";
+import { HttpHelper } from '@lib/helpers/http.helper';
 
 @Injectable({
   providedIn: "root"

@@ -1,8 +1,8 @@
-import { User } from "../../../../projects/lib/models/user.model";
-import { IStatusResponse } from "../../../../projects/lib/interfaces/base.interface";
-import { UserRepo } from "../repo/user.repo";
+import { User } from "@lib/models/user.model";
+import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { FilterQuery } from "mongodb";
-import { UserBuilder } from "../../../../projects/lib/builders/user.builder";
+import { UserBuilder } from "@lib/builders/user.builder";
+import { UserRepo } from '../repo/user.repo';
 
 export class UserHandler {
   private userRepo: UserRepo;
