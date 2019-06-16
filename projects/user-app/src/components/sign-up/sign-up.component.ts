@@ -5,7 +5,7 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: "app-sign-up",
@@ -20,7 +20,7 @@ export class SignUpComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthenticationService
+    private userService: UserService
   ) {
     this.signUpForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -40,13 +40,6 @@ export class SignUpComponent {
       gender: [""],
       dateOfBirth: [""]
     });
-  }
-
-  async signUp(): Promise<void> {
-    this.waitingForResponse = true;
-    const result = await this.authService.logIn();
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    this.waitingForResponse = false;
   }
 
   get username(): AbstractControl {
@@ -71,5 +64,12 @@ export class SignUpComponent {
 
   get lastName(): AbstractControl {
     return this.signUpForm.get("lastName");
+  }
+
+  async signUp(): Promise<void> {
+    this.waitingForResponse = true;
+    const result = await this.userService.signUp();
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    this.waitingForResponse = false;
   }
 }

@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { RequestCustom } from '../../../lib/interfaces/express.interface';
+import { ILogInExpressRequest } from "../../../lib/interfaces/express.interface";
 
-const userLogInPrivateKey = "!EnglishOnlineTesting_UserLogIn_Authentication_PrivateKey!";
+const userLogInPrivateKey =
+  "!EnglishOnlineTesting_UserLogIn_Authentication_PrivateKey!";
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const headers = req.headers;
-  const token = headers.authorization as string;
+  const token: string = headers.authorization as string;
+
   if (!token) {
     return res.sendStatus(403).json({
       message: "You don't have the authorization to perform this action",
@@ -36,7 +38,7 @@ export function signToken(req: Request, res: Response, next: NextFunction) {
         status: "Not Ok"
       });
     }
-    (req as RequestCustom).accessToken = token;
+    (req as ILogInExpressRequest).accessToken = token;
     next();
   });
 }

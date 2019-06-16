@@ -3,20 +3,11 @@ import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ReactiveFormsModule } from "@angular/forms";
-
-import {
-  MatInputModule,
-  MatCheckboxModule,
-  MatRadioModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatButtonModule,
-  MatCardModule,
-  MatToolbarModule,
-} from '@angular/material';
+import { HttpClientModule } from "@angular/common/http";
+import { AngularMaterialModule } from "./angular-material.module";
 
 // Services
-import { AuthenticationService } from "../services/authentication.service";
+import { UserService } from "../services/user.service";
 
 // Components
 import { HomeComponent } from "../components/home/home.component";
@@ -46,10 +37,10 @@ import { ErrorFieldComponent } from "../components/notification/error-field/erro
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatToolbarModule,
-    MatButtonModule
+    HttpClientModule,
+    AngularMaterialModule
   ],
-  providers: [AuthenticationService],
+  providers: [UserService],
   bootstrap: [MainComponent]
 })
 export class AppModule {}

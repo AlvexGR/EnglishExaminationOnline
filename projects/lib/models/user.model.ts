@@ -1,13 +1,13 @@
 import { BaseModel } from "./base.model";
 
 export class GenderType {
-  static male = "male";
-  static female = "female";
+  static readonly male = "male";
+  static readonly female = "female";
 }
 
 export class UserType {
-  static admin = "admin";
-  static user = "user";
+  static readonly admin = "admin";
+  static readonly user = "user";
 }
 
 export class User extends BaseModel {

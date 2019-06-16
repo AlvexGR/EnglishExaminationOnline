@@ -5,7 +5,7 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { AuthenticationService } from "../../services/authentication.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: "app-log-in",
@@ -15,12 +15,12 @@ import { AuthenticationService } from "../../services/authentication.service";
 export class LogInComponent {
   logInForm: FormGroup;
   waitingForResponse = false;
-  error = false;
+  hasError = false;
   errorMessage: string;
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthenticationService
+    private userService: UserService
   ) {
     this.logInForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -37,9 +37,23 @@ export class LogInComponent {
   }
 
   async logIn(): Promise<void> {
+    if (this.logInForm.invalid) {
+      return;
+    }
+
+    const username: string = this.username.value;
+    const password: string = this.password.value;
+
+    if (!username || !password) {
+      return;
+    }
+
     this.waitingForResponse = true;
-    const result = await this.authService.logIn();
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    const result = await this.userService.logIn(username, password);
     this.waitingForResponse = false;
+    this.hasError = result.status;
+    if (!result.status) {
+      this.errorMessage = result.message;
+    }
   }
 }

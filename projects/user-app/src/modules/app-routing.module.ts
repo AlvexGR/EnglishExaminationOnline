@@ -7,25 +7,33 @@ import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
 
+export const routesName = {
+  logIn: "log-in",
+  signUp: "sign-up",
+  admin: "admin",
+  home: "",
+  profile: "profile"
+};
+
 const routes: Routes = [
   {
-    path: "",
+    path: routesName.home,
     component: HomeComponent
   },
   {
-    path: "logIn",
+    path: routesName.logIn,
     component: LogInComponent
   },
   {
-    path: "signUp",
+    path: routesName.signUp,
     component: SignUpComponent
   },
   {
-    path: "admin",
+    path: routesName.admin,
     component: AdminComponent
   },
   {
-    path: "profile",
+    path: routesName.profile,
     component: ProfileComponent
   }
 ];

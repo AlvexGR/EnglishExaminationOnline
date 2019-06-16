@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build-server": "tsc projects/server/**/*.ts",
-    "server-dev": "nodemon projects/server/server.ts"
+    "dev-server": "nodemon -r tsconfig-paths/register projects/server/server.ts"
   },
   "private": true,
   "dependencies": {
@@ -62,6 +62,7 @@
     "nodemon": "^1.19.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
+    "tsconfig-paths": "^3.8.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
   }

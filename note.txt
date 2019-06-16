@@ -1,0 +1,2 @@
+tsconfig-paths: this package will resolve problem with relative-path => Cannot find modules when starting server
+cors: this package will resolve problem with "No Access-Control-Allow-Origin header"
