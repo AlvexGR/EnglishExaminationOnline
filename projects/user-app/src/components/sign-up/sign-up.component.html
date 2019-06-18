@@ -45,6 +45,10 @@
       *ngIf="username.invalid && username.touched"
       [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
     ></app-error-field>
+    <app-error-field
+      *ngIf="usernameError"
+      [errorMessage]="usernameErrorMessage"
+    ></app-error-field>
   </div>
   <div class="inputField">
     <label>Mật khẩu</label>
@@ -98,6 +102,10 @@
     <app-error-field
       *ngIf="email.hasError('email') && email.touched"
       [errorMessage]="'Địa chỉ Email không đúng định dạng'"
+    ></app-error-field>
+    <app-error-field
+      *ngIf="emailError"
+      [errorMessage]="emailErrorMessage"
     ></app-error-field>
   </div>
   <div class="inputField form-check-inline">

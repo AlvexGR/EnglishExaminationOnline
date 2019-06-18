@@ -139,4 +139,57 @@ export class BaseRepo<T extends BaseModel> {
       }
     };
   }
+
+  async insert(
+    obj: T
+  ): Promise<{ inserted: boolean; statusResponse: IStatusResponse }> {
+    if (!obj) {
+      return {
+        inserted: false,
+        statusResponse: {
+          status: true,
+          message: "Không thành công"
+        }
+      };
+    }
+
+    const client = MongoDbHelper.getMongoClient();
+    try {
+      // Connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+      const result = await collection.insertOne(obj);
+
+      if (result.insertedCount !== 1) {
+        return {
+          inserted: false,
+          statusResponse: {
+            status: false,
+            message: "Đã có lỗi xảy ra, xin hãy thử lại"
+          }
+        };
+      }
+    } catch (err) {
+      return {
+        inserted: false,
+        statusResponse: {
+          status: false,
+          message: "Đã có lỗi xảy ra, xin hãy thử lại"
+        }
+      };
+    } finally {
+      client.close();
+    }
+
+    return {
+      inserted: true,
+      statusResponse: {
+        status: true,
+        message: "Thành công"
+      }
+    };
+  }
 }

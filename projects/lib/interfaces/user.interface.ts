@@ -1,5 +1,5 @@
-import { User } from '@lib/models/user.model';
-import { IStatusResponse } from './base.interface';
+import { User } from "@lib/models/user.model";
+import { IStatusResponse } from "./base.interface";
 
 export interface ILogInResponse {
   accessToken: string;
@@ -8,14 +8,9 @@ export interface ILogInResponse {
 }
 
 export interface ISignUpResponse {
-  status: boolean;
+  statusResponse: IStatusResponse;
   validation: {
-    firstName: IStatusResponse;
-    lastName: IStatusResponse;
-    username: IStatusResponse;
-    password: IStatusResponse;
-    email: IStatusResponse;
-    gender: IStatusResponse;
-    dateOfBirth: IStatusResponse;
+    usernameValid: boolean;
+    emailValid: boolean;
   };
 }

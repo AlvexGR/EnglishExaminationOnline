@@ -5,7 +5,9 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { UserService } from '@app/src/services/user/user.service';
+import { UserService } from "@app/src/services/user/user.service";
+import { Router } from "@angular/router";
+import { Utility } from '@lib/helpers/utility.helper';
 
 @Component({
   selector: "app-sign-up",
@@ -17,10 +19,15 @@ export class SignUpComponent {
   waitingForResponse = false;
   error = false;
   errorMessage: string;
+  emailError = false;
+  emailErrorMessage: string;
+  usernameError = false;
+  usernameErrorMessage: string;
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.signUpForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -66,10 +73,46 @@ export class SignUpComponent {
     return this.signUpForm.get("lastName");
   }
 
+  get gender(): AbstractControl {
+    return this.signUpForm.get("gender");
+  }
+
+  get dateOfBirth(): AbstractControl {
+    return this.signUpForm.get("dateOfBirth");
+  }
+
   async signUp(): Promise<void> {
+    // Reset errors
+    this.error = this.emailError = this.usernameError = false;
+
     this.waitingForResponse = true;
-    const result = await this.userService.signUp();
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    const newUser = this.userService.createFromObj({
+      username: this.username.value,
+      password: this.password.value,
+      email: this.email.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      gender: this.gender.value,
+      dateOfBirth: this.dateOfBirth.value
+    });
+
+    const result = await this.userService.signUp(newUser);
     this.waitingForResponse = false;
+
+    if (!result.statusResponse.status) {
+      this.error = true;
+      this.errorMessage = result.statusResponse.message;
+      return;
+    }
+
+    if (result.validation && (!result.validation.emailValid || !result.validation.usernameValid)) {
+      this.emailError = !result.validation.emailValid;
+      this.usernameError = !result.validation.usernameValid;
+      this.emailErrorMessage = "Email này đã tồn tại";
+      this.usernameErrorMessage = "Tài khoản đăng nhập này đã tồn tại";
+      return;
+    }
+
+    this.router.navigate([`/${Utility.appRoutesName.logIn}`]);
   }
 }

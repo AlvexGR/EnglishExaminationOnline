@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { User } from "@lib/models/user.model";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
-  HttpClient,
-  HttpHeaders,
-  HttpResponse,
-  HttpErrorResponse
-} from "@angular/common/http";
-import { ILogInResponse } from "@lib/interfaces/user.interface";
+  ILogInResponse,
+  ISignUpResponse
+} from "@lib/interfaces/user.interface";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
+import { UserBuilder } from "@lib/builders/user.builder";
+import md5 = require("md5");
 
 @Injectable({
   providedIn: "root"
@@ -28,13 +28,12 @@ export class UserService {
   }
 
   async logIn(username: string, password: string): Promise<IStatusResponse> {
-    const result: IStatusResponse = {
-      status: true,
-      message: ""
-    };
-
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     let response = new HttpResponse<ILogInResponse>();
+
+    // Hash password before send to Server
+    password = md5(password);
+
     try {
       response = await this.http
         .post<ILogInResponse>(
@@ -44,24 +43,61 @@ export class UserService {
         )
         .toPromise();
     } catch (err) {
-      result.status = false;
-      result.message = err.error.statusResponse.message;
-      return result;
+      return {
+        status: false,
+        message: err.error.statusResponse.message
+      };
     }
 
     const body = response.body;
     this._currentUser = body.user;
     this._accessToken = body.accessToken;
 
-    return result;
+    return {
+      status: true,
+      message: ""
+    };
   }
 
-  async signUp(): Promise<boolean> {
-    return true;
+  async signUp(newUser: User): Promise<ISignUpResponse> {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    let response = new HttpResponse<ISignUpResponse>();
+
+    // Hash password before send to Server
+    newUser.password = md5(newUser.password);
+    try {
+      response = await this.http
+        .post<ISignUpResponse>(
+          `${HttpHelper.endpoint}/${HttpHelper.users}`,
+          { user: newUser },
+          { headers, observe: "response" }
+        )
+        .toPromise();
+    } catch (err) {
+      return err.error;
+    }
+
+    return response.body;
   }
 
   logOut(): void {
     this._currentUser = null;
     this._accessToken = null;
+  }
+
+  createFromObj(obj: any): User {
+    const userBuilder = new UserBuilder();
+
+    userBuilder
+      .withUsername(obj.username)
+      .withPassword(obj.password)
+      .withEmail(obj.email)
+      .withFirstName(obj.firstName)
+      .withLastName(obj.lastName)
+      .withGender(obj.gender)
+      .withRole(obj.role)
+      .withDateOfBirth(obj.dateOfBirth);
+
+    return userBuilder.build();
   }
 }

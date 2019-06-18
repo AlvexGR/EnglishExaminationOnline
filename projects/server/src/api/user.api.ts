@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
-import { ILogInResponse } from "@lib/interfaces/user.interface";
+import { ILogInResponse, ISignUpResponse } from "@lib/interfaces/user.interface";
 
 import { UserHandler } from "../handlers/user.handler";
 import {
@@ -8,11 +8,12 @@ import {
   verifyToken
 } from "../middleware/authentication.middleware";
 import { HttpHelper } from '@lib/helpers/http.helper';
+import { IStatusResponse } from '@lib/interfaces/base.interface';
 
 const router = express.Router();
 const userHandler = new UserHandler();
 
-// Login
+// Log In
 router.post(
   `/${HttpHelper.logIn}`,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -81,5 +82,35 @@ router.post(
     return res.status(200).json(result);
   }
 );
+
+// Sign Up
+router.post(`/`, async (req: Request, res: Response) => {
+  const newUser = userHandler.createFromObj(req.body.user);
+
+  const validateUserResult = await userHandler.validateNewUser(newUser);
+  if (!validateUserResult.canInsert) {
+    const signUpRes = validateUserResult.signUpResponse;
+    if (!signUpRes.statusResponse.status) {
+      return res.status(500).json({
+        statusResponse: signUpRes.statusResponse,
+        validation: null
+      });
+    }
+    return res.status(400).json(signUpRes);
+  }
+
+  const insertResult = await userHandler.insert(newUser);
+
+  if (!insertResult.inserted) {
+    const statusResult = insertResult.statusResponse;
+    if (statusResult.status) {
+      return res.status(400).json(statusResult);
+    } else {
+      return res.status(500).json(statusResult);
+    }
+  }
+
+  return res.status(200).json({ statusResponse: insertResult.statusResponse });
+});
 
 module.exports = router;
