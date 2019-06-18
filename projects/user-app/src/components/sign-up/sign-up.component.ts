@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
 import { Router } from "@angular/router";
-import { Utility } from '@lib/helpers/utility.helper';
+import { AppRoutesName, StatusCode } from '@lib/helpers/utility.helper';
 
 @Component({
   selector: "app-sign-up",
@@ -99,7 +99,7 @@ export class SignUpComponent {
     const result = await this.userService.signUp(newUser);
     this.waitingForResponse = false;
 
-    if (!result.statusResponse.status) {
+    if (result.statusResponse.status !== StatusCode.Ok) {
       this.error = true;
       this.errorMessage = result.statusResponse.message;
       return;
@@ -113,6 +113,6 @@ export class SignUpComponent {
       return;
     }
 
-    this.router.navigate([`/${Utility.appRoutesName.logIn}`]);
+    this.router.navigate([`/${AppRoutesName.logIn}`]);
   }
 }

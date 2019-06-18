@@ -9,6 +9,7 @@ import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { UserBuilder } from "@lib/builders/user.builder";
 import md5 = require("md5");
+import { StatusCode } from '@lib/helpers/utility.helper';
 
 @Injectable({
   providedIn: "root"
@@ -43,20 +44,14 @@ export class UserService {
         )
         .toPromise();
     } catch (err) {
-      return {
-        status: false,
-        message: err.error.statusResponse.message
-      };
+      return err.error.statusResponse;
     }
 
     const body = response.body;
     this._currentUser = body.user;
     this._accessToken = body.accessToken;
 
-    return {
-      status: true,
-      message: ""
-    };
+    return body.statusResponse;
   }
 
   async signUp(newUser: User): Promise<ISignUpResponse> {
@@ -81,8 +76,7 @@ export class UserService {
   }
 
   logOut(): void {
-    this._currentUser = null;
-    this._accessToken = null;
+    this._currentUser = this._accessToken = null;
   }
 
   createFromObj(obj: any): User {

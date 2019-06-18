@@ -6,27 +6,27 @@ import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
-import { Utility } from '@lib/helpers/utility.helper';
+import { AppRoutesName } from '@lib/helpers/utility.helper';
 
 const routes: Routes = [
   {
-    path: Utility.appRoutesName.home,
+    path: AppRoutesName.home,
     component: HomeComponent
   },
   {
-    path: Utility.appRoutesName.logIn,
+    path: AppRoutesName.logIn,
     component: LogInComponent
   },
   {
-    path: Utility.appRoutesName.signUp,
+    path: AppRoutesName.signUp,
     component: SignUpComponent
   },
   {
-    path: Utility.appRoutesName.admin,
+    path: AppRoutesName.admin,
     component: AdminComponent
   },
   {
-    path: Utility.appRoutesName.profile,
+    path: AppRoutesName.profile,
     component: ProfileComponent
   }
 ];

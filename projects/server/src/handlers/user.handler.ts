@@ -4,6 +4,7 @@ import { FilterQuery } from "mongodb";
 import { UserRepo } from "../repo/user.repo";
 import { ISignUpResponse } from "@lib/interfaces/user.interface";
 import { UserBuilder } from "@lib/builders/user.builder";
+import { StatusCode } from '@lib/helpers/utility.helper';
 
 export class UserHandler {
   private userRepo: UserRepo;
@@ -15,18 +16,18 @@ export class UserHandler {
     password: string
   ): Promise<{ statusResponse: IStatusResponse; hasUser: boolean }> {
     const countUser = await this.userRepo.countBy({ username, password });
-    if (!countUser.statusResponse.status) {
+    if (countUser.statusResponse.status !== StatusCode.Ok) {
       return {
         hasUser: false,
         statusResponse: countUser.statusResponse
       };
     }
 
-    if (countUser.statusResponse.status && countUser.total === 0) {
+    if (countUser.total === 0) {
       return {
         statusResponse: {
-          status: true,
-          message: "Tên tài khoản hoặc mật khẩu không chính xác"
+          status: StatusCode.BadRequest,
+          message: ""
         },
         hasUser: false
       };
@@ -34,7 +35,10 @@ export class UserHandler {
 
     return {
       hasUser: true,
-      statusResponse: countUser.statusResponse
+      statusResponse: {
+        status: StatusCode.Ok,
+        message: ""
+      }
     };
   }
 
@@ -43,7 +47,7 @@ export class UserHandler {
     limit?: number
   ): Promise<{ users: Array<User>; statusResponse: IStatusResponse }> {
     const getResult = await this.userRepo.getBy(query, limit);
-    if (!getResult.statusResponse.status) {
+    if (getResult.statusResponse.status !== StatusCode.Ok) {
       return {
         users: null,
         statusResponse: getResult.statusResponse
@@ -70,7 +74,7 @@ export class UserHandler {
     const usernameResult = result[0];
     const emailResult = result[1];
 
-    if (!usernameResult.statusResponse.status) {
+    if (usernameResult.statusResponse.status !== StatusCode.Ok) {
       return {
         canInsert: false,
         signUpResponse: {
@@ -80,7 +84,7 @@ export class UserHandler {
       };
     }
 
-    if (!emailResult.statusResponse.status) {
+    if (emailResult.statusResponse.status !== StatusCode.Ok) {
       return {
         canInsert: false,
         signUpResponse: {
@@ -92,7 +96,7 @@ export class UserHandler {
     const canInsert = usernameResult.total === 0 && emailResult.total === 0;
     const signUpResult: ISignUpResponse = {
       statusResponse: {
-        status: true,
+        status: StatusCode.Ok,
         message: ""
       },
       validation: {

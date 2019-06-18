@@ -1,13 +1,13 @@
 import { BaseModel } from "./base.model";
 
-export class GenderType {
-  static readonly male = "male";
-  static readonly female = "female";
+export enum GenderType {
+  male,
+  female
 }
 
-export class UserType {
-  static readonly admin = "admin";
-  static readonly user = "user";
+export enum UserType {
+  admin,
+  user
 }
 
 export class User extends BaseModel {
@@ -16,8 +16,8 @@ export class User extends BaseModel {
   email: string;
   firstName: string;
   lastName: string;
-  gender: string;
-  role: string;
+  gender: GenderType;
+  role: UserType;
   dateOfBirth: Date;
 
   constructor(id?: string) {

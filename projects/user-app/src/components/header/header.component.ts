@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Utility } from '@lib/helpers/utility.helper';
+import { AppRoutesName } from '@lib/helpers/utility.helper';
 
 @Component({
   selector: 'app-header',
@@ -18,18 +18,18 @@ export class HeaderComponent {
   }
 
   goToHome(): void {
-    this.navigateTo(`/${Utility.appRoutesName.home}`);
+    this.navigateTo(`/${AppRoutesName.home}`);
   }
 
   goToLogIn(): void {
-    this.navigateTo(`/${Utility.appRoutesName.logIn}`);
+    this.navigateTo(`/${AppRoutesName.logIn}`);
   }
 
   goToSignUp(): void {
-    this.navigateTo(`/${Utility.appRoutesName.signUp}`);
+    this.navigateTo(`/${AppRoutesName.signUp}`);
   }
 
   goToAdmin(): void {
-    this.navigateTo(`/${Utility.appRoutesName.admin}`);
+    this.navigateTo(`/${AppRoutesName.admin}`);
   }
 }

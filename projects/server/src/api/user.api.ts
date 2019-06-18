@@ -1,14 +1,18 @@
 import express, { Request, Response, NextFunction } from "express";
 import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
-import { ILogInResponse, ISignUpResponse } from "@lib/interfaces/user.interface";
+import {
+  ILogInResponse,
+  ISignUpResponse
+} from "@lib/interfaces/user.interface";
 
 import { UserHandler } from "../handlers/user.handler";
 import {
   signToken,
   verifyToken
 } from "../middleware/authentication.middleware";
-import { HttpHelper } from '@lib/helpers/http.helper';
-import { IStatusResponse } from '@lib/interfaces/base.interface';
+import { HttpHelper } from "@lib/helpers/http.helper";
+import { IStatusResponse } from "@lib/interfaces/base.interface";
+import { StatusCode } from "@lib/helpers/utility.helper";
 
 const router = express.Router();
 const userHandler = new UserHandler();
@@ -22,14 +26,14 @@ router.post(
       body.username,
       body.password
     );
-
-    if (!verifyResult.statusResponse.status) {
+    console.log(verifyResult);
+    if (verifyResult.statusResponse.status !== StatusCode.Ok) {
       const response: ILogInResponse = {
         accessToken: null,
         statusResponse: verifyResult.statusResponse,
         user: null
       };
-      return res.status(500).json(response);
+      return res.status(StatusCode.InternalError).json(response);
     }
 
     if (!verifyResult.hasUser) {
@@ -38,32 +42,32 @@ router.post(
         statusResponse: verifyResult.statusResponse,
         user: null
       };
-      return res.status(400).json(response);
+      return res.status(StatusCode.BadRequest).json(response);
     }
 
     const getByResult = await userHandler.getBy(
       { username: body.username, password: body.password },
       1
     );
-    if (!getByResult.statusResponse.status) {
+    if (getByResult.statusResponse.status !== StatusCode.Ok) {
       const response: ILogInResponse = {
         accessToken: null,
         statusResponse: getByResult.statusResponse,
         user: null
       };
-      return res.status(500).json(response);
+      return res.status(StatusCode.InternalError).json(response);
     }
     const logInUser = getByResult.users[0];
     if (!logInUser) {
       const response: ILogInResponse = {
         accessToken: null,
         statusResponse: {
-          status: false,
+          status: StatusCode.InternalError,
           message: "Đã có lỗi xảy ra, xin hãy thử lại"
         },
         user: null
       };
-      return res.status(500).json(response);
+      return res.status(StatusCode.InternalError).json(response);
     }
 
     (req as ILogInExpressRequest).user = logInUser;
@@ -75,11 +79,11 @@ router.post(
       user: (req as ILogInExpressRequest).user,
       accessToken: (req as ILogInExpressRequest).accessToken,
       statusResponse: {
-        status: true,
+        status: StatusCode.Ok,
         message: "Đăng nhập thành công"
       }
     };
-    return res.status(200).json(result);
+    return res.status(StatusCode.Ok).json(result);
   }
 );
 
@@ -91,12 +95,12 @@ router.post(`/`, async (req: Request, res: Response) => {
   if (!validateUserResult.canInsert) {
     const signUpRes = validateUserResult.signUpResponse;
     if (!signUpRes.statusResponse.status) {
-      return res.status(500).json({
+      return res.status(StatusCode.InternalError).json({
         statusResponse: signUpRes.statusResponse,
         validation: null
       });
     }
-    return res.status(400).json(signUpRes);
+    return res.status(StatusCode.BadRequest).json(signUpRes);
   }
 
   const insertResult = await userHandler.insert(newUser);
@@ -104,13 +108,15 @@ router.post(`/`, async (req: Request, res: Response) => {
   if (!insertResult.inserted) {
     const statusResult = insertResult.statusResponse;
     if (statusResult.status) {
-      return res.status(400).json(statusResult);
+      return res.status(StatusCode.BadRequest).json(statusResult);
     } else {
-      return res.status(500).json(statusResult);
+      return res.status(StatusCode.InternalError).json(statusResult);
     }
   }
 
-  return res.status(200).json({ statusResponse: insertResult.statusResponse });
+  return res
+    .status(StatusCode.Ok)
+    .json({ statusResponse: insertResult.statusResponse, validation: null });
 });
 
 module.exports = router;

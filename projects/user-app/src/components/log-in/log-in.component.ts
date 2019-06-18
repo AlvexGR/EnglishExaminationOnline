@@ -6,6 +6,7 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
+import { StatusCode } from '@lib/helpers/utility.helper';
 
 @Component({
   selector: "app-log-in",
@@ -51,9 +52,9 @@ export class LogInComponent {
     this.waitingForResponse = true;
     const result = await this.userService.logIn(username, password);
     this.waitingForResponse = false;
-    this.hasError = !result.status;
-    if (!result.status) {
-      this.errorMessage = result.message;
+    this.hasError = result.status === StatusCode.BadRequest;
+    if (this.hasError) {
+      this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
     }
   }
 }

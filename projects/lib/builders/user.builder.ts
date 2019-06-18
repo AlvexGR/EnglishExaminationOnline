@@ -42,14 +42,14 @@ export class UserBuilder {
     return this;
   }
 
-  withGender(gender: string): UserBuilder {
+  withGender(gender: number): UserBuilder {
     if (gender) {
       this.user.gender = gender;
     }
     return this;
   }
 
-  withRole(role: string): UserBuilder {
+  withRole(role: number): UserBuilder {
     if (role) {
       this.user.role = role;
     }

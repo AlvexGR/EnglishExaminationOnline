@@ -1,4 +1,6 @@
+import { StatusCode } from '@lib/helpers/utility.helper';
+
 export interface IStatusResponse {
-  status: boolean;
+  status: StatusCode;
   message: string;
 }

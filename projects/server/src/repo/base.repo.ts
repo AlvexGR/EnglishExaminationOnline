@@ -2,6 +2,7 @@ import { BaseModel } from "@lib/models/base.model";
 import { FilterQuery } from "mongodb";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { MongoDbHelper } from "@lib/helpers/mongoDb.helper";
+import { StatusCode } from '@lib/helpers/utility.helper';
 
 export class BaseRepo<T extends BaseModel> {
   protected readonly collectionName: string;
@@ -19,7 +20,7 @@ export class BaseRepo<T extends BaseModel> {
       return {
         doc: null,
         statusResponse: {
-          status: true,
+          status: StatusCode.BadRequest,
           message: "Id không hợp lệ"
         }
       };
@@ -41,7 +42,7 @@ export class BaseRepo<T extends BaseModel> {
       return {
         doc: null,
         statusResponse: {
-          status: false,
+          status: StatusCode.InternalError,
           message: "Đã có lỗi xảy ra, xin hãy thử lại"
         }
       };
@@ -52,7 +53,7 @@ export class BaseRepo<T extends BaseModel> {
     return {
       doc: result,
       statusResponse: {
-        status: true,
+        status: StatusCode.Ok,
         message: "Thành công"
       }
     };
@@ -86,7 +87,7 @@ export class BaseRepo<T extends BaseModel> {
       return {
         docs: null,
         statusResponse: {
-          status: false,
+          status: StatusCode.InternalError,
           message: "Đã có lỗi xảy ra, xin hãy thử lại"
         }
       };
@@ -97,7 +98,7 @@ export class BaseRepo<T extends BaseModel> {
     return {
       docs: results,
       statusResponse: {
-        status: true,
+        status: StatusCode.Ok,
         message: "Thành công"
       }
     };
@@ -123,18 +124,18 @@ export class BaseRepo<T extends BaseModel> {
       return {
         total: result,
         statusResponse: {
-          status: false,
+          status: StatusCode.InternalError,
           message: "Đã có lỗi xảy ra, xin hãy thử lại"
         }
       };
     } finally {
       client.close();
     }
-
+    console.log(`Result: ${result}`);
     return {
       total: result,
       statusResponse: {
-        status: true,
+        status: StatusCode.Ok,
         message: "Thành công"
       }
     };
@@ -147,7 +148,7 @@ export class BaseRepo<T extends BaseModel> {
       return {
         inserted: false,
         statusResponse: {
-          status: true,
+          status: StatusCode.BadRequest,
           message: "Không thành công"
         }
       };
@@ -167,7 +168,7 @@ export class BaseRepo<T extends BaseModel> {
         return {
           inserted: false,
           statusResponse: {
-            status: false,
+            status: StatusCode.InternalError,
             message: "Đã có lỗi xảy ra, xin hãy thử lại"
           }
         };
@@ -176,7 +177,7 @@ export class BaseRepo<T extends BaseModel> {
       return {
         inserted: false,
         statusResponse: {
-          status: false,
+          status: StatusCode.InternalError,
           message: "Đã có lỗi xảy ra, xin hãy thử lại"
         }
       };
@@ -187,7 +188,7 @@ export class BaseRepo<T extends BaseModel> {
     return {
       inserted: true,
       statusResponse: {
-        status: true,
+        status: StatusCode.Ok,
         message: "Thành công"
       }
     };
