@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -7,14 +7,14 @@ import {
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
 import { Router } from "@angular/router";
-import { AppRoutesName, StatusCode } from '@lib/helpers/utility.helper';
+import { AppRoutesName, StatusCode } from "@lib/helpers/utility.helper";
 
 @Component({
   selector: "app-sign-up",
   templateUrl: "./sign-up.component.html",
   styleUrls: ["./sign-up.component.css"]
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   waitingForResponse = false;
   error = false;
@@ -28,7 +28,9 @@ export class SignUpComponent {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
       username: ["", Validators.required],
       password: [
@@ -47,6 +49,44 @@ export class SignUpComponent {
       gender: [""],
       dateOfBirth: [""]
     });
+  }
+
+  async signUp(): Promise<void> {
+    // Reset errors
+    this.error = this.emailError = this.usernameError = false;
+
+    this.waitingForResponse = true;
+    const newUser = this.userService.createFromObj({
+      username: this.username.value,
+      password: this.password.value,
+      email: this.email.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      gender: this.gender.value,
+      dateOfBirth: this.dateOfBirth.value
+    });
+
+    const result = await this.userService.signUp(newUser);
+    this.waitingForResponse = false;
+
+    if (result.statusResponse.status !== StatusCode.Ok) {
+      this.error = true;
+      this.errorMessage = result.statusResponse.message;
+      return;
+    }
+
+    if (
+      result.validation &&
+      (!result.validation.emailValid || !result.validation.usernameValid)
+    ) {
+      this.emailError = !result.validation.emailValid;
+      this.usernameError = !result.validation.usernameValid;
+      this.emailErrorMessage = "Email này đã tồn tại";
+      this.usernameErrorMessage = "Tài khoản đăng nhập này đã tồn tại";
+      return;
+    }
+
+    this.router.navigate([`/${AppRoutesName.logIn}`]);
   }
 
   get username(): AbstractControl {
@@ -79,40 +119,5 @@ export class SignUpComponent {
 
   get dateOfBirth(): AbstractControl {
     return this.signUpForm.get("dateOfBirth");
-  }
-
-  async signUp(): Promise<void> {
-    // Reset errors
-    this.error = this.emailError = this.usernameError = false;
-
-    this.waitingForResponse = true;
-    const newUser = this.userService.createFromObj({
-      username: this.username.value,
-      password: this.password.value,
-      email: this.email.value,
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
-      gender: this.gender.value,
-      dateOfBirth: this.dateOfBirth.value
-    });
-
-    const result = await this.userService.signUp(newUser);
-    this.waitingForResponse = false;
-
-    if (result.statusResponse.status !== StatusCode.Ok) {
-      this.error = true;
-      this.errorMessage = result.statusResponse.message;
-      return;
-    }
-
-    if (result.validation && (!result.validation.emailValid || !result.validation.usernameValid)) {
-      this.emailError = !result.validation.emailValid;
-      this.usernameError = !result.validation.usernameValid;
-      this.emailErrorMessage = "Email này đã tồn tại";
-      this.usernameErrorMessage = "Tài khoản đăng nhập này đã tồn tại";
-      return;
-    }
-
-    this.router.navigate([`/${AppRoutesName.logIn}`]);
   }
 }

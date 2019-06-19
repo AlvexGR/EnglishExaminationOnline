@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
@@ -6,15 +6,15 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
-import { StatusCode, AppRoutesName } from '@lib/helpers/utility.helper';
-import { Router } from '@angular/router';
+import { StatusCode, AppRoutesName } from "@lib/helpers/utility.helper";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-log-in",
   templateUrl: "./log-in.component.html",
   styleUrls: ["./log-in.component.css"]
 })
-export class LogInComponent {
+export class LogInComponent implements OnInit {
   logInForm: FormGroup;
   waitingForResponse = false;
   hasError = false;
@@ -24,7 +24,9 @@ export class LogInComponent {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.logInForm = this.formBuilder.group({
       username: ["", Validators.required],
       password: ["", Validators.required]

@@ -1,29 +1,34 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { AppRoutesName } from "@lib/helpers/utility.helper";
 import { UserService } from "@app/src/services/user/user.service";
-import { Observable } from "rxjs";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.css"]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private _currentUserSubscription: Subscription;
+
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.userObservable.subscribe(currentUser => {
+    this._currentUserSubscription = this.userService.userObservable.subscribe(currentUser => {
       if (!currentUser) {
         // User logged in
         document.getElementById("logInOutButton").innerText = "Log In";
-        console.log(this.userService.currentUser);
       } else {
         // User logged out
         document.getElementById("logInOutButton").innerText = "Log Out";
-        console.log(this.userService.currentUser);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leak
+    this._currentUserSubscription.unsubscribe();
   }
 
   navigateTo(location: string): void {
