@@ -2,7 +2,7 @@ import { BaseModel } from "@lib/models/base.model";
 import { FilterQuery } from "mongodb";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { MongoDbHelper } from "@lib/helpers/mongoDb.helper";
-import { StatusCode } from '@lib/helpers/utility.helper';
+import { StatusCode } from "@lib/helpers/utility.helper";
 
 export class BaseRepo<T extends BaseModel> {
   protected readonly collectionName: string;
@@ -131,7 +131,7 @@ export class BaseRepo<T extends BaseModel> {
     } finally {
       client.close();
     }
-    console.log(`Result: ${result}`);
+
     return {
       total: result,
       statusResponse: {

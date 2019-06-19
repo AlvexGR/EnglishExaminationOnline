@@ -6,7 +6,8 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
-import { StatusCode } from '@lib/helpers/utility.helper';
+import { StatusCode, AppRoutesName } from '@lib/helpers/utility.helper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-log-in",
@@ -21,7 +22,8 @@ export class LogInComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.logInForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -55,6 +57,8 @@ export class LogInComponent {
     this.hasError = result.status === StatusCode.BadRequest;
     if (this.hasError) {
       this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
+      return;
     }
+    this.router.navigate([`/${AppRoutesName.home}`]);
   }
 }

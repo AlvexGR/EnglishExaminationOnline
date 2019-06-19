@@ -26,7 +26,6 @@ router.post(
       body.username,
       body.password
     );
-    console.log(verifyResult);
     if (verifyResult.statusResponse.status !== StatusCode.Ok) {
       const response: ILogInResponse = {
         accessToken: null,

@@ -8,8 +8,9 @@ import {
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { UserBuilder } from "@lib/builders/user.builder";
-import md5 = require("md5");
+import md5 from "md5";
 import { StatusCode } from '@lib/helpers/utility.helper';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -17,8 +18,20 @@ import { StatusCode } from '@lib/helpers/utility.helper';
 export class UserService {
   private _currentUser: User;
   private _accessToken: string;
+  private _userObservable: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this._userObservable = new BehaviorSubject<User>(this._currentUser);
+  }
+
+  get userObservable(): Observable<User> {
+    return this._userObservable.asObservable();
+  }
+
+  private set setUser(value: User) {
+    this._currentUser = value;
+    this._userObservable.next(value);
+  }
 
   get currentUser(): User {
     return this._currentUser;
@@ -48,7 +61,7 @@ export class UserService {
     }
 
     const body = response.body;
-    this._currentUser = body.user;
+    this.setUser = body.user;
     this._accessToken = body.accessToken;
 
     return body.statusResponse;
@@ -76,7 +89,7 @@ export class UserService {
   }
 
   logOut(): void {
-    this._currentUser = this._accessToken = null;
+    this.setUser = this._accessToken = null;
   }
 
   createFromObj(obj: any): User {
