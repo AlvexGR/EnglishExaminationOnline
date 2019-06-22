@@ -65,6 +65,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.navigateTo(`/${AppRoutesName.profile}`);
   }
 
+  goToHistory(): void {
+    this.navigateTo(`/${AppRoutesName.history}`);
+  }
+
   logOut(): void {
     this.userService.logOut();
   }

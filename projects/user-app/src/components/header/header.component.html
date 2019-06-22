@@ -21,12 +21,16 @@
       <span>Admin</span>
     </button>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="rightMenuButton">
-      <i class="fas fa-bars" style="font-size: 20px;"></i>
+      <i class="fas fa-user-circle" style="font-size: 20px;"></i>
     </button>
     <mat-menu #menu="matMenu">
       <button *ngIf="isLoggedIn" mat-menu-item (click)="goToProfile()">
-        <i class="fas fa-user-circle"></i>
+        <i class="far fa-address-card"></i>
         <span>Tài khoản</span>
+      </button>
+      <button *ngIf="isLoggedIn" mat-menu-item (click)="goToHistory()">
+        <i class="fas fa-history"></i>
+        <span>Lịch sử thi</span>
       </button>
       <button *ngIf="!isLoggedIn" mat-menu-item (click)="goToLogIn()">
         <i class="fas fa-sign-in-alt"></i>
@@ -36,7 +40,7 @@
         <i class="fas fa-sign-out-alt"></i>
         <span>Đăng xuất</span>
       </button>
-      <button mat-menu-item (click)="goToSignUp()">
+      <button *ngIf="!isLoggedIn" mat-menu-item (click)="goToSignUp()">
         <i class="fas fa-user-plus"></i>
         <span>Đăng kí</span>
       </button>

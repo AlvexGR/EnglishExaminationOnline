@@ -35,7 +35,8 @@ export const AppRoutesName = {
   admin: "admin",
   home: "",
   profile: "profile",
-  testPage: "test-page"
+  testPage: "test-page",
+  history: "history"
 };
 
 export enum StatusCode {

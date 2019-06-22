@@ -21,6 +21,7 @@ import { AdminComponent } from "../components/admin/admin.component";
 import { ErrorFieldComponent } from "../components/notification/error-field/error-field.component";
 import { MultipleChoiceComponent } from '../components/english-testing/multiple-choice/multiple-choice.component';
 import { TestPageComponent } from '../components/english-testing/test-page/test-page.component';
+import { HistoryComponent } from '../components/english-testing/history/history.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TestPageComponent } from '../components/english-testing/test-page/test-
     AdminComponent,
     ErrorFieldComponent,
     MultipleChoiceComponent,
-    TestPageComponent
+    TestPageComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
