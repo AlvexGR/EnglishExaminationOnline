@@ -3,7 +3,7 @@
   <button mat-button style="margin-left: 50px;" (click)="goToHome()">
     Home
   </button>
-  <button mat-button (click)="goToAdmin()">
+  <button *ngIf="isAdmin" mat-button (click)="goToAdmin()">
     Admin
   </button>
   <button mat-button (click)="goToSignUp()">

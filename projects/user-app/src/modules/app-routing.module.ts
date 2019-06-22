@@ -8,6 +8,8 @@ import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
 import { AppRoutesName } from '@lib/helpers/utility.helper';
 
+import { AdminGuard } from '../guards/admin/admin.guard';
+
 const routes: Routes = [
   {
     path: AppRoutesName.home,
@@ -23,7 +25,8 @@ const routes: Routes = [
   },
   {
     path: AppRoutesName.admin,
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: AppRoutesName.profile,

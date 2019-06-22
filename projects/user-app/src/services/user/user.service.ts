@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { User } from "@lib/models/user.model";
+import { User, UserType } from "@lib/models/user.model";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
   ILogInResponse,
@@ -102,7 +102,7 @@ export class UserService {
       .withFirstName(obj.firstName)
       .withLastName(obj.lastName)
       .withGender(obj.gender)
-      .withRole(obj.role)
+      .withRole(obj.role || UserType.user)
       .withDateOfBirth(obj.dateOfBirth);
 
     return userBuilder.build();

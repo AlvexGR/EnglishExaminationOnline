@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { AppRoutesName } from "@lib/helpers/utility.helper";
 import { UserService } from "@app/src/services/user/user.service";
 import { Subscription } from "rxjs";
+import { UserType } from '@lib/models/user.model';
 
 @Component({
   selector: "app-header",
@@ -11,16 +12,18 @@ import { Subscription } from "rxjs";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private _currentUserSubscription: Subscription;
-
+  private _isAdmin: boolean;
   constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this._currentUserSubscription = this.userService.userObservable.subscribe(currentUser => {
       if (!currentUser) {
-        // User logged in
-        document.getElementById("logInOutButton").innerText = "Log In";
-      } else {
         // User logged out
+        document.getElementById("logInOutButton").innerText = "Log In";
+        this._isAdmin = false;
+      } else {
+        // User logged in
+        this._isAdmin = currentUser.role === UserType.admin;
         document.getElementById("logInOutButton").innerText = "Log Out";
       }
     });
@@ -52,5 +55,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   goToAdmin(): void {
     this.navigateTo(`/${AppRoutesName.admin}`);
+  }
+
+  get isAdmin() {
+    return this._isAdmin;
   }
 }
