@@ -61,7 +61,11 @@
         placeholder="Vd: !Pass_quen_ROI.1234"
       />
       <div class="input-group-append">
-        <button class="btn btn-light" (click)="setPasswordVisibility()">
+        <button
+          class="btn btn-light"
+          type="button"
+          (click)="setPasswordVisibility()"
+        >
           <i *ngIf="passwordState" class="fas fa-eye"></i>
           <i *ngIf="!passwordState" class="fas fa-eye-slash"></i>
         </button>
@@ -90,7 +94,11 @@
         pattern="{{ password.value }}"
       />
       <div class="input-group-append">
-        <button class="btn btn-light" (click)="setPasswordConfirmVisibility()">
+        <button
+          class="btn btn-light"
+          type="button"
+          (click)="setPasswordConfirmVisibility()"
+        >
           <i *ngIf="passwordConfirmState" class="fas fa-eye"></i>
           <i *ngIf="!passwordConfirmState" class="fas fa-eye-slash"></i>
         </button>

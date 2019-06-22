@@ -8,6 +8,7 @@ import {
 import { UserService } from "@app/src/services/user/user.service";
 import { StatusCode, AppRoutesName } from "@lib/helpers/utility.helper";
 import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-log-in",
@@ -24,7 +25,8 @@ export class LogInComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -34,12 +36,19 @@ export class LogInComponent implements OnInit {
     });
   }
 
-  get username(): AbstractControl {
-    return this.logInForm.get("username");
-  }
-
-  get password(): AbstractControl {
-    return this.logInForm.get("password");
+  openSnackBar() {
+    if (!this.userService.currentUser) {
+      return;
+    }
+    this.snackBar.open(
+      `Đăng nhập thành công. Xin chào ${
+        this.userService.currentUser.firstName
+      }!`,
+      "X",
+      {
+        duration: 3000
+      }
+    );
   }
 
   setPasswordVisibility(): void {
@@ -73,6 +82,15 @@ export class LogInComponent implements OnInit {
       this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
       return;
     }
+    this.openSnackBar();
     this.router.navigate([`/${AppRoutesName.home}`]);
+  }
+
+  get username(): AbstractControl {
+    return this.logInForm.get("username");
+  }
+
+  get password(): AbstractControl {
+    return this.logInForm.get("password");
   }
 }
