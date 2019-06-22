@@ -23,6 +23,8 @@ export class SignUpComponent implements OnInit {
   emailErrorMessage: string;
   usernameError = false;
   usernameErrorMessage: string;
+  passwordState: boolean;
+  passwordConfirmState: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,7 +53,32 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+  setPasswordVisibility(): void {
+    const password = document.getElementById("passwordBox") as HTMLInputElement;
+    if (password.type === "password") {
+      password.type = "text";
+      this.passwordState = true;
+    } else {
+      password.type = "password";
+      this.passwordState = false;
+    }
+  }
+
+  setPasswordConfirmVisibility(): void {
+    const password = document.getElementById("passwordConfirmBox") as HTMLInputElement;
+    if (password.type === "password") {
+      password.type = "text";
+      this.passwordConfirmState = true;
+    } else {
+      password.type = "password";
+      this.passwordConfirmState = false;
+    }
+  }
+
   async signUp(): Promise<void> {
+    if (this.signUpForm.invalid) {
+      return;
+    }
     // Reset errors
     this.error = this.emailError = this.usernameError = false;
 

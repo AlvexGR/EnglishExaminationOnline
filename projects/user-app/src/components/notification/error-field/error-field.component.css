@@ -1,16 +1,12 @@
 .errorIcon {
-  display: inline-block;
-  vertical-align: middle;
   font-size: 25px;
   color: red;
 }
 
 .errorText {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 8px;
+  margin: 0px;
 }
 
-.errorContainer {
-  padding: 0;
+.noPadding {
+  padding: 0 !important;
 }

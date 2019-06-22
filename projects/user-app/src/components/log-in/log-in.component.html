@@ -19,12 +19,21 @@
   </div>
   <div class="inputField">
     <label>Mật khẩu</label>
-    <input
-      formControlName="password"
-      type="password"
-      class="form-control"
-      placeholder="Vd: !Pass_quen_ROI.1234"
-    />
+    <div class="input-group">
+      <input
+        id="passwordBox"
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Vd: !Pass_quen_ROI.1234"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-light" (click)="setPasswordVisibility()">
+          <i *ngIf="passwordState" class="fas fa-eye"></i>
+          <i *ngIf="!passwordState" class="fas fa-eye-slash"></i>
+        </button>
+      </div>
+    </div>
     <app-error-field
       *ngIf="password.invalid && password.touched"
       [errorMessage]="'Hãy nhập vào Mật khẩu'"

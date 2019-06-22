@@ -19,6 +19,7 @@ export class LogInComponent implements OnInit {
   waitingForResponse = false;
   hasError = false;
   errorMessage: string;
+  passwordState: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +42,22 @@ export class LogInComponent implements OnInit {
     return this.logInForm.get("password");
   }
 
+  setPasswordVisibility(): void {
+    const password = document.getElementById("passwordBox") as HTMLInputElement;
+    if (password.type === "password") {
+      password.type = "text";
+      this.passwordState = true;
+    } else {
+      password.type = "password";
+      this.passwordState = false;
+    }
+  }
+
   async logIn(): Promise<void> {
+    if (this.logInForm.invalid) {
+      return;
+    }
+
     const username: string = this.username.value;
     const password: string = this.password.value;
 

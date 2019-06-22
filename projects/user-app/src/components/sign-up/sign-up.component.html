@@ -52,12 +52,21 @@
   </div>
   <div class="inputField">
     <label>Mật khẩu</label>
-    <input
-      formControlName="password"
-      type="password"
-      class="form-control"
-      placeholder="Vd: !Pass_quen_ROI.1234"
-    />
+    <div class="input-group">
+      <input
+        id="passwordBox"
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Vd: !Pass_quen_ROI.1234"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-light" (click)="setPasswordVisibility()">
+          <i *ngIf="passwordState" class="fas fa-eye"></i>
+          <i *ngIf="!passwordState" class="fas fa-eye-slash"></i>
+        </button>
+      </div>
+    </div>
     <app-error-field
       *ngIf="password.hasError('required') && password.touched"
       [errorMessage]="'Hãy nhập vào Mật khẩu'"
@@ -71,13 +80,22 @@
   </div>
   <div class="inputField">
     <label>Xác nhận mật khẩu</label>
-    <input
-      formControlName="passwordConfirm"
-      type="password"
-      class="form-control"
-      placeholder="Vd: !Pass_quen_ROI.1234"
-      pattern="{{ password.value }}"
-    />
+    <div class="input-group">
+      <input
+        id="passwordConfirmBox"
+        formControlName="passwordConfirm"
+        type="password"
+        class="form-control"
+        placeholder="Vd: !Pass_quen_ROI.1234"
+        pattern="{{ password.value }}"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-light" (click)="setPasswordConfirmVisibility()">
+          <i *ngIf="passwordConfirmState" class="fas fa-eye"></i>
+          <i *ngIf="!passwordConfirmState" class="fas fa-eye-slash"></i>
+        </button>
+      </div>
+    </div>
     <app-error-field
       *ngIf="passwordConfirm.hasError('required') && passwordConfirm.touched"
       [errorMessage]="'Hãy nhập vào Mật khẩu'"
