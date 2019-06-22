@@ -1,12 +1,9 @@
-.navBar {
-  position: sticky;
-  top: 0px;
-  z-index: 100000;
+.customNavBar {
   height: 50px;
+  z-index: 100000;
   -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  margin-bottom: 20px;
 }
 
 .navButton {
