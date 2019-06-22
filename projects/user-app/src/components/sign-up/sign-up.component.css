@@ -1,8 +1,13 @@
-.formContainer {
+.cardContainer {
   margin: auto;
-  width: 30%;
+  width: 40%;
   margin-top: 30px;
   margin-bottom: 30px;
+}
+
+.formContainer {
+  width: 80%;
+  margin: auto;
 }
 
 .inputField {

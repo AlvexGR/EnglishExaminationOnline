@@ -19,14 +19,16 @@ import {
     MatButtonModule,
     MatMenuModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule
   ],
   exports: [
     MatToolbarModule,
     MatButtonModule,
     MatMenuModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule
   ]
 })
 export class AngularMaterialModule {}

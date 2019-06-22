@@ -36,7 +36,7 @@ export class LogInComponent implements OnInit {
     });
   }
 
-  openSnackBar() {
+  notifyLogIn() {
     if (!this.userService.currentUser) {
       return;
     }
@@ -82,7 +82,7 @@ export class LogInComponent implements OnInit {
       this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
       return;
     }
-    this.openSnackBar();
+    this.notifyLogIn();
     this.router.navigate([`/${AppRoutesName.home}`]);
   }
 
