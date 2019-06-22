@@ -19,6 +19,8 @@ import { FooterComponent } from "../components/footer/footer.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { AdminComponent } from "../components/admin/admin.component";
 import { ErrorFieldComponent } from "../components/notification/error-field/error-field.component";
+import { MultipleChoiceComponent } from '../components/english-testing/multiple-choice/multiple-choice.component';
+import { TestPageComponent } from '../components/english-testing/test-page/test-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ErrorFieldComponent } from "../components/notification/error-field/erro
     FooterComponent,
     SignUpComponent,
     AdminComponent,
-    ErrorFieldComponent
+    ErrorFieldComponent,
+    MultipleChoiceComponent,
+    TestPageComponent
   ],
   imports: [
     BrowserModule,

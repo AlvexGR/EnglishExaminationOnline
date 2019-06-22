@@ -9,8 +9,10 @@ body {
 * {
   margin: 0;
   padding: 0;
+  font-family: "K2D", "Roboto", "Helvetica Neue", "sans-serif";
+  font-size: 17px;
 }
 
-body {
-  font-family: "K2D", Roboto, "Helvetica Neue", sans-serif;
+button:focus {
+  outline: none;
 }

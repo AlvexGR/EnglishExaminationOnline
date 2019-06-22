@@ -1,0 +1,14 @@
+.homeContainer {
+  height: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  height: 60px;
+  width: 250px;
+}
+

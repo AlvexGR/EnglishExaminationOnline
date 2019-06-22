@@ -7,11 +7,13 @@ import {
   MatNativeDateModule,
   MatButtonModule,
   MatCardModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatMenuModule,
+  MatDividerModule
 } from "@angular/material";
 
 @NgModule({
-  imports: [MatToolbarModule, MatButtonModule],
-  exports: [MatToolbarModule, MatButtonModule]
+  imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatDividerModule],
+  exports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatDividerModule]
 })
 export class AngularMaterialModule {}

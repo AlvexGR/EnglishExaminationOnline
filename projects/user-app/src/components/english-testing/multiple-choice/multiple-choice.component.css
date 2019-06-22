@@ -1,0 +1,10 @@
+.questionContainer {
+  width: 100%;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.statement {
+  width: 100%;
+}

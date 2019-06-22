@@ -42,10 +42,6 @@ export class LogInComponent implements OnInit {
   }
 
   async logIn(): Promise<void> {
-    if (this.logInForm.invalid) {
-      return;
-    }
-
     const username: string = this.username.value;
     const password: string = this.password.value;
 

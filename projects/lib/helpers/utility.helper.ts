@@ -34,7 +34,8 @@ export const AppRoutesName = {
   signUp: "sign-up",
   admin: "admin",
   home: "",
-  profile: "profile"
+  profile: "profile",
+  testPage: "test-page"
 };
 
 export enum StatusCode {

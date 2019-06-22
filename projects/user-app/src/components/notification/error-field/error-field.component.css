@@ -1,15 +1,16 @@
-img {
-  height: 15px;
-  width: 15px;
-}
-
-.container {
-  padding: 0;
-}
-
-.imageContainer {
-  float: left;
-  margin-right: 5px;
+.errorIcon {
+  display: inline-block;
   vertical-align: middle;
-  align-content: left;
+  font-size: 25px;
+  color: red;
+}
+
+.errorText {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.errorContainer {
+  padding: 0;
 }
