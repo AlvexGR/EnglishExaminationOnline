@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "@app/src/services/user/user.service";
 import { Router } from "@angular/router";
-import { AppRoutesName } from "@lib/helpers/utility.helper";
+import { AppRoutesName, StatusCode } from "@lib/helpers/utility.helper";
 import {
   FormBuilder,
   FormGroup,
@@ -70,7 +70,58 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  async updateProfile(): Promise<void> {}
+  async updateProfile(): Promise<void> {
+    if (this.profileForm.invalid) {
+      return;
+    }
+
+    this.resetStatus();
+
+    this.waitingForResponse = true;
+    const updatedUser = this.userService.createFromObj({
+      _id: this.userService.currentUser._id,
+      username: this.username.value,
+      password: this.newPassword.value,
+      email: this.email.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      gender: this.gender.value,
+      dateOfBirth: this.dateOfBirth.value,
+      role: this.userService.currentUser.role
+    });
+
+    const result = await this.userService.update(
+      updatedUser,
+      this.currentPassword.value
+    );
+    this.waitingForResponse = false;
+    if (result.statusResponse.status !== StatusCode.Ok) {
+      this.error = true;
+      this.errorMessage = "Cập nhật thông tin không thành công";
+      const validation = result.validation;
+      if (validation) {
+        if (!validation.username) {
+          this.usernameError = true;
+          this.usernameErrorMessage = "Tên đăng nhập đã tồn tại";
+        }
+        if (!validation.email) {
+          this.emailError = true;
+          this.emailErrorMessage = "Địa chỉ Email đã tồn tại";
+        }
+        if (!validation.currentPassword) {
+          this.currentPasswordError = true;
+          this.currentPasswordErrorMessage = "Mật khẩu hiện tại không đúng";
+        }
+      }
+    } else {
+      this.success = true;
+      this.successMessage = "Cập nhật thông tin thành công";
+    }
+  }
+
+  resetStatus(): void {
+    this.error = this.emailError = this.usernameError = this.currentPasswordError = this.success = false;
+  }
 
   setFirstNameAccessibility(): void {
     this.firstNameState = !this.firstNameState;
@@ -137,6 +188,10 @@ export class ProfileComponent implements OnInit {
 
   get newPasswordConfirm(): AbstractControl {
     return this.profileForm.get("newPasswordConfirm");
+  }
+
+  get currentPassword(): AbstractControl {
+    return this.profileForm.get("currentPassword");
   }
 
   get email(): AbstractControl {

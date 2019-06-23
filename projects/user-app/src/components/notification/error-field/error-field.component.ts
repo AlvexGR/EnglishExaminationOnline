@@ -10,7 +10,6 @@ export class ErrorFieldComponent {
 
   @Input()
   set errorMessage(errorMessage: string) {
-    this._errorMessage = "<No error>";
     if (errorMessage) {
       this._errorMessage = errorMessage;
     }

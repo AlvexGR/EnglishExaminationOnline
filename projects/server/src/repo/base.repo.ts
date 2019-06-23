@@ -162,17 +162,7 @@ export class BaseRepo<T extends BaseModel> {
       const collection = client
         .db(MongoDbHelper.databaseName)
         .collection(this.collectionName);
-      const result = await collection.insertOne(obj);
-
-      if (result.insertedCount !== 1) {
-        return {
-          inserted: false,
-          statusResponse: {
-            status: StatusCode.InternalError,
-            message: "Đã có lỗi xảy ra, xin hãy thử lại"
-          }
-        };
-      }
+      await collection.insertOne(obj);
     } catch (err) {
       return {
         inserted: false,
@@ -187,6 +177,48 @@ export class BaseRepo<T extends BaseModel> {
 
     return {
       inserted: true,
+      statusResponse: {
+        status: StatusCode.Ok,
+        message: "Thành công"
+      }
+    };
+  }
+
+  async update(
+    obj: T
+  ): Promise<{ updated: boolean; statusResponse: IStatusResponse }> {
+    if (!obj) {
+      return {
+        updated: false,
+        statusResponse: {
+          status: StatusCode.BadRequest,
+          message: "Không thành công"
+        }
+      };
+    }
+    const client = MongoDbHelper.getMongoClient();
+    try {
+      // Connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+      await collection.updateOne({ _id: obj._id }, {$set: obj});
+    } catch (err) {
+      return {
+        updated: false,
+        statusResponse: {
+          status: StatusCode.InternalError,
+          message: "Đã có lỗi xảy ra, xin hãy thử lại"
+        }
+      };
+    } finally {
+      client.close();
+    }
+
+    return {
+      updated: true,
       statusResponse: {
         status: StatusCode.Ok,
         message: "Thành công"

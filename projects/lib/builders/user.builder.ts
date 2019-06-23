@@ -3,8 +3,8 @@ import { User } from '@lib/models/user.model';
 export class UserBuilder {
   private user: User;
 
-  constructor(userId?: string) {
-    this.user = new User(userId);
+  constructor(id?: string) {
+    this.user = new User(id);
   }
 
   withUsername(username: string): UserBuilder {

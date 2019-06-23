@@ -14,3 +14,12 @@ export interface ISignUpResponse {
     emailValid: boolean;
   };
 }
+
+export interface IUpdateResponse {
+  statusResponse: IStatusResponse;
+  validation: {
+    username: boolean;
+    email: boolean;
+    currentPassword: boolean;
+  };
+}

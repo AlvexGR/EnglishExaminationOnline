@@ -104,11 +104,11 @@
             <i *ngIf="!currentPasswordState" class="fas fa-eye-slash"></i>
           </button>
         </div>
-        <app-error-field
-          *ngIf="currentPasswordError"
-          [errorMessage]="currentPasswordErrorMessage"
-        ></app-error-field>
       </div>
+      <app-error-field
+        *ngIf="currentPasswordError"
+        [errorMessage]="currentPasswordErrorMessage"
+      ></app-error-field>
     </div>
     <div class="inputField">
       <label>Mật khẩu mới</label>
@@ -166,8 +166,13 @@
       </div>
       <app-error-field
         *ngIf="
-          newPasswordConfirm.hasError('pattern') && newPasswordConfirm.touched
+          newPassword.value.length > 0 &&
+          newPasswordConfirm.value.length == 0
         "
+        [errorMessage]="'Hãy nhập mật khẩu mới vào đây'"
+      ></app-error-field>
+      <app-error-field
+        *ngIf="newPasswordConfirm.hasError('pattern')"
         [errorMessage]="'Mật khẩu không trùng khớp'"
       ></app-error-field>
     </div>
@@ -238,7 +243,12 @@
         *ngIf="!waitingForResponse"
         type="submit"
         class="btn btn-primary btn-block"
-        [disabled]="profileForm.invalid"
+        [disabled]="
+          profileForm.invalid ||
+          (currentPassword.value && !newPassword.value) ||
+          (!currentPassword.value && newPassword.value) ||
+          (newPassword.value !== newPasswordConfirm.value)
+        "
       >
         Lưu thông tin
       </button>
@@ -252,12 +262,10 @@
       </button>
     </div>
     <app-error-field
-      class="inputField"
       *ngIf="error"
       [errorMessage]="errorMessage"
     ></app-error-field>
     <app-success-field
-      class="inputField"
       *ngIf="success"
       [successMessage]="successMessage"
     ></app-success-field>

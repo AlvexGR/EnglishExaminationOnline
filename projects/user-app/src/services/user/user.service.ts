@@ -3,14 +3,15 @@ import { User, UserType } from "@lib/models/user.model";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
   ILogInResponse,
-  ISignUpResponse
+  ISignUpResponse,
+  IUpdateResponse
 } from "@lib/interfaces/user.interface";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { UserBuilder } from "@lib/builders/user.builder";
 import md5 from "md5";
-import { StatusCode } from '@lib/helpers/utility.helper';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { StatusCode, UtilityFunctions } from "@lib/helpers/utility.helper";
+import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -46,7 +47,7 @@ export class UserService {
     let response = new HttpResponse<ILogInResponse>();
 
     // Hash password before send to Server
-    password = md5(password);
+    password = UtilityFunctions.hash(password);
 
     try {
       response = await this.http
@@ -72,7 +73,7 @@ export class UserService {
     let response = new HttpResponse<ISignUpResponse>();
 
     // Hash password before send to Server
-    newUser.password = md5(newUser.password);
+    newUser.password = UtilityFunctions.hash(newUser.password);
     try {
       response = await this.http
         .post<ISignUpResponse>(
@@ -88,12 +89,49 @@ export class UserService {
     return response.body;
   }
 
+  async update(
+    updatedUser: User,
+    currentPassword?: string
+  ): Promise<IUpdateResponse> {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: this.accessToken
+    });
+    let response = new HttpResponse<IUpdateResponse>();
+
+    // hash password
+    if (updatedUser.password) {
+      updatedUser.password = UtilityFunctions.hash(updatedUser.password);
+    } else {
+      updatedUser.password = this.currentUser.password;
+    }
+    currentPassword = currentPassword && UtilityFunctions.hash(currentPassword);
+
+    try {
+      response = await this.http
+        .put<IUpdateResponse>(
+          `${HttpHelper.endpoint}/${HttpHelper.users}`,
+          {
+            user: updatedUser,
+            currentUserId: this.currentUser._id,
+            inputPassword: currentPassword
+          },
+          { headers, observe: "response" }
+        )
+        .toPromise();
+    } catch (err) {
+      return err.error;
+    }
+
+    return response.body;
+  }
+
   logOut(): void {
     this.setUser = this._accessToken = null;
   }
 
   createFromObj(obj: any): User {
-    const userBuilder = new UserBuilder();
+    const userBuilder = new UserBuilder(obj._id);
 
     userBuilder
       .withUsername(obj.username)
@@ -102,7 +140,7 @@ export class UserService {
       .withFirstName(obj.firstName)
       .withLastName(obj.lastName)
       .withGender(obj.gender)
-      .withRole(obj.role || UserType.user)
+      .withRole(obj.role)
       .withDateOfBirth(obj.dateOfBirth);
 
     return userBuilder.build();

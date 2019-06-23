@@ -7,8 +7,8 @@ import {
 
 import { UserHandler } from "../handlers/user.handler";
 import {
-  signToken,
-  verifyToken
+  signAccessToken,
+  verifyAccessToken
 } from "../middleware/authentication.middleware";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
@@ -72,7 +72,7 @@ router.post(
     (req as ILogInExpressRequest).user = logInUser;
     next();
   },
-  signToken,
+  signAccessToken,
   (req: Request, res: Response) => {
     const result: ILogInResponse = {
       user: (req as ILogInExpressRequest).user,
@@ -116,6 +116,27 @@ router.post(`/`, async (req: Request, res: Response) => {
   return res
     .status(StatusCode.Ok)
     .json({ statusResponse: insertResult.statusResponse, validation: null });
+});
+
+// Update
+router.put(`/`, verifyAccessToken, async (req: Request, res: Response) => {
+  const updatedUser = userHandler.createFromObj(req.body.user);
+  const currentUserId = req.body.currentUserId;
+  const inputPassword = req.body.inputPassword;
+  const validateResult = await userHandler.validateUpdateUser(
+    currentUserId,
+    inputPassword,
+    updatedUser
+  );
+
+  if (!validateResult.canUpdate) {
+    return res
+      .status(validateResult.updateResponse.statusResponse.status)
+      .json(validateResult.updateResponse);
+  }
+
+  const updateResult = await userHandler.update(updatedUser);
+  return res.status(updateResult.statusResponse.status).json(updateResult);
 });
 
 module.exports = router;

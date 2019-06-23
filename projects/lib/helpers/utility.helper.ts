@@ -1,3 +1,5 @@
+import md5 = require('md5');
+
 export class UtilityFunctions {
   static convertLocalToUTC(dateTime: Date): Date {
     let result: Date;
@@ -26,6 +28,10 @@ export class UtilityFunctions {
       return null;
     }
     return result;
+  }
+
+  static hash(source: string) {
+    return md5(source);
   }
 }
 
