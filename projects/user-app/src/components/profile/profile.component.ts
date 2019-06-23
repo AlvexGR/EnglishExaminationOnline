@@ -167,7 +167,7 @@ export class ProfileComponent implements OnInit {
 
   setCurrentPasswordVisibility(): void {
     const password = document.getElementById(
-      "currentPasswordState"
+      "currentPasswordBox"
     ) as HTMLInputElement;
     if (password.type === "password") {
       password.type = "text";
