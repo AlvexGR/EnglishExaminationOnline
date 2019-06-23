@@ -4,7 +4,7 @@
 html,
 body {
   height: 100%;
-  background-color: #EAEAEA;
+  background-color: #eaeaea;
 }
 
 * {
@@ -15,5 +15,12 @@ body {
 }
 
 button:focus {
-  outline: none;
+  outline: none !important;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

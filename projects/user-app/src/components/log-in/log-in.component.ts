@@ -37,18 +37,18 @@ export class LogInComponent implements OnInit {
   }
 
   notifyLogIn() {
-    if (!this.userService.currentUser) {
-      return;
-    }
-    this.snackBar.open(
-      `Đăng nhập thành công. Xin chào ${
-        this.userService.currentUser.firstName
-      }!`,
-      "X",
-      {
-        duration: 3000
-      }
-    );
+    // if (!this.userService.currentUser) {
+    //   return;
+    // }
+    // this.snackBar.open(
+    //   `Đăng nhập thành công. Xin chào ${
+    //     this.userService.currentUser.firstName
+    //   }!`,
+    //   "X",
+    //   {
+    //     duration: 3000
+    //   }
+    // );
   }
 
   setPasswordVisibility(): void {
@@ -83,7 +83,8 @@ export class LogInComponent implements OnInit {
       return;
     }
     this.notifyLogIn();
-    this.router.navigate([`/${AppRoutesName.home}`]);
+    //this.router.navigate([`/${AppRoutesName.home}`]);
+    this.router.navigate([`/${AppRoutesName.profile}`]);
   }
 
   get username(): AbstractControl {

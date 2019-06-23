@@ -6,7 +6,7 @@ import { Component, Input } from "@angular/core";
   styleUrls: ["./error-field.component.css"]
 })
 export class ErrorFieldComponent {
-  _errorMessage: string;
+  private _errorMessage: string;
 
   @Input()
   set errorMessage(errorMessage: string) {

@@ -71,6 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logOut(): void {
     this.userService.logOut();
+    this.navigateTo(`/${AppRoutesName.logIn}`);
   }
 
   get isAdmin() {

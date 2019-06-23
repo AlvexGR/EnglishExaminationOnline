@@ -22,6 +22,7 @@ import { ErrorFieldComponent } from "../components/notification/error-field/erro
 import { MultipleChoiceComponent } from '../components/english-testing/multiple-choice/multiple-choice.component';
 import { TestPageComponent } from '../components/english-testing/test-page/test-page.component';
 import { HistoryComponent } from '../components/english-testing/history/history.component';
+import { SuccessFieldComponent } from '../components/notification/success-field/success-field.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HistoryComponent } from '../components/english-testing/history/history.
     ErrorFieldComponent,
     MultipleChoiceComponent,
     TestPageComponent,
-    HistoryComponent
+    HistoryComponent,
+    SuccessFieldComponent
   ],
   imports: [
     BrowserModule,
