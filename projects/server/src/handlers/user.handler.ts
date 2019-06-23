@@ -50,14 +50,11 @@ export class UserHandler {
     limit?: number
   ): Promise<{ users: Array<User>; statusResponse: IStatusResponse }> {
     const getResult = await this.userRepo.getBy(query, limit);
-    if (getResult.statusResponse.status !== StatusCode.Ok) {
-      return {
-        users: null,
-        statusResponse: getResult.statusResponse
-      };
-    }
     return {
-      users: getResult.docs,
+      users:
+        getResult.statusResponse.status === StatusCode.Ok
+          ? getResult.docs
+          : null,
       statusResponse: getResult.statusResponse
     };
   }

@@ -6,7 +6,7 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
-import { StatusCode, AppRoutesName } from "@lib/helpers/utility.helper";
+import { StatusCode, AppRoutesName, WebStorage } from "@lib/helpers/utility.helper";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 
@@ -32,7 +32,8 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
     this.logInForm = this.formBuilder.group({
       username: ["", Validators.required],
-      password: ["", Validators.required]
+      password: ["", Validators.required],
+      rememberMe: [false]
     });
   }
 
@@ -82,9 +83,21 @@ export class LogInComponent implements OnInit {
       this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
       return;
     }
-    this.notifyLogIn();
-    //this.router.navigate([`/${AppRoutesName.home}`]);
-    this.router.navigate([`/${AppRoutesName.profile}`]);
+    // this.notifyLogIn();
+
+    // Clear all first to prevent conflict
+    WebStorage.clearBoth();
+    if (this.rememberMe.value) {
+      // Store current user Id and access token to local store
+      WebStorage.setItemLocal("userId", this.userService.currentUser._id);
+      WebStorage.setItemLocal("accessToken", this.userService.accessToken);
+    } else {
+      // Store only in session store
+      WebStorage.setItemSession("userId", this.userService.currentUser._id);
+      WebStorage.setItemSession("accessToken", this.userService.accessToken);
+    }
+
+    this.router.navigate([`/${AppRoutesName.home}`]);
   }
 
   get username(): AbstractControl {
@@ -93,5 +106,9 @@ export class LogInComponent implements OnInit {
 
   get password(): AbstractControl {
     return this.logInForm.get("password");
+  }
+
+  get rememberMe(): AbstractControl {
+    return this.logInForm.get("rememberMe");
   }
 }

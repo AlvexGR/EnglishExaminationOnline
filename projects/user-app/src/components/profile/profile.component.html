@@ -245,7 +245,6 @@
         class="btn btn-primary btn-block"
         [disabled]="
           profileForm.invalid ||
-          (currentPassword.value && !newPassword.value) ||
           (!currentPassword.value && newPassword.value) ||
           (newPassword.value !== newPasswordConfirm.value)
         "

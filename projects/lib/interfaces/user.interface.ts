@@ -7,6 +7,11 @@ export interface ILogInResponse {
   statusResponse: IStatusResponse;
 }
 
+export interface IGetUserResponse {
+  user: User;
+  statusResponse: IStatusResponse;
+}
+
 export interface ISignUpResponse {
   statusResponse: IStatusResponse;
   validation: {

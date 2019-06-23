@@ -37,41 +37,37 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this._currentUserSubscription.unsubscribe();
   }
 
-  navigateTo(location: string): void {
-    this.router.navigate([location]);
-  }
-
   goToHome(): void {
-    this.navigateTo(`/${AppRoutesName.home}`);
+    this.router.navigate([`/${AppRoutesName.home}`]);
   }
 
   goToLogIn(): void {
-    this.navigateTo(`/${AppRoutesName.logIn}`);
+    this.router.navigate([`/${AppRoutesName.logIn}`]);
   }
 
   goToSignUp(): void {
-    this.navigateTo(`/${AppRoutesName.signUp}`);
+    this.router.navigate([`/${AppRoutesName.signUp}`]);
   }
 
   goToAdmin(): void {
-    this.navigateTo(`/${AppRoutesName.admin}`);
+    this.router.navigate([`/${AppRoutesName.admin}`]);
   }
 
   goToTestPage(): void {
-    this.navigateTo(`/${AppRoutesName.testPage}`);
+    this.router.navigate([`/${AppRoutesName.testPage}`]);
   }
 
   goToProfile(): void {
-    this.navigateTo(`/${AppRoutesName.profile}`);
+    this.router.navigate([`/${AppRoutesName.profile}`]);
   }
 
   goToHistory(): void {
-    this.navigateTo(`/${AppRoutesName.history}`);
+    this.router.navigate([`/${AppRoutesName.history}`]);
   }
 
   logOut(): void {
     this.userService.logOut();
-    this.navigateTo(`/${AppRoutesName.logIn}`);
+    this.router.navigate([`/${AppRoutesName.logIn}`]);
   }
 
   get isAdmin() {

@@ -204,7 +204,7 @@ export class BaseRepo<T extends BaseModel> {
       const collection = client
         .db(MongoDbHelper.databaseName)
         .collection(this.collectionName);
-      await collection.updateOne({ _id: obj._id }, {$set: obj});
+      await collection.updateOne({ _id: obj._id }, { $set: obj });
     } catch (err) {
       return {
         updated: false,

@@ -1,16 +1,19 @@
 import { Injectable } from "@angular/core";
-import { User, UserType } from "@lib/models/user.model";
+import { User } from "@lib/models/user.model";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
   ILogInResponse,
   ISignUpResponse,
-  IUpdateResponse
+  IUpdateResponse,
+  IGetUserResponse
 } from "@lib/interfaces/user.interface";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { UserBuilder } from "@lib/builders/user.builder";
-import md5 from "md5";
-import { StatusCode, UtilityFunctions } from "@lib/helpers/utility.helper";
+import {
+  UtilityFunctions,
+  WebStorage
+} from "@lib/helpers/utility.helper";
 import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
@@ -40,6 +43,27 @@ export class UserService {
 
   get accessToken(): string {
     return this._accessToken;
+  }
+
+  async getThenSet(userId: string, accessToken: string): Promise<void> {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: accessToken
+    });
+    let response = new HttpResponse<IGetUserResponse>();
+    try {
+      response = await this.http
+        .get<IGetUserResponse>(
+          `${HttpHelper.endpoint}/${HttpHelper.users}/${userId}`,
+          { headers, observe: "response" }
+        )
+        .toPromise();
+      this.setUser = response.body.user;
+      this._accessToken = accessToken;
+    } catch (err) {
+      // ignore it for now
+      console.log(err);
+    }
   }
 
   async logIn(username: string, password: string): Promise<IStatusResponse> {
@@ -123,11 +147,13 @@ export class UserService {
       return err.error;
     }
 
+    this.setUser = updatedUser;
     return response.body;
   }
 
   logOut(): void {
     this.setUser = this._accessToken = null;
+    WebStorage.clearBoth();
   }
 
   createFromObj(obj: any): User {

@@ -1,9 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
-import {
-  ILogInResponse,
-  ISignUpResponse
-} from "@lib/interfaces/user.interface";
+import { ILogInResponse } from "@lib/interfaces/user.interface";
 
 import { UserHandler } from "../handlers/user.handler";
 import {
@@ -11,7 +8,6 @@ import {
   verifyAccessToken
 } from "../middleware/authentication.middleware";
 import { HttpHelper } from "@lib/helpers/http.helper";
-import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
 
 const router = express.Router();
@@ -137,6 +133,16 @@ router.put(`/`, verifyAccessToken, async (req: Request, res: Response) => {
 
   const updateResult = await userHandler.update(updatedUser);
   return res.status(updateResult.statusResponse.status).json(updateResult);
+});
+
+// Get by Id
+router.get(`/:id`, verifyAccessToken, async (req: Request, res: Response) => {
+  const result = await userHandler.getBy({ _id: req.params.id }, 1);
+
+  return res.status(result.statusResponse.status).json({
+    statusResponse: result.statusResponse,
+    user: result.users && result.users[0]
+  });
 });
 
 module.exports = router;

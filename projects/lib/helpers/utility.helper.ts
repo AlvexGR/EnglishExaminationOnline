@@ -1,4 +1,4 @@
-import md5 = require('md5');
+import md5 from "md5";
 
 export class UtilityFunctions {
   static convertLocalToUTC(dateTime: Date): Date {
@@ -32,6 +32,79 @@ export class UtilityFunctions {
 
   static hash(source: string) {
     return md5(source);
+  }
+}
+
+export class WebStorage {
+  static setItemLocal(key: string, value: string): void {
+    if (!this.checkStorage()) {
+      return;
+    }
+    localStorage.setItem(key, value);
+  }
+
+  static getItemLocal(key: string): string {
+    if (!this.checkStorage()) {
+      return;
+    }
+    return localStorage.getItem(key);
+  }
+
+  static removeItemLocal(key: string): void {
+    if (!this.checkStorage()) {
+      return;
+    }
+    localStorage.removeItem(key);
+  }
+
+  static clearLocal(): void {
+    if (!this.checkStorage()) {
+      return;
+    }
+    localStorage.clear();
+  }
+
+  static setItemSession(key: string, value: string): void {
+    if (!this.checkStorage()) {
+      return;
+    }
+    sessionStorage.setItem(key, value);
+  }
+
+  static getItemSession(key: string): string {
+    if (!this.checkStorage()) {
+      return;
+    }
+    return sessionStorage.getItem(key);
+  }
+
+  static removeItemSession(key: string): void {
+    if (!this.checkStorage()) {
+      return;
+    }
+    sessionStorage.removeItem(key);
+  }
+
+  static clearSession(): void {
+    if (!this.checkStorage()) {
+      return;
+    }
+    sessionStorage.clear();
+  }
+
+  static clearBoth(): void {
+    this.clearLocal();
+    this.clearSession();
+  }
+
+  static checkStorage(): boolean {
+    if (typeof Storage !== "undefined") {
+      return true;
+    }
+    console.log(
+      "There is no Storage on this browser. It sucks and you should use something else"
+    );
+    return false;
   }
 }
 
