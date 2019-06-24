@@ -1,4 +1,5 @@
 import md5 from "md5";
+import { v4 } from "uuid";
 
 export class UtilityFunctions {
   static convertLocalToUTC(dateTime: Date): Date {
@@ -32,6 +33,10 @@ export class UtilityFunctions {
 
   static hash(source: string) {
     return md5(source);
+  }
+
+  static generateUUID(): string {
+    return v4();
   }
 }
 
