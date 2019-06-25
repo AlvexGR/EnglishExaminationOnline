@@ -1,8 +1,7 @@
-#footer {
+.footer {
   background-color: #4252af;
-  position: relative;
   height: 150px;
-  clear: both; /* Clear floating elements from both side */
+  width: 100%;
 }
 
 p {

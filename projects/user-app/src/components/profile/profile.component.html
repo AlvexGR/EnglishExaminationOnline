@@ -1,272 +1,283 @@
-<mat-card class="cardContainer">
-  <form
-    class="formContainer form-group"
-    [formGroup]="profileForm"
-    (ngSubmit)="updateProfile()"
-  >
-    <h3 style="text-align: center;">Thông tin tài khoản</h3>
-    <div class="inputField">
-      <label>Tên</label>
-      <div class="input-group">
-        <input
-          id="firstNameInput"
-          formControlName="firstName"
-          type="text"
-          class="form-control"
-          [readOnly]="firstNameState"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setFirstNameAccessibility()"
-          >
-            <i *ngIf="firstNameState" class="fas fa-lock"></i>
-            <i *ngIf="!firstNameState" class="fas fa-lock-open"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="firstName.invalid && firstName.touched"
-        [errorMessage]="'Hãy nhập vào Tên của bạn'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Họ</label>
-      <div class="input-group">
-        <input
-          formControlName="lastName"
-          type="text"
-          class="form-control"
-          [readOnly]="lastNameState"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setLastNameAccessibility()"
-          >
-            <i *ngIf="lastNameState" class="fas fa-lock"></i>
-            <i *ngIf="!lastNameState" class="fas fa-lock-open"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="lastName.invalid && lastName.touched"
-        [errorMessage]="'Hãy nhập vào Họ của bạn'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Tên tài khoản</label>
-      <div class="input-group">
-        <input
-          formControlName="username"
-          type="text"
-          class="form-control"
-          [readonly]="usernameState"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setUsernameAccessibility()"
-          >
-            <i *ngIf="usernameState" class="fas fa-lock"></i>
-            <i *ngIf="!usernameState" class="fas fa-lock-open"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="username.invalid && username.touched"
-        [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="usernameError"
-        [errorMessage]="usernameErrorMessage"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Mật khẩu hiện tại</label>
-      <div class="input-group">
-        <input
-          id="currentPasswordBox"
-          formControlName="currentPassword"
-          type="password"
-          class="form-control"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setCurrentPasswordVisibility()"
-          >
-            <i *ngIf="currentPasswordState" class="fas fa-eye"></i>
-            <i *ngIf="!currentPasswordState" class="fas fa-eye-slash"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="currentPasswordError"
-        [errorMessage]="currentPasswordErrorMessage"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Mật khẩu mới</label>
-      <div class="input-group">
-        <input
-          id="newPasswordBox"
-          formControlName="newPassword"
-          type="password"
-          class="form-control"
-          placeholder="Vd: !Pass_quen_ROI.1234"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setNewPasswordVisibility()"
-          >
-            <i *ngIf="newPasswordState" class="fas fa-eye"></i>
-            <i *ngIf="!newPasswordState" class="fas fa-eye-slash"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="newPassword.hasError('pattern') && newPassword.touched"
-        [errorMessage]="
-          'Độ dài từ 8 kí tự và có ít nhất 1 chữ thường, chữ hoa, số, kí tự đặc biệt'
-        "
-      ></app-error-field>
-      <app-error-field
-        *ngIf="newPasswordError"
-        [errorMessage]="newPasswordErrorMessage"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Xác nhận mật khẩu mới</label>
-      <div class="input-group">
-        <input
-          id="newPasswordConfirmBox"
-          formControlName="newPasswordConfirm"
-          type="password"
-          class="form-control"
-          placeholder="Vd: !Pass_quen_ROI.1234"
-          pattern="{{ newPassword.value }}"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setNewPasswordConfirmVisibility()"
-          >
-            <i *ngIf="newPasswordConfirmState" class="fas fa-eye"></i>
-            <i *ngIf="!newPasswordConfirmState" class="fas fa-eye-slash"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="
-          newPassword.value.length > 0 &&
-          newPasswordConfirm.value.length == 0
-        "
-        [errorMessage]="'Hãy nhập mật khẩu mới vào đây'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="newPasswordConfirm.hasError('pattern')"
-        [errorMessage]="'Mật khẩu không trùng khớp'"
-      ></app-error-field>
-    </div>
-    <div class="inputField">
-      <label>Địa chỉ Email</label>
-      <div class="input-group">
-        <input
-          formControlName="email"
-          type="email"
-          class="form-control"
-          [readOnly]="emailState"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-light"
-            type="button"
-            (click)="setEmailAccessibility()"
-          >
-            <i *ngIf="emailState" class="fas fa-lock"></i>
-            <i *ngIf="!emailState" class="fas fa-lock-open"></i>
-          </button>
-        </div>
-      </div>
-      <app-error-field
-        *ngIf="email.hasError('required') && email.touched"
-        [errorMessage]="'Hãy nhập vào địa chỉ Email'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="email.hasError('email') && email.touched"
-        [errorMessage]="'Địa chỉ Email không đúng định dạng'"
-      ></app-error-field>
-      <app-error-field
-        *ngIf="emailError"
-        [errorMessage]="emailErrorMessage"
-      ></app-error-field>
-    </div>
-    <div class="inputField form-check-inline">
-      <label class="form-check-label">
-        <input
-          type="radio"
-          class="form-check-input"
-          formControlName="gender"
-          [value]="0"
-        />Nam
-      </label>
-    </div>
-    <div class="form-check-inline">
-      <label class="form-check-label">
-        <input
-          type="radio"
-          class="form-check-input"
-          formControlName="gender"
-          [value]="1"
-        />Nữ
-      </label>
-    </div>
-    <div class="inputField">
-      <label>Ngày sinh</label>
-      <input
-        class="form-control"
-        id="datePicker"
-        type="date"
-        formControlName="dateOfBirth"
-      />
-    </div>
-    <div class="inputField">
-      <button
-        *ngIf="!waitingForResponse"
-        type="submit"
-        class="btn btn-primary btn-block"
-        [disabled]="
-          profileForm.invalid ||
-          (!currentPassword.value && newPassword.value) ||
-          (newPassword.value !== newPasswordConfirm.value)
-        "
+<div class="container-fluid min-vh-100 mt-3">
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 shadow-sm p-3 mb-5 bg-white rounded">
+      <form
+        class="form-group p-3"
+        [formGroup]="profileForm"
+        (ngSubmit)="updateProfile()"
       >
-        Lưu thông tin
-      </button>
-      <button
-        *ngIf="waitingForResponse"
-        class="btn btn-primary btn-block"
-        disabled
-      >
-        <span class="spinner-border spinner-border-sm"></span>
-        Kiểm tra thông tin...
-      </button>
+        <h3 class="text-center">Thông tin tài khoản</h3>
+        <div class="mb-3">
+          <label>Tên</label>
+          <div class="input-group">
+            <input
+              id="firstNameInput"
+              formControlName="firstName"
+              type="text"
+              class="form-control"
+              [readOnly]="firstNameState"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setFirstNameAccessibility()"
+              >
+                <i *ngIf="firstNameState" class="fas fa-lock"></i>
+                <i *ngIf="!firstNameState" class="fas fa-lock-open"></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="firstName.invalid && firstName.touched"
+            [errorMessage]="'Hãy nhập vào Tên của bạn'"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Họ</label>
+          <div class="input-group">
+            <input
+              formControlName="lastName"
+              type="text"
+              class="form-control"
+              [readOnly]="lastNameState"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setLastNameAccessibility()"
+              >
+                <i *ngIf="lastNameState" class="fas fa-lock"></i>
+                <i *ngIf="!lastNameState" class="fas fa-lock-open"></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="lastName.invalid && lastName.touched"
+            [errorMessage]="'Hãy nhập vào Họ của bạn'"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Tên tài khoản</label>
+          <div class="input-group">
+            <input
+              formControlName="username"
+              type="text"
+              class="form-control"
+              [readonly]="usernameState"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setUsernameAccessibility()"
+              >
+                <i *ngIf="usernameState" class="fas fa-lock"></i>
+                <i *ngIf="!usernameState" class="fas fa-lock-open"></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="username.invalid && username.touched"
+            [errorMessage]="'Hãy nhập vào Tên đăng nhập'"
+          ></app-error-field>
+          <app-error-field
+            *ngIf="usernameError"
+            [errorMessage]="usernameErrorMessage"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Mật khẩu hiện tại</label>
+          <div class="input-group">
+            <input
+              id="currentPasswordBox"
+              formControlName="currentPassword"
+              type="password"
+              class="form-control"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setCurrentPasswordVisibility()"
+              >
+                <i *ngIf="currentPasswordState" class="fas fa-eye"></i>
+                <i *ngIf="!currentPasswordState" class="fas fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="currentPasswordError"
+            [errorMessage]="currentPasswordErrorMessage"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Mật khẩu mới</label>
+          <div class="input-group">
+            <input
+              id="newPasswordBox"
+              formControlName="newPassword"
+              type="password"
+              class="form-control"
+              placeholder="Vd: !Pass_quen_ROI.1234"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setNewPasswordVisibility()"
+              >
+                <i *ngIf="newPasswordState" class="fas fa-eye"></i>
+                <i *ngIf="!newPasswordState" class="fas fa-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="newPassword.hasError('pattern') && newPassword.touched"
+            [errorMessage]="
+              'Độ dài từ 8 kí tự và có ít nhất 1 chữ thường, chữ hoa, số, kí tự đặc biệt'
+            "
+          ></app-error-field>
+          <app-error-field
+            *ngIf="newPasswordError"
+            [errorMessage]="newPasswordErrorMessage"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Xác nhận mật khẩu mới</label>
+          <div class="input-group">
+            <input
+              id="newPasswordConfirmBox"
+              formControlName="newPasswordConfirm"
+              type="password"
+              class="form-control"
+              placeholder="Vd: !Pass_quen_ROI.1234"
+              pattern="{{ newPassword.value }}"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setNewPasswordConfirmVisibility()"
+              >
+                <i *ngIf="newPasswordConfirmState" class="fas fa-eye"></i>
+                <i
+                  *ngIf="!newPasswordConfirmState"
+                  class="fas fa-eye-slash"
+                ></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="
+              newPassword.value.length > 0 &&
+              newPasswordConfirm.value.length == 0
+            "
+            [errorMessage]="'Hãy nhập mật khẩu mới vào đây'"
+          ></app-error-field>
+          <app-error-field
+            *ngIf="newPasswordConfirm.hasError('pattern')"
+            [errorMessage]="'Mật khẩu không trùng khớp'"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Địa chỉ Email</label>
+          <div class="input-group">
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              [readOnly]="emailState"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-light"
+                type="button"
+                (click)="setEmailAccessibility()"
+              >
+                <i *ngIf="emailState" class="fas fa-lock"></i>
+                <i *ngIf="!emailState" class="fas fa-lock-open"></i>
+              </button>
+            </div>
+          </div>
+          <app-error-field
+            *ngIf="email.hasError('required') && email.touched"
+            [errorMessage]="'Hãy nhập vào địa chỉ Email'"
+          ></app-error-field>
+          <app-error-field
+            *ngIf="email.hasError('email') && email.touched"
+            [errorMessage]="'Địa chỉ Email không đúng định dạng'"
+          ></app-error-field>
+          <app-error-field
+            *ngIf="emailError"
+            [errorMessage]="emailErrorMessage"
+          ></app-error-field>
+        </div>
+        <div class="mb-3 form-check-inline">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              formControlName="gender"
+              [value]="0"
+            />Nam
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input
+              type="radio"
+              class="form-check-input"
+              formControlName="gender"
+              [value]="1"
+            />Nữ
+          </label>
+        </div>
+        <div class="mb-3">
+          <label>Ngày sinh</label>
+          <input
+            class="form-control"
+            id="datePicker"
+            type="date"
+            formControlName="dateOfBirth"
+          />
+        </div>
+        <div class="mb-3">
+          <button
+            *ngIf="!waitingForResponse"
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="
+              profileForm.invalid ||
+              (!currentPassword.value && newPassword.value) ||
+              newPassword.value !== newPasswordConfirm.value
+            "
+          >
+            Lưu thông tin
+          </button>
+          <button
+            *ngIf="waitingForResponse"
+            class="btn btn-primary btn-block"
+            disabled
+          >
+            <span class="spinner-border spinner-border-sm"></span>
+            Kiểm tra thông tin...
+          </button>
+        </div>
+        <app-error-field
+          class="text-center"
+          *ngIf="error"
+          [errorMessage]="errorMessage"
+        ></app-error-field>
+        <app-success-field
+          class="text-center"
+          *ngIf="success"
+          [successMessage]="successMessage"
+        ></app-success-field>
+      </form>
     </div>
-    <app-error-field
-      *ngIf="error"
-      [errorMessage]="errorMessage"
-    ></app-error-field>
-    <app-success-field
-      *ngIf="success"
-      [successMessage]="successMessage"
-    ></app-success-field>
-  </form>
-</mat-card>
+    <div class="col-lg-4"></div>
+  </div>
+</div>

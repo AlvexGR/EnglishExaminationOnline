@@ -1,49 +1,31 @@
-<mat-toolbar color="primary" class="navbar navbar-expand-sm fixed-top customNavBar">
-  <span style="font-size: 22px; font-weight: bold;"
-    >English Online Testing</span
-  >
-  <nav class="navButtons">
-    <button
-      class="navButton"
-      mat-button
-      style="margin-left: 15px;"
-      (click)="goToHome()"
-    >
-      <i class="fas fa-home"></i>
-      <span>Trang chủ</span>
-    </button>
-    <button class="navButton" mat-button (click)="goToTestPage()">
-      <i class="fas fa-file-alt"></i>
-      <span>Bài thi</span>
-    </button>
-    <button class="navButton" *ngIf="isAdmin" mat-button (click)="goToAdmin()">
-      <i class="fas fa-user-shield"></i>
-      <span>Admin</span>
-    </button>
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="rightMenuButton">
-      <i class="fas fa-user-circle" style="font-size: 20px;"></i>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button *ngIf="isLoggedIn" mat-menu-item (click)="goToProfile()">
-        <i class="far fa-address-card"></i>
-        <span>Tài khoản</span>
-      </button>
-      <button *ngIf="isLoggedIn" mat-menu-item (click)="goToHistory()">
-        <i class="fas fa-history"></i>
-        <span>Lịch sử thi</span>
-      </button>
-      <button *ngIf="!isLoggedIn" mat-menu-item (click)="goToLogIn()">
-        <i class="fas fa-sign-in-alt"></i>
-        <span>Đăng nhập</span>
-      </button>
-      <button *ngIf="isLoggedIn" mat-menu-item (click)="logOut()">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Đăng xuất</span>
-      </button>
-      <button *ngIf="!isLoggedIn" mat-menu-item (click)="goToSignUp()">
-        <i class="fas fa-user-plus"></i>
-        <span>Đăng kí</span>
-      </button>
-    </mat-menu>
-  </nav>
-</mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+  </div>
+</nav>

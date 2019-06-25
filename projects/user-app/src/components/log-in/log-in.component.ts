@@ -78,9 +78,14 @@ export class LogInComponent implements OnInit {
     this.waitingForResponse = true;
     const result = await this.userService.logIn(username, password);
     this.waitingForResponse = false;
-    this.hasError = result.status === StatusCode.BadRequest;
-    if (this.hasError) {
+    this.hasError = result.status !== StatusCode.Ok;
+    if (result.status === StatusCode.BadRequest) {
       this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
+      return;
+    }
+
+    if (result.status === StatusCode.InternalError) {
+      this.errorMessage = "Đã có lỗi xảy ra, xin hãy thử lại";
       return;
     }
     // this.notifyLogIn();

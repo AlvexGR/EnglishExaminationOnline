@@ -62,7 +62,7 @@ export class UserService {
       this._accessToken = accessToken;
     } catch (err) {
       // ignore it for now
-      console.log(err);
+      console.log("Get user stored in web storage failed: " + err);
     }
   }
 
