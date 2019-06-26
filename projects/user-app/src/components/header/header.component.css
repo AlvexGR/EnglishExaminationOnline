@@ -1,31 +1,7 @@
-.customNavBar {
-  height: 50px;
-  z-index: 100000;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+.toggler-icon {
+  font-size: 25px;
 }
 
-.navButton {
-  display: inline-block;
-  width: 150px;
-  height: 75%;
-}
-
-.navButton ~ .navButton {
-  margin-left: 10px;
-}
-
-.navButtons {
-  width: 100%;
-}
-
-span {
-  margin-left: 12px;
-}
-
-.rightMenuButton {
-  float: right;
-  height: 40px;
-  width: 40px;
+.toggler-icon:hover {
+  color: white;
 }
