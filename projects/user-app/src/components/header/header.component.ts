@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
-import { AppRoutesName } from "@lib/helpers/utility.helper";
 import { UserService } from "@app/src/services/user/user.service";
 import { Subscription } from "rxjs";
 import { UserType } from "@lib/models/user.model";
@@ -39,37 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToHome(): void {
-    this.router.navigate([`/${AppRoutesName.home}`]);
-  }
-
-  goToLogIn(): void {
-    this.router.navigate([`/${AppRoutesName.logIn}`]);
-  }
-
-  goToSignUp(): void {
-    this.router.navigate([`/${AppRoutesName.signUp}`]);
-  }
-
-  goToAdmin(): void {
-    this.router.navigate([`/${AppRoutesName.admin}`]);
-  }
-
-  goToTestPage(): void {
-    this.router.navigate([`/${AppRoutesName.testPage}`]);
-  }
-
-  goToProfile(): void {
-    this.router.navigate([`/${AppRoutesName.profile}`]);
-  }
-
-  goToHistory(): void {
-    this.router.navigate([`/${AppRoutesName.history}`]);
-  }
-
   logOut(): void {
     this.userService.logOut();
-    this.router.navigate([`/${AppRoutesName.logIn}`]);
   }
 
   get isAdmin() {

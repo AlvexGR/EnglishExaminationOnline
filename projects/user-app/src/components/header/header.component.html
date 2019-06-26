@@ -1,21 +1,21 @@
 <nav
-  class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm p-3 mb-5 rounded"
+  class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm p-2 mb-4 navbar-custom-bg"
 >
-  <a class="navbar-brand brand font-weight-bold" routerLink="/"
-    >English Online Testing</a
-  >
+  <a class="navbar-brand brand font-weight-bold" routerLink="/">
+    English Online Testing
+  </a>
   <button
     class="navbar-toggler border-0"
     type="button"
     data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
+    data-target="#navbarContent"
+    aria-controls="navbarContent"
     aria-expanded="true"
     aria-label="Toggle navigation"
   >
     <i class="fas fa-bars toggler-icon"></i>
   </button>
-  <div class="collapse navbar-collapse z-index" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" id="home">
         <a class="nav-link" routerLink="/">
@@ -24,40 +24,29 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/log-in" id="log-in">
-          <i class="fas fa-sign-in-alt"></i>
-          <span class="ml-1">Đăng nhập</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLink="/log-in"
-          id="log-out"
-          (click)="logOut()"
-        >
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="ml-1">Đăng xuất</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/profile" id="profile">
-          <i class="far fa-id-card"></i>
-          <span class="ml-1">Trang cá nhân</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" routerLink="/test-page" id="test-page">
           <i class="fas fa-file-alt"></i>
           <span class="ml-1">Bài thi</span>
         </a>
       </li>
-      <li class="nav-item">
-          <a class="nav-link" routerLink="/history" id="history">
-            <i class="fas fa-history"></i>
-            <span class="ml-1">Lịch sử thi</span>
-          </a>
-        </li>
+      <li *ngIf="isAdmin" class="nav-item">
+        <a class="nav-link" routerLink="/admin" id="admin">
+          <i class="fas fa-user-shield"></i>
+          <span class="ml-1">Admin</span>
+        </a>
+      </li>
+      <li *ngIf="!isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/log-in" id="log-in">
+          <i class="fas fa-sign-in-alt"></i>
+          <span class="ml-1">Đăng nhập</span>
+        </a>
+      </li>
+      <li *ngIf="!isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="/sign-up" id="sign-up">
+          <i class="fas fa-user-plus"></i>
+          <span class="ml-1">Đăng kí</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a
           class="nav-link"
@@ -66,7 +55,7 @@
           <i class="fab fa-github"></i>
         </a>
       </li>
-      <li class="nav-item dropdown">
+      <li *ngIf="isLoggedIn" class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
           id="navbarDropdown"
@@ -75,19 +64,28 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Dropdown
+          <i class="fas fa-user"></i>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" routerLink="/profile" id="profile">
+            <i class="far fa-id-card"></i>
+            <span class="ml-1">Trang cá nhân</span>
+          </a>
+          <a class="dropdown-item" routerLink="/history" id="history">
+            <i class="fas fa-history"></i>
+            <span class="ml-1">Lịch sử thi</span>
+          </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a
+            class="dropdown-item"
+            routerLink="/log-in"
+            id="log-out"
+            (click)="logOut()"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-1">Đăng xuất</span>
+          </a>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-          >Disabled</a
-        >
       </li>
     </ul>
   </div>
