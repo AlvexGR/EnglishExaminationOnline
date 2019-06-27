@@ -6,7 +6,11 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { UserService } from "@app/src/services/user/user.service";
-import { StatusCode, AppRoutesName, WebStorage } from "@lib/helpers/utility.helper";
+import {
+  StatusCode,
+  AppRoutesName,
+  WebStorage
+} from "@lib/helpers/utility.helper";
 import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 
@@ -38,18 +42,18 @@ export class LogInComponent implements OnInit {
   }
 
   notifyLogIn() {
-    // if (!this.userService.currentUser) {
-    //   return;
-    // }
-    // this.snackBar.open(
-    //   `Đăng nhập thành công. Xin chào ${
-    //     this.userService.currentUser.firstName
-    //   }!`,
-    //   "X",
-    //   {
-    //     duration: 3000
-    //   }
-    // );
+    if (!this.userService.currentUser) {
+      return;
+    }
+    this.snackBar.open(
+      `Đăng nhập thành công. Xin chào ${
+        this.userService.currentUser.firstName
+      }!`,
+      "X",
+      {
+        duration: 3000
+      }
+    );
   }
 
   setPasswordVisibility(): void {
@@ -78,17 +82,23 @@ export class LogInComponent implements OnInit {
     this.waitingForResponse = true;
     const result = await this.userService.logIn(username, password);
     this.waitingForResponse = false;
-    this.hasError = result.status !== StatusCode.Ok;
-    if (result.status === StatusCode.BadRequest) {
-      this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
-      return;
-    }
-
-    if (result.status === StatusCode.InternalError) {
+    if (result) {
+      this.hasError = result.status !== StatusCode.Ok;
+      switch (result.status) {
+        case StatusCode.BadRequest:
+          this.errorMessage = "Tên đăng nhập hoặc mật khẩu không đúng";
+          return;
+        case StatusCode.InternalError:
+          this.errorMessage = "Đã có lỗi xảy ra, xin hãy thử lại";
+          return;
+        default: break;
+      }
+    } else {
+      this.hasError = true;
       this.errorMessage = "Đã có lỗi xảy ra, xin hãy thử lại";
       return;
     }
-    // this.notifyLogIn();
+    this.notifyLogIn();
 
     // Clear all first to prevent conflict
     WebStorage.clearBoth();
