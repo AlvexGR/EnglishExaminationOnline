@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from '@app/src/services/user/user.service';
-import { WebStorage } from '@lib/helpers/utility.helper';
+import { WebStorage, AppRoutesName } from '@lib/helpers/utility.helper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-main",
@@ -9,7 +10,11 @@ import { WebStorage } from '@lib/helpers/utility.helper';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
+    // Because routeLinkActive will always set "/" to active
+    // we need to change home route from "" to "/home"
+    // but there isn't any default route property => this is a work around
+    this.router.navigate([`/${AppRoutesName.home}`]);
   }
 
   async ngOnInit(): Promise<void> {

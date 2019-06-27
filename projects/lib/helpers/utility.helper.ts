@@ -117,7 +117,7 @@ export const AppRoutesName = {
   logIn: "log-in",
   signUp: "sign-up",
   admin: "admin",
-  home: "",
+  home: "home",
   profile: "profile",
   testPage: "test-page",
   history: "history"
