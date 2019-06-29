@@ -15,6 +15,7 @@
             type="text"
             class="form-control"
             placeholder="Vd: Nhân"
+            tabindex="1"
           />
           <app-error-field
             *ngIf="firstName.invalid && firstName.touched"
@@ -28,6 +29,7 @@
             type="text"
             class="form-control"
             placeholder="Vd: Nguyễn"
+            tabindex="2"
           />
           <app-error-field
             *ngIf="lastName.invalid && lastName.touched"
@@ -41,6 +43,7 @@
             type="text"
             class="form-control"
             placeholder="Vd: Beast_Master69"
+            tabindex="3"
           />
           <app-error-field
             *ngIf="username.invalid && username.touched"
@@ -60,6 +63,7 @@
               type="password"
               class="form-control"
               placeholder="Vd: !Pass_quen_ROI.1234"
+              tabindex="4"
             />
             <div class="input-group-append">
               <button
@@ -93,6 +97,7 @@
               class="form-control"
               placeholder="Vd: !Pass_quen_ROI.1234"
               pattern="{{ password.value }}"
+              tabindex="5"
             />
             <div class="input-group-append">
               <button
@@ -125,6 +130,7 @@
             type="email"
             class="form-control"
             placeholder="Vd: Beast_Master69@gmail.com"
+            tabindex="6"
           />
           <app-error-field
             *ngIf="email.hasError('required') && email.touched"
@@ -146,6 +152,7 @@
               class="form-check-input"
               formControlName="gender"
               value="0"
+              tabindex="7"
             />Nam
           </label>
         </div>
@@ -156,6 +163,7 @@
               class="form-check-input"
               formControlName="gender"
               value="1"
+              tabindex="8"
             />Nữ
           </label>
         </div>
@@ -166,6 +174,7 @@
             id="datePicker"
             type="date"
             formControlName="dateOfBirth"
+            tabindex="9"
           />
         </div>
         <div class="mb-3">
@@ -174,6 +183,7 @@
             type="submit"
             class="btn btn-primary btn-block"
             [disabled]="signUpForm.invalid"
+            tabindex="10"
           >
             Đăng Kí
           </button>
@@ -192,7 +202,8 @@
           [errorMessage]="errorMessage"
         ></app-error-field>
         <div class="mb-3 text-center">
-          Bạn đã có tài khoản? <a [routerLink]="['/logIn']">Đăng nhập</a>
+          Bạn đã có tài khoản?
+          <a [routerLink]="['/log-in']" tabindex="11">Đăng nhập</a>
         </div>
       </form>
     </div>

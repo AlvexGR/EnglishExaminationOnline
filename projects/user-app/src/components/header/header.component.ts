@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "@app/src/services/user/user.service";
 import { Subscription } from "rxjs";
-import { UserType } from "@lib/models/user.model";
+import { UserRole } from "@lib/models/user.model";
 
 @Component({
   selector: "app-header",
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this._isAdmin = false;
         } else {
           // User logged in
-          this._isAdmin = currentUser.role === UserType.admin;
+          this._isAdmin = currentUser.role === UserRole.admin;
           this._isLoggedIn = true;
         }
       }

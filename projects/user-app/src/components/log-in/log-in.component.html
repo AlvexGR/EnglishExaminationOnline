@@ -16,6 +16,7 @@
             type="text"
             class="form-control"
             placeholder="Vd: Beast_Master69"
+            tabindex="1"
           />
           <app-error-field
             *ngIf="username.invalid && username.touched"
@@ -31,6 +32,7 @@
               type="password"
               class="form-control"
               placeholder="Vd: !Pass_quen_ROI.1234"
+              tabindex="2"
             />
             <div class="input-group-append">
               <button
@@ -54,6 +56,7 @@
               type="checkbox"
               class="form-check-input"
               formControlName="rememberMe"
+              tabindex="3"
             />
             Ghi nhớ tôi
           </label>
@@ -64,6 +67,7 @@
             type="submit"
             class="btn btn-primary btn-block"
             [disabled]="logInForm.invalid"
+            tabindex="4"
           >
             Đăng Nhập
           </button>
@@ -82,7 +86,8 @@
           [errorMessage]="errorMessage"
         ></app-error-field>
         <div class="text-center">
-          Bạn chưa có tài khoản? <a [routerLink]="['/signUp']">Đăng kí</a>
+          Bạn chưa có tài khoản?
+          <a [routerLink]="['/sign-up']" tabindex="5">Đăng kí</a>
         </div>
       </form>
     </div>

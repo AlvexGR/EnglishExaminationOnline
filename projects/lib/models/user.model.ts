@@ -5,7 +5,7 @@ export enum GenderType {
   female
 }
 
-export enum UserType {
+export enum UserRole {
   admin,
   user
 }
@@ -17,7 +17,7 @@ export class User extends BaseModel {
   firstName: string;
   lastName: string;
   gender: GenderType;
-  role: UserType;
+  role: UserRole;
   dateOfBirth: Date;
 
   constructor(id?: string) {

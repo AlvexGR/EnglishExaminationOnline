@@ -17,6 +17,7 @@
               type="text"
               class="form-control"
               [readOnly]="firstNameState"
+              tabindex=1
             />
             <div class="input-group-append">
               <button
@@ -42,6 +43,7 @@
               type="text"
               class="form-control"
               [readOnly]="lastNameState"
+              tabindex=2
             />
             <div class="input-group-append">
               <button
@@ -67,6 +69,7 @@
               type="text"
               class="form-control"
               [readonly]="usernameState"
+              tabindex=3
             />
             <div class="input-group-append">
               <button
@@ -96,6 +99,7 @@
               formControlName="currentPassword"
               type="password"
               class="form-control"
+              tabindex=4
             />
             <div class="input-group-append">
               <button
@@ -122,6 +126,7 @@
               type="password"
               class="form-control"
               placeholder="Vd: !Pass_quen_ROI.1234"
+              tabindex=5
             />
             <div class="input-group-append">
               <button
@@ -155,6 +160,7 @@
               class="form-control"
               placeholder="Vd: !Pass_quen_ROI.1234"
               pattern="{{ newPassword.value }}"
+              tabindex=6
             />
             <div class="input-group-append">
               <button
@@ -190,6 +196,7 @@
               type="email"
               class="form-control"
               [readOnly]="emailState"
+              tabindex=7
             />
             <div class="input-group-append">
               <button
@@ -222,6 +229,7 @@
               class="form-check-input"
               formControlName="gender"
               [value]="0"
+              tabindex=8
             />Nam
           </label>
         </div>
@@ -232,6 +240,7 @@
               class="form-check-input"
               formControlName="gender"
               [value]="1"
+              tabindex=9
             />Nữ
           </label>
         </div>
@@ -242,6 +251,7 @@
             id="datePicker"
             type="date"
             formControlName="dateOfBirth"
+            tabindex=10
           />
         </div>
         <div class="mb-3">
@@ -254,6 +264,7 @@
               (!currentPassword.value && newPassword.value) ||
               newPassword.value !== newPasswordConfirm.value
             "
+            tabindex=11
           >
             Lưu thông tin
           </button>
