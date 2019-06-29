@@ -7,13 +7,19 @@ import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
-import { TestPageComponent } from '../components/english-testing/test-page/test-page.component';
-import { HistoryComponent } from '../components/english-testing/history/history.component';
+import { TestPageComponent } from "../components/english-testing/test-page/test-page.component";
+import { HistoryComponent } from "../components/english-testing/history/history.component";
 
 import { AdminGuard } from "../guards/admin/admin.guard";
-import { LogInGuard } from '../guards/log-in/log-in.guard';
+import { LogInGuard } from "../guards/log-in/log-in.guard";
+import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 
 const routes: Routes = [
+  {
+    path: "",
+    redirectTo: AppRoutesName.home,
+    pathMatch: "full"
+  },
   {
     path: AppRoutesName.home,
     component: HomeComponent
@@ -39,7 +45,7 @@ const routes: Routes = [
   {
     path: AppRoutesName.testPage,
     component: TestPageComponent,
-    // canActivate: [LogInGuard]
+    canActivate: [LogInGuard]
   },
   {
     path: AppRoutesName.history,

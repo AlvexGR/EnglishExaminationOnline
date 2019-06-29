@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { User } from "@lib/models/user.model";
+import { User, UserRole } from "@lib/models/user.model";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
   ILogInResponse,
@@ -45,6 +45,10 @@ export class UserService {
     return this._accessToken;
   }
 
+  get isAdmin(): boolean {
+    return this._currentUser && this._currentUser.role === UserRole.admin;
+  }
+
   async getThenSet(userId: string, accessToken: string): Promise<void> {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -62,11 +66,11 @@ export class UserService {
       this._accessToken = accessToken;
     } catch (err) {
       // ignore it for now
-      console.log("Get user stored in web storage failed: " + err);
+      // console.log("Get user stored in web storage failed: " + err);
     }
   }
 
-  async logIn(username: string, password: string): Promise<IStatusResponse> {
+  async logIn(username: string, password: string, rememberMe?: boolean): Promise<IStatusResponse> {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     let response = new HttpResponse<ILogInResponse>();
 
@@ -85,10 +89,22 @@ export class UserService {
       return err.error.statusResponse;
     }
 
+    // Log out before process new user
+    this.logOut();
+
     const body = response.body;
     this.setUser = body.user;
     this._accessToken = body.accessToken;
 
+    if (rememberMe) {
+      // Store current user Id and access token to local store
+      WebStorage.setItemLocal("userId", this._currentUser._id);
+      WebStorage.setItemLocal("accessToken", this._accessToken);
+    } else {
+      // Store only in session store
+      WebStorage.setItemSession("userId", this._currentUser._id);
+      WebStorage.setItemSession("accessToken", this._accessToken);
+    }
     return body.statusResponse;
   }
 

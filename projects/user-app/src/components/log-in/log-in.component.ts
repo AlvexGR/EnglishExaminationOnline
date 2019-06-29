@@ -11,7 +11,7 @@ import {
   AppRoutesName,
   WebStorage
 } from "@lib/helpers/utility.helper";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 
 @Component({
@@ -25,11 +25,13 @@ export class LogInComponent implements OnInit {
   hasError = false;
   errorMessage: string;
   passwordState: boolean;
+  returnUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
@@ -39,6 +41,8 @@ export class LogInComponent implements OnInit {
       password: ["", Validators.required],
       rememberMe: [false]
     });
+
+    this.returnUrl = this.route.snapshot.queryParamMap.get("returnUrl") || AppRoutesName.home;
   }
 
   notifyLogIn() {
@@ -80,7 +84,7 @@ export class LogInComponent implements OnInit {
     }
 
     this.waitingForResponse = true;
-    const result = await this.userService.logIn(username, password);
+    const result = await this.userService.logIn(username, password, this.rememberMe.value);
     this.waitingForResponse = false;
     if (result) {
       this.hasError = result.status !== StatusCode.Ok;
@@ -100,19 +104,10 @@ export class LogInComponent implements OnInit {
     }
     this.notifyLogIn();
 
-    // Clear all first to prevent conflict
-    WebStorage.clearBoth();
-    if (this.rememberMe.value) {
-      // Store current user Id and access token to local store
-      WebStorage.setItemLocal("userId", this.userService.currentUser._id);
-      WebStorage.setItemLocal("accessToken", this.userService.accessToken);
-    } else {
-      // Store only in session store
-      WebStorage.setItemSession("userId", this.userService.currentUser._id);
-      WebStorage.setItemSession("accessToken", this.userService.accessToken);
+    if (this.returnUrl === `/${AppRoutesName.admin}` && !this.userService.isAdmin) {
+      this.returnUrl = AppRoutesName.home;
     }
-
-    this.router.navigate([`/${AppRoutesName.home}`]);
+    this.router.navigate([`/${this.returnUrl}`]);
   }
 
   get username(): AbstractControl {
