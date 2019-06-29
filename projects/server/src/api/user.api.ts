@@ -9,9 +9,11 @@ import {
 } from "../middleware/authentication.middleware";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { StatusCode } from "@lib/helpers/utility.helper";
+import { TokenHandler } from "../handlers/token.handler";
 
 const router = express.Router();
 const userHandler = new UserHandler();
+const tokenHandler = new TokenHandler();
 
 // Log In
 router.post(
@@ -91,8 +93,7 @@ router.post(`/`, async (req: Request, res: Response) => {
     const signUpRes = validateUserResult.signUpResponse;
     if (!signUpRes.statusResponse.status) {
       return res.status(StatusCode.InternalError).json({
-        statusResponse: signUpRes.statusResponse,
-        validation: null
+        statusResponse: signUpRes.statusResponse
       });
     }
     return res.status(StatusCode.BadRequest).json(signUpRes);
@@ -101,17 +102,14 @@ router.post(`/`, async (req: Request, res: Response) => {
   const insertResult = await userHandler.insert(newUser);
 
   if (!insertResult.inserted) {
-    const statusResult = insertResult.statusResponse;
-    if (statusResult.status) {
-      return res.status(StatusCode.BadRequest).json(statusResult);
-    } else {
-      return res.status(StatusCode.InternalError).json(statusResult);
-    }
+    return res
+      .status(insertResult.statusResponse.status)
+      .json({ statusResponse: insertResult.statusResponse });
   }
 
   return res
     .status(StatusCode.Ok)
-    .json({ statusResponse: insertResult.statusResponse, validation: null });
+    .json({ statusResponse: insertResult.statusResponse });
 });
 
 // Update
@@ -143,6 +141,11 @@ router.get(`/:id`, verifyAccessToken, async (req: Request, res: Response) => {
     statusResponse: result.statusResponse,
     user: result.users && result.users[0]
   });
+});
+
+router.post(`/${HttpHelper.logOut}`, async (req: Request, res: Response) => {
+  const result = await tokenHandler.insert(req.body.token);
+  return res.status(result.statusResponse.status).json(result.statusResponse);
 });
 
 module.exports = router;

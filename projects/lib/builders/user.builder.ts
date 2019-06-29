@@ -1,10 +1,10 @@
-import { User } from '@lib/models/user.model';
+import { UserModel } from '@lib/models/user.model';
 
 export class UserBuilder {
-  private user: User;
+  private user: UserModel;
 
   constructor(id?: string) {
-    this.user = new User(id);
+    this.user = new UserModel(id);
   }
 
   withUsername(username: string): UserBuilder {

@@ -6,6 +6,7 @@ export class MongoDbHelper {
 
   // Collections
   static users = "Users";
+  static invalidatedTokens = "InvalidatedTokens";
 
   static getMongoClient(): MongoClient {
     return new MongoClient(this.connectionString, {

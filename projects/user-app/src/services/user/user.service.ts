@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { User, UserRole } from "@lib/models/user.model";
+import { UserModel, UserRole } from "@lib/models/user.model";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
   ILogInResponse,
@@ -10,34 +10,32 @@ import {
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { UserBuilder } from "@lib/builders/user.builder";
-import {
-  UtilityFunctions,
-  WebStorage
-} from "@lib/helpers/utility.helper";
+import { UtilityFunctions, WebStorage } from "@lib/helpers/utility.helper";
 import { Observable, BehaviorSubject } from "rxjs";
+import { TokenModel } from "@lib/models/token.model";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-  private _currentUser: User;
+  private _currentUser: UserModel;
   private _accessToken: string;
-  private _userObservable: BehaviorSubject<User>;
+  private _userObservable: BehaviorSubject<UserModel>;
 
   constructor(private http: HttpClient) {
-    this._userObservable = new BehaviorSubject<User>(this._currentUser);
+    this._userObservable = new BehaviorSubject<UserModel>(this._currentUser);
   }
 
-  get userObservable(): Observable<User> {
+  get userObservable(): Observable<UserModel> {
     return this._userObservable.asObservable();
   }
 
-  private set setUser(value: User) {
+  private set setUser(value: UserModel) {
     this._currentUser = value;
     this._userObservable.next(value);
   }
 
-  get currentUser(): User {
+  get currentUser(): UserModel {
     return this._currentUser;
   }
 
@@ -70,7 +68,7 @@ export class UserService {
     }
   }
 
-  async logIn(username: string, password: string, rememberMe?: boolean): Promise<IStatusResponse> {
+  async logIn(username: string, password: string): Promise<IStatusResponse> {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     let response = new HttpResponse<ILogInResponse>();
 
@@ -90,25 +88,19 @@ export class UserService {
     }
 
     // Log out before process new user
-    this.logOut();
+    await this.logOut();
 
     const body = response.body;
     this.setUser = body.user;
     this._accessToken = body.accessToken;
 
-    if (rememberMe) {
-      // Store current user Id and access token to local store
-      WebStorage.setItemLocal("userId", this._currentUser._id);
-      WebStorage.setItemLocal("accessToken", this._accessToken);
-    } else {
-      // Store only in session store
-      WebStorage.setItemSession("userId", this._currentUser._id);
-      WebStorage.setItemSession("accessToken", this._accessToken);
-    }
+    // Store current user Id and access token to local store
+    WebStorage.setItemLocal("userId", this._currentUser._id);
+    WebStorage.setItemLocal("accessToken", this._accessToken);
     return body.statusResponse;
   }
 
-  async signUp(newUser: User): Promise<ISignUpResponse> {
+  async signUp(newUser: UserModel): Promise<ISignUpResponse> {
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
     let response = new HttpResponse<ISignUpResponse>();
 
@@ -130,7 +122,7 @@ export class UserService {
   }
 
   async update(
-    updatedUser: User,
+    updatedUser: UserModel,
     currentPassword?: string
   ): Promise<IUpdateResponse> {
     const headers = new HttpHeaders({
@@ -167,12 +159,33 @@ export class UserService {
     return response.body;
   }
 
-  logOut(): void {
+  async logOut(): Promise<void> {
+    if (!this._accessToken && !WebStorage.getItemLocal("accessToken")) {
+      return;
+    }
+
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    let response = new HttpResponse<IStatusResponse>();
+    const token = new TokenModel();
+    token.token = this._accessToken || WebStorage.getItemLocal("accessToken");
+
+    try {
+      response = await this.http
+        .post<IStatusResponse>(
+          `${HttpHelper.endpoint}/${HttpHelper.users}/${HttpHelper.logOut}`,
+          { token },
+          { headers, observe: "response" }
+        )
+        .toPromise();
+    } catch (err) {
+      // ignore
+    }
+
     this.setUser = this._accessToken = null;
     WebStorage.clearBoth();
   }
 
-  createFromObj(obj: any): User {
+  createFromObj(obj: any): UserModel {
     const userBuilder = new UserBuilder(obj._id);
 
     userBuilder

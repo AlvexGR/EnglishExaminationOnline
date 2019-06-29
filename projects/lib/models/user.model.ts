@@ -10,7 +10,7 @@ export enum UserRole {
   user
 }
 
-export class User extends BaseModel {
+export class UserModel extends BaseModel {
   username: string;
   password: string;
   email: string;

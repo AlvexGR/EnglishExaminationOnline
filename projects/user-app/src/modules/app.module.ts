@@ -29,17 +29,8 @@ import { PageNotFoundComponent } from "../components/notification/page-not-found
 export function initData(userService: UserService) {
   return async () => {
     // Check local storage
-    let userId = WebStorage.getItemLocal("userId");
-    let accessToken = WebStorage.getItemLocal("accessToken");
-    if (userId && accessToken) {
-      await userService.getThenSet(userId, accessToken);
-      return;
-    }
-
-    // Check session storage
-    userId = WebStorage.getItemSession("userId");
-    accessToken = WebStorage.getItemSession("accessToken");
-
+    const userId = WebStorage.getItemLocal("userId");
+    const accessToken = WebStorage.getItemLocal("accessToken");
     if (userId && accessToken) {
       await userService.getThenSet(userId, accessToken);
       return;

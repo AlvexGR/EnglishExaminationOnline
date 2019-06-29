@@ -50,24 +50,13 @@
             [errorMessage]="'Hãy nhập vào Mật khẩu'"
           ></app-error-field>
         </div>
-        <div class="mb-3 form-check">
-          <label class="form-check-label">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              formControlName="rememberMe"
-              tabindex="3"
-            />
-            Ghi nhớ tôi
-          </label>
-        </div>
         <div class="mb-3">
           <button
             *ngIf="!waitingForResponse"
             type="submit"
             class="btn btn-primary btn-block"
             [disabled]="logInForm.invalid"
-            tabindex="4"
+            tabindex="3"
           >
             Đăng Nhập
           </button>
@@ -87,7 +76,7 @@
         ></app-error-field>
         <div class="text-center">
           Bạn chưa có tài khoản?
-          <a [routerLink]="['/sign-up']" tabindex="5">Đăng kí</a>
+          <a [routerLink]="['/sign-up']" tabindex="4">Đăng kí</a>
         </div>
       </form>
     </div>

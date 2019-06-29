@@ -2,11 +2,17 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
+import { TokenHandler } from "../handlers/token.handler";
 
 const userLogInPrivateKey =
   "!EnglishOnlineTesting_UserLogIn_Authentication_PrivateKey!";
+const tokenHandler = new TokenHandler();
 
-export function verifyAccessToken(req: Request, res: Response, next: NextFunction) {
+export async function verifyAccessToken(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const headers = req.headers;
   const token = headers.authorization as string;
 
@@ -33,10 +39,26 @@ export function verifyAccessToken(req: Request, res: Response, next: NextFunctio
       }
     }
   );
+
+  const result = await tokenHandler.verifyToken(token);
+
+  if (!result.valid) {
+    return res.status(result.statusResponse.status).json({
+      statusResponse: {
+        message: "Không có quyền để thực hiện, xin hãy thử lại",
+        status: StatusCode.Forbidden
+      }
+    });
+  }
+
   next();
 }
 
-export function signAccessToken(req: Request, res: Response, next: NextFunction) {
+export function signAccessToken(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   jwt.sign({}, userLogInPrivateKey, (err, token) => {
     if (err) {
       return res.status(StatusCode.InternalError).json({

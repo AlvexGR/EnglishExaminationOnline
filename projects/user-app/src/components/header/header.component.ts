@@ -38,8 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  logOut(): void {
-    this.userService.logOut();
+  async logOut(): Promise<void> {
+    await this.userService.logOut();
   }
 
   get isAdmin() {

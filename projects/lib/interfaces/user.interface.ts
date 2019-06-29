@@ -1,14 +1,14 @@
-import { User } from "@lib/models/user.model";
+import { UserModel } from "@lib/models/user.model";
 import { IStatusResponse } from "./base.interface";
 
 export interface ILogInResponse {
   accessToken: string;
-  user: User;
+  user: UserModel;
   statusResponse: IStatusResponse;
 }
 
 export interface IGetUserResponse {
-  user: User;
+  user: UserModel;
   statusResponse: IStatusResponse;
 }
 

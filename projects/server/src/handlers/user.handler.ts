@@ -1,4 +1,4 @@
-import { User } from "@lib/models/user.model";
+import { UserModel } from "@lib/models/user.model";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { FilterQuery } from "mongodb";
 import { UserRepo } from "../repo/user.repo";
@@ -10,15 +10,15 @@ import { UserBuilder } from "@lib/builders/user.builder";
 import { StatusCode } from "@lib/helpers/utility.helper";
 
 export class UserHandler {
-  private userRepo: UserRepo;
+  private _userRepo: UserRepo;
   constructor() {
-    this.userRepo = new UserRepo();
+    this._userRepo = new UserRepo();
   }
   async verifyLogIn(
     username: string,
     password: string
   ): Promise<{ statusResponse: IStatusResponse; hasUser: boolean }> {
-    const countUser = await this.userRepo.countBy({ username, password });
+    const countUser = await this._userRepo.countBy({ username, password });
     if (countUser.statusResponse.status !== StatusCode.Ok) {
       return {
         hasUser: false,
@@ -48,8 +48,8 @@ export class UserHandler {
   async getBy(
     query: FilterQuery<any>,
     limit?: number
-  ): Promise<{ users: Array<User>; statusResponse: IStatusResponse }> {
-    const getResult = await this.userRepo.getBy(query, limit);
+  ): Promise<{ users: Array<UserModel>; statusResponse: IStatusResponse }> {
+    const getResult = await this._userRepo.getBy(query, limit);
     return {
       users:
         getResult.statusResponse.status === StatusCode.Ok
@@ -60,14 +60,14 @@ export class UserHandler {
   }
 
   async validateNewUser(
-    newUser: User
+    newUser: UserModel
   ): Promise<{ canInsert: boolean; signUpResponse: ISignUpResponse }> {
     // check for username
-    const countByUsername = this.userRepo.countBy({
+    const countByUsername = this._userRepo.countBy({
       username: newUser.username
     });
 
-    const countByEmail = this.userRepo.countBy({ email: newUser.email });
+    const countByEmail = this._userRepo.countBy({ email: newUser.email });
 
     const results = await Promise.all([countByUsername, countByEmail]);
 
@@ -103,16 +103,15 @@ export class UserHandler {
   }
 
   async insert(
-    newUser: User
+    newUser: UserModel
   ): Promise<{ inserted: boolean; statusResponse: IStatusResponse }> {
-    const insertResult = await this.userRepo.insert(newUser);
-    return insertResult;
+    return await this._userRepo.insert(newUser);
   }
 
   async validateUpdateUser(
     currentUserId: string,
     inputPassword: string,
-    updatedUser: User
+    updatedUser: UserModel
   ): Promise<{ canUpdate: boolean; updateResponse: IUpdateResponse }> {
     const getResult = await this.getBy({ _id: currentUserId }, 1);
     if (getResult.statusResponse.status !== StatusCode.Ok) {
@@ -140,7 +139,7 @@ export class UserHandler {
 
     // Count username
     if (currentUser.username !== updatedUser.username) {
-      const usernameResult = await this.userRepo.countBy({
+      const usernameResult = await this._userRepo.countBy({
         username: updatedUser.username
       });
       if (usernameResult.statusResponse.status !== StatusCode.Ok) {
@@ -158,7 +157,7 @@ export class UserHandler {
 
     // Count email
     if (currentUser.email !== updatedUser.email) {
-      const emailResult = await this.userRepo.countBy({
+      const emailResult = await this._userRepo.countBy({
         email: updatedUser.email
       });
       if (emailResult.statusResponse.status !== StatusCode.Ok) {
@@ -188,15 +187,15 @@ export class UserHandler {
     return { canUpdate, updateResponse };
   }
 
-  async update(updatedUser: User): Promise<IUpdateResponse> {
-    const result = await this.userRepo.update(updatedUser);
+  async update(updatedUser: UserModel): Promise<IUpdateResponse> {
+    const result = await this._userRepo.update(updatedUser);
     return {
       statusResponse: result.statusResponse,
       validation: null
     };
   }
 
-  createFromObj(obj: any): User {
+  createFromObj(obj: any): UserModel {
     const userBuilder = new UserBuilder(obj._id);
 
     userBuilder

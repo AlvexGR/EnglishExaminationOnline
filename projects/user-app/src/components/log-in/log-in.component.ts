@@ -84,7 +84,7 @@ export class LogInComponent implements OnInit {
     }
 
     this.waitingForResponse = true;
-    const result = await this.userService.logIn(username, password, this.rememberMe.value);
+    const result = await this.userService.logIn(username, password);
     this.waitingForResponse = false;
     if (result) {
       this.hasError = result.status !== StatusCode.Ok;
@@ -116,9 +116,5 @@ export class LogInComponent implements OnInit {
 
   get password(): AbstractControl {
     return this.logInForm.get("password");
-  }
-
-  get rememberMe(): AbstractControl {
-    return this.logInForm.get("rememberMe");
   }
 }
