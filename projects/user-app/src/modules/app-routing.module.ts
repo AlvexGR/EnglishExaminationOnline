@@ -9,10 +9,10 @@ import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
 import { TestPageComponent } from "../components/english-testing/test-page/test-page.component";
 import { HistoryComponent } from "../components/english-testing/history/history.component";
+import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 
 import { AdminGuard } from "../guards/admin/admin.guard";
 import { LogInGuard } from "../guards/log-in/log-in.guard";
-import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
@@ -51,6 +51,10 @@ const routes: Routes = [
     path: AppRoutesName.history,
     component: HistoryComponent,
     canActivate: [LogInGuard]
+  },
+  {
+    path: "**",
+    component: PageNotFoundComponent
   }
 ];
 
