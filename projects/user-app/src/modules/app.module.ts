@@ -25,6 +25,7 @@ import { TestPageComponent } from "../components/english-testing/test-page/test-
 import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { SuccessFieldComponent } from "../components/notification/success-field/success-field.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
+import { TestCardComponent } from '../components/english-testing/test-card/test-card.component';
 
 export function initData(userService: UserService) {
   return async () => {
@@ -53,7 +54,8 @@ export function initData(userService: UserService) {
     TestPageComponent,
     HistoryComponent,
     SuccessFieldComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TestCardComponent
   ],
   imports: [
     // Module import order matters

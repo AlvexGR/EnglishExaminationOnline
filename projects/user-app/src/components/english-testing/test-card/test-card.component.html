@@ -1,0 +1,35 @@
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{title}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{subtitle}}</h6>
+      <p class="card-text text-justify">{{content}}</p>
+      <h6 class="card-subtitle mb-2 text-info">Thời gian làm bài: {{time}}</h6>
+      <div class="row align-items-center">
+        <div class="col-lg-9">
+          <a routerLink="/home" class="btn btn-primary">Làm bài</a>
+          <a routerLink="/home" class="btn btn-success ml-3">Bảng xếp hạng</a>
+        </div>
+        <div
+          class="col-lg-3 text-right"
+          data-toggle="tooltip"
+          data-placement="left"
+          title="Độ khó"
+          id="difficult"
+        >
+          <i *ngIf="starOne" class="fas fa-star star"></i>
+          <i *ngIf="starTwo" class="fas fa-star star"></i>
+          <i *ngIf="starThree" class="fas fa-star star"></i>
+          <i *ngIf="starFour" class="fas fa-star star"></i>
+          <i *ngIf="starFive" class="fas fa-star star"></i>
+          <i *ngIf="noStarOne" class="far fa-star star"></i>
+          <i *ngIf="noStarTwo" class="far fa-star star"></i>
+          <i *ngIf="noStarThree" class="far fa-star star"></i>
+          <i *ngIf="noStarFour" class="far fa-star star"></i>
+          <i *ngIf="noStarFive" class="far fa-star star"></i>
+          <i *ngIf="halfStar" class="fas fa-star-half-alt star"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

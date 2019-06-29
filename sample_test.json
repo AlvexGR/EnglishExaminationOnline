@@ -1,0 +1,96 @@
+{
+  "id": "sample_test",
+  "title": "Sample 10 questions test",
+  "sections": [
+    {
+      "id": "section_1",
+      "index": 1,
+      "title": "Choose the best answer",
+      "questions": [
+        {
+          "id": "question_1",
+          "index": 1,
+          "content": "Doctors _____ a cure to AIDS yet.",
+          "choiceA": "have found",
+          "choiceB": "found",
+          "choiceC": "haven't found",
+          "choiceD": "hasn't found",
+          "answer": 2,
+          "sectionId": "section_1",
+          "questionType": 0,
+          "tags": []
+        },
+        {
+          "id": "question_2",
+          "index": 2,
+          "content": "Do you mind _____ up?",
+          "choiceA": "wash",
+          "choiceB": "washing",
+          "choiceC": "washed",
+          "choiceD": "to wash",
+          "answer": 1,
+          "sectionId": "section_1",
+          "questionType": 0,
+          "tags": []
+        }
+      ]
+    },
+    {
+      "id": "section_2",
+      "index": 2,
+      "title": "Read the following passage and choose A, B, C, or D to fill in the gaps:",
+      "questions": [
+        {
+          "content": "James Cook was born in England (3)_____ 1728. His parents (4)_______ poor farm workers. (5)______ James was 18, he found a job on a coastal ship. He worked (6)______ ships until he was 27 years old, and then he joined the navy. He fought (7)_______ Canada in a war against France. In 1768 King George III made him the captain of a ship and (8)____ him to the Pacific. He was gone (9)_______ nearly three years when he (10)_________, he was a national hero.",
+          "sectionId": "section_2",
+          "questionType": 1
+        },
+        {
+          "id": "question_3",
+          "index": 3,
+          "content": "",
+          "choiceA": "in",
+          "choiceB": "at",
+          "choiceC": "on",
+          "choiceD": "during",
+          "sectionId": "section_2",
+          "answer": 0,
+          "questionType": 0,
+          "tags": [
+            
+          ]
+        },
+        {
+          "id": "question_4",
+          "index": 4,
+          "content": "",
+          "choiceA": "are",
+          "choiceB": "be",
+          "choiceC": "were",
+          "choiceD": "was",
+          "sectionId": "section_2",
+          "answer": 2,
+          "questionType": 0,
+          "tags": [
+            
+          ]
+        },
+        {
+          "id": "question_5",
+          "index": 5,
+          "content": "",
+          "choiceA": "why",
+          "choiceB": "when",
+          "choiceC": "because",
+          "choiceD": "during",
+          "sectionId": "section_2",
+          "answer": 1,
+          "questionType": 0,
+          "tags": [
+            
+          ]
+        }
+      ]
+    }
+  ]
+}
