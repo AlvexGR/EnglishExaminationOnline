@@ -36,15 +36,21 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      $(document).ready(function() {
-        $(document).click(function(event) {
-          var clickOver = $(event.target);
-          var _opened = $(".navbar-collapse").hasClass("navbar-collapse");
-          if (_opened === true && !clickOver.hasClass("navbar-toggler")) {
-            $("button.navbar-toggler").click();
-          }
-        });
+      // tooltip
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
       });
+
+      // Close nav bar drop down when lost focus
+      // $(document).ready(function() {
+      //   $(document).click(function(event) {
+      //     var clickOver = $(event.target);
+      //     var _opened = $(".navbar-collapse").hasClass("navbar-collapse");
+      //     if (_opened === true && !clickOver.hasClass("navbar-toggler")) {
+      //       $("button.navbar-toggler").click();
+      //     }
+      //   });
+      // });
     </script>
   </head>
   <body>

@@ -7,6 +7,10 @@ export class MongoDbHelper {
   // Collections
   static users = "Users";
   static invalidatedTokens = "InvalidatedTokens";
+  static tests = "Tests";
+  static sections = "Sections";
+  static questions = "Questions";
+  static tags = "Tags";
 
   static getMongoClient(): MongoClient {
     return new MongoClient(this.connectionString, {

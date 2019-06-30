@@ -1,0 +1,38 @@
+{
+  "tests": {
+    "_id": "",
+    "index": 1,
+    "title": "",
+    "subtitle": "",
+    "content": "",
+    "time": 60,
+    "difficult": 3.5,
+    "sectionIds": []
+  },
+  "sections": {
+    "_id": "",
+    "index": 1,
+    "title": "",
+    "testId": "",
+    "questionIds": []
+  },
+  "questions": {
+    "_id": "",
+    "index": 1,
+    "content": "",
+    "questionType": 0,
+    "choiceA": "",
+    "choiceB": "",
+    "choiceC": "",
+    "choiceD": "",
+    "answer": 0,
+    "sectionId": "",
+    "tagIds": []
+  },
+  "tags": {
+    "_id": "",
+    "description": "",
+    "name": "",
+    "tagId": ""
+  }
+}

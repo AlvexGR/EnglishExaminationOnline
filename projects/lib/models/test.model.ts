@@ -1,13 +1,15 @@
 import { BaseModel } from "./base.model";
-import { Section } from './section.model';
+import { SectionModel } from './section.model';
 
-export class Test extends BaseModel {
+export class TestModel extends BaseModel {
   title: string;
+  index: number;
   subtitle: string;
   content: string;
-  time: number; // total minute
+  time: number; // total minutes
   difficulty: number;
-  sections: Array<Section>;
+  sections: Array<SectionModel>;
+  sectionIds: Array<string>;
 
   constructor(id?: string) {
     super(id);

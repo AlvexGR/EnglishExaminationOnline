@@ -1,7 +1,11 @@
-import { BaseModel } from './base.model';
+import { BaseModel } from "./base.model";
+import { TagModel } from './tag.model';
 
 export enum AnswerChoice {
-  A, B, C, D
+  A,
+  B,
+  C,
+  D
 }
 
 export enum QuestionType {
@@ -9,7 +13,7 @@ export enum QuestionType {
   plainParagraph
 }
 
-export class Question extends BaseModel {
+export class QuestionModel extends BaseModel {
   index: number;
   content: string;
   questionType: QuestionType;
@@ -19,7 +23,8 @@ export class Question extends BaseModel {
   choiceD: string;
   answer: AnswerChoice;
   sectionId: string;
-  tags: Array<string>;
+  tags: Array<TagModel>;
+  tagIds: Array<string>;
 
   constructor(id?: string) {
     super(id);

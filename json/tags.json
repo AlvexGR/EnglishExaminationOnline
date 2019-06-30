@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "64a4f225-6470-4c67-8ffc-5763ce8f5f62",
+    "description": "ngữ pháp",
+    "name": "grammar"
+  },
+  {
+    "_id": "066af357-5d81-4eb3-97f0-5439b6946b33",
+    "description": "từ vựng",
+    "name": "vocabulary"
+  },
+  {
+    "_id": "eeef7143-9f54-4546-a693-6163eb57a22b",
+    "description": "ngoại động từ",
+    "name": "transitive verb",
+    "tagId": "64a4f225-6470-4c67-8ffc-5763ce8f5f62"
+  },
+  {
+    "_id": "0a6ffae9-b57c-409c-88c3-badb6feaccfb",
+    "description": "nội động từ",
+    "name": "intransitive verb",
+    "tagId": "64a4f225-6470-4c67-8ffc-5763ce8f5f62"
+  },
+  {
+    "_id": "7c8e43eb-44e4-43dc-8895-a036de3d1298",
+    "description": "câu hỏi",
+    "name": "question",
+    "tagId": "64a4f225-6470-4c67-8ffc-5763ce8f5f62"
+  },
+  {
+    "_id": "",
+    "description": "",
+    "name": "",
+    "tagId": "066af357-5d81-4eb3-97f0-5439b6946b33"
+  }
+]

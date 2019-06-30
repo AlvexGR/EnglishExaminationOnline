@@ -1,0 +1,71 @@
+[
+  {
+    "_id": "4fbee88b-f618-4fb2-b3d6-cd01e80a3f53",
+    "index": 1,
+    "content": "Doctors _____ a cure to AIDS yet.",
+    "questionType": 0,
+    "choiceA": "have found",
+    "choiceB": "found",
+    "choiceC": "haven't found",
+    "choiceD": "hasn't found",
+    "answer": 2,
+    "sectionId": "b0a68f44-5b43-46fc-8e47-493eac06d4a8",
+    "tagIds": ["359d488a-a67b-429c-9a40-bf7a62b1a566"]
+  },
+  {
+    "_id": "cfc98cc3-1d86-4cb1-86d4-ac6af233011b",
+    "index": 2,
+    "content": "Do you mind _____ up?",
+    "questionType": 0,
+    "choiceA": "wash",
+    "choiceB": "washing",
+    "choiceC": "washed",
+    "choiceD": "to wash",
+    "answer": 1,
+    "sectionId": "b0a68f44-5b43-46fc-8e47-493eac06d4a8",
+    "tagIds": ["c1137985-9b7b-4fe4-bf40-b844f6b3a953"]
+  },
+  {
+    "_id": "969ce19c-a870-49a4-bdf3-1c293e71e07c",
+    "index": 3,
+    "content": "James Cook was born in England (3)_____ 1728. His parents (4)_______ poor farm workers. (5)______ James was 18, he found a job on a coastal ship. He worked (6)______ ships until he was 27 years old, and then he joined the navy. He fought (7)_______ Canada in a war against France. In 1768 King George III made him the captain of a ship and (8)____ him to the Pacific. He was gone (9)_______ nearly three years when he (10)_________, he was a national hero.",
+    "questionType": 1,
+    "sectionId": "2822c514-6707-4eb2-92b8-c5626587c6d8"
+  },
+  {
+    "_id": "81fc6abf-c97a-4047-8910-ba1a31dbc819",
+    "index": 4,
+    "questionType": 0,
+    "choiceA": "in",
+    "choiceB": "at",
+    "choiceC": "on",
+    "choiceD": "during",
+    "answer": 0,
+    "sectionId": "2822c514-6707-4eb2-92b8-c5626587c6d8",
+    "tagIds": ["3d299f54-9999-4957-9b68-5958fc5e3409"]
+  },
+  {
+    "_id": "81a99879-95ad-4f2a-81bd-1095abe7afb0",
+    "index": 5,
+    "questionType": 0,
+    "choiceA": "are",
+    "choiceB": "be",
+    "choiceC": "were",
+    "choiceD": "was",
+    "answer": 2,
+    "sectionId": "2822c514-6707-4eb2-92b8-c5626587c6d8",
+    "tagIds": ["d4335f28-0561-4444-8409-ed03bdfb9a03"]
+  },
+  {
+    "_id": "43d8cbf6-1161-40ac-a815-e5afb1a84d72",
+    "index": 6,
+    "questionType": 0,
+    "choiceA": "why",
+    "choiceB": "when",
+    "choiceC": "because",
+    "choiceD": "during",
+    "answer": 1,
+    "sectionId": "2822c514-6707-4eb2-92b8-c5626587c6d8",
+    "tagIds": ["7c8e43eb-44e4-43dc-8895-a036de3d1298"]
+  }
+]
