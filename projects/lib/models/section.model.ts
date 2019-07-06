@@ -6,7 +6,7 @@ export class SectionModel extends BaseModel {
   title: string;
   questions: Array<QuestionModel>;
   questionIds: Array<string>;
-  testId: string;
+  examId: string;
 
   constructor(id?: string) {
     super(id);

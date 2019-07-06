@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import session from "express-session";
 import path from "path";
 import cors from "cors";
+import { HttpHelper } from '@lib/helpers/http.helper';
 
 const server: Application = express();
 const PORT = process.env.PORT || 1503;
@@ -25,7 +26,8 @@ server.use(cors());
 // });
 
 // APIs
-server.use("/api/users", require("./src/api/user.api"));
+server.use(`/api/${HttpHelper.users}`, require("./src/api/user.api"));
+server.use(`/api/${HttpHelper.exams}`, require("./src/api/exam.api"));
 
 server.listen(PORT, () => {
   console.log(`Server running at ${PORT}`);

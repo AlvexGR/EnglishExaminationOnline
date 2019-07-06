@@ -7,7 +7,7 @@ export interface ILogInResponse {
   statusResponse: IStatusResponse;
 }
 
-export interface IGetUserResponse {
+export interface IUserResponse {
   user: UserModel;
   statusResponse: IStatusResponse;
 }

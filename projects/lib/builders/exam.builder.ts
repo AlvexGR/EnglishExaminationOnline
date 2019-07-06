@@ -1,54 +1,54 @@
-import { TestModel } from "@lib/models/test.model";
+import { ExamModel } from "@lib/models/exam.model";
 import { SectionModel } from "@lib/models/section.model";
 
-export class TestBuilder {
-  private _test: TestModel;
+export class ExamBuilder {
+  private _test: ExamModel;
 
   constructor(id?: string) {
-    this._test = new TestModel(id);
+    this._test = new ExamModel(id);
   }
 
-  withIndex(index: number): TestBuilder {
+  withIndex(index: number): ExamBuilder {
     this._test.index = index;
     return this;
   }
 
-  withTitle(title: string): TestBuilder {
+  withTitle(title: string): ExamBuilder {
     this._test.title = title;
     return this;
   }
 
-  withSubtitle(subtitle: string): TestBuilder {
+  withSubtitle(subtitle: string): ExamBuilder {
     this._test.subtitle = subtitle;
     return this;
   }
 
-  withContent(content: string): TestBuilder {
+  withContent(content: string): ExamBuilder {
     this._test.content = content;
     return this;
   }
 
-  withTime(time: number): TestBuilder {
+  withTime(time: number): ExamBuilder {
     this._test.time = time;
     return this;
   }
 
-  withDifficulty(difficulty: number): TestBuilder {
+  withDifficulty(difficulty: number): ExamBuilder {
     this._test.difficulty = difficulty;
     return this;
   }
 
-  withSections(sections: Array<SectionModel>): TestBuilder {
+  withSections(sections: Array<SectionModel>): ExamBuilder {
     this._test.sections = sections;
     return this;
   }
 
-  withSectionIds(ids: Array<string>): TestBuilder {
+  withSectionIds(ids: Array<string>): ExamBuilder {
     this._test.sectionIds = ids;
     return this;
   }
 
-  build(): TestModel {
+  build(): ExamModel {
     return this._test;
   }
 }

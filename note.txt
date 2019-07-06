@@ -1,2 +1,5 @@
 tsconfig-paths: this package will resolve problem with relative-path => Cannot find modules when starting server
 cors: this package will resolve problem with "No Access-Control-Allow-Origin header"
+
+test script single: npm run test-server projects/server/test/handlers/user.handler.test.ts
+test script all: npm run test-all-server

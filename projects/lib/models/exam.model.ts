@@ -1,7 +1,7 @@
 import { BaseModel } from "./base.model";
 import { SectionModel } from './section.model';
 
-export class TestModel extends BaseModel {
+export class ExamModel extends BaseModel {
   title: string;
   index: number;
   subtitle: string;

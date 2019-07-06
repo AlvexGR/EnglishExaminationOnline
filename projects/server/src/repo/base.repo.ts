@@ -53,8 +53,60 @@ export class BaseRepo<T extends BaseModel> {
     return {
       doc: result,
       statusResponse: {
-        status: StatusCode.Ok,
-        message: "Thành công"
+        status: result ? StatusCode.Ok : StatusCode.BadRequest,
+        message: result ? "Thành công" : "Không có dữ liệu"
+      }
+    };
+  }
+
+  async getByIds(
+    ids: Array<string>
+  ): Promise<{
+    docs: Array<T>;
+    statusResponse: IStatusResponse;
+  }> {
+    if (!ids) {
+      return {
+        docs: null,
+        statusResponse: {
+          status: StatusCode.BadRequest,
+          message: "Ids không hợp lệ"
+        }
+      };
+    }
+
+    let results: Array<T> = null;
+    const client = MongoDbHelper.getMongoClient();
+
+    try {
+      // Connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+
+      const cursor = await collection.find<T>({ _id: { $in: ids } });
+
+      results = await cursor.toArray();
+    } catch (err) {
+      return {
+        docs: null,
+        statusResponse: {
+          status: StatusCode.InternalError,
+          message: "Đã có lỗi xảy ra, xin hãy thử lại"
+        }
+      };
+    } finally {
+      client.close();
+    }
+    return {
+      docs: results,
+      statusResponse: {
+        status:
+          results.length === ids.length ? StatusCode.Ok : StatusCode.BadRequest,
+        message:
+          results.length === ids.length ? "Thành công" : "Không có dữ liệu"
       }
     };
   }
@@ -81,8 +133,7 @@ export class BaseRepo<T extends BaseModel> {
         cursor.limit(limit);
       }
 
-      const raw = await cursor.toArray();
-      results = raw;
+      results = await cursor.toArray();
     } catch (err) {
       return {
         docs: null,
@@ -98,8 +149,8 @@ export class BaseRepo<T extends BaseModel> {
     return {
       docs: results,
       statusResponse: {
-        status: StatusCode.Ok,
-        message: "Thành công"
+        status: results.length > 0 ? StatusCode.Ok : StatusCode.BadRequest,
+        message: results.length > 0 ? "Thành công" : "Không có dữ liệu"
       }
     };
   }

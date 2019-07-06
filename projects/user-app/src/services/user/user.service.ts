@@ -5,7 +5,7 @@ import {
   ILogInResponse,
   ISignUpResponse,
   IUpdateResponse,
-  IGetUserResponse
+  IUserResponse
 } from "@lib/interfaces/user.interface";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
@@ -52,10 +52,10 @@ export class UserService {
       "Content-Type": "application/json",
       Authorization: accessToken
     });
-    let response = new HttpResponse<IGetUserResponse>();
+    let response = new HttpResponse<IUserResponse>();
     try {
       response = await this.http
-        .get<IGetUserResponse>(
+        .get<IUserResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}/${userId}`,
           { headers, observe: "response" }
         )

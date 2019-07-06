@@ -7,7 +7,7 @@ export class MongoDbHelper {
   // Collections
   static users = "Users";
   static invalidatedTokens = "InvalidatedTokens";
-  static tests = "Tests";
+  static exams = "Exams";
   static sections = "Sections";
   static questions = "Questions";
   static tags = "Tags";

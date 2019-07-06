@@ -28,8 +28,8 @@ export class SectionBuilder {
     return this;
   }
 
-  withTestId(id: string): SectionBuilder {
-    this._section.testId = id;
+  withExamId(id: string): SectionBuilder {
+    this._section.examId = id;
     return this;
   }
 

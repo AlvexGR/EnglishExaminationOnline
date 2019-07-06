@@ -9,6 +9,7 @@ import { WebStorage } from "@lib/helpers/utility.helper";
 
 // Services
 import { UserService } from "../services/user/user.service";
+import { ExamService } from "../services/exam/exam.service";
 
 // Components
 import { HomeComponent } from "../components/home/home.component";
@@ -25,7 +26,7 @@ import { TestPageComponent } from "../components/english-testing/test-page/test-
 import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { SuccessFieldComponent } from "../components/notification/success-field/success-field.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
-import { TestCardComponent } from '../components/english-testing/test-card/test-card.component';
+import { TestCardComponent } from "../components/english-testing/test-card/test-card.component";
 
 export function initData(userService: UserService) {
   return async () => {
@@ -68,6 +69,7 @@ export function initData(userService: UserService) {
   ],
   providers: [
     UserService,
+    ExamService,
     {
       // APP_INITIALIZER (built-in token) is a function, which will be executed when application is initialized.
       // It means you can set it up as a factory in providers section of your AppModule class
