@@ -1,8 +1,8 @@
 import { QuestionRepo } from "../repo/question.repo";
 import { IQuestionsResponse } from "@lib/interfaces/question.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
-import { ITagsResponse } from '@lib/interfaces/tag.interface';
-import { TagHandler } from './tag.handler';
+import { ITagsResponse } from "@lib/interfaces/tag.interface";
+import { TagHandler } from "./tag.handler";
 
 export class QuestionHandler {
   private _tagHandler: TagHandler;
@@ -31,6 +31,9 @@ export class QuestionHandler {
         statusResponse: result.statusResponse
       };
     }
+
+    // sort by index
+    result.docs.sort((a, b) => a.index < b.index ? -1 : 1);
 
     // Get tags by tag ids
     const tagsPromise = new Array<Promise<ITagsResponse>>();

@@ -1,32 +1,36 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="d-inline" style="width: 50px;">
-      1.
+    <div class="d-inline normal-text question-number">
+      {{ questionNumber }}.
     </div>
-    <div class="d-inline">
-      Would you like _______ to Ian's house?
+    <div class="d-inline normal-text">
+      {{ content }}
     </div>
   </div>
   <div class="row">
     <div class="ml-5">
       <div class="form-check">
         <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />A) to go
+          <input type="radio" class="form-check-input" name="sample" />A)
+          {{ choiceA }}
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />B) going
+          <input type="radio" class="form-check-input" name="sample" />B)
+          {{ choiceB }}
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />C) go
+          <input type="radio" class="form-check-input" name="sample" />C)
+          {{ choiceC }}
         </label>
       </div>
       <div class="form-check">
         <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />D) went
+          <input type="radio" class="form-check-input" name="sample" />D)
+          {{ choiceD }}
         </label>
       </div>
     </div>

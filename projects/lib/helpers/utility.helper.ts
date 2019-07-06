@@ -119,7 +119,7 @@ export const AppRoutesName = {
   admin: "admin",
   home: "home",
   profile: "profile",
-  testPage: "test-page",
+  examPage: "exam-page/:id",
   history: "history"
 };
 

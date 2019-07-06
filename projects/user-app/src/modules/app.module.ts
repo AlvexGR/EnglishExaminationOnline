@@ -22,11 +22,12 @@ import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { AdminComponent } from "../components/admin/admin.component";
 import { ErrorFieldComponent } from "../components/notification/error-field/error-field.component";
 import { MultipleChoiceComponent } from "../components/english-testing/multiple-choice/multiple-choice.component";
-import { TestPageComponent } from "../components/english-testing/test-page/test-page.component";
+import { ExamPageComponent } from "../components/english-testing/exam-page/exam-page.component";
 import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { SuccessFieldComponent } from "../components/notification/success-field/success-field.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
-import { TestCardComponent } from "../components/english-testing/test-card/test-card.component";
+import { ExamCardComponent } from "../components/english-testing/exam-card/exam-card.component";
+import { PlainParagraphComponent } from '../components/english-testing/plain-paragraph/plain-paragraph.component';
 
 export function initData(userService: UserService) {
   return async () => {
@@ -52,11 +53,12 @@ export function initData(userService: UserService) {
     AdminComponent,
     ErrorFieldComponent,
     MultipleChoiceComponent,
-    TestPageComponent,
+    ExamPageComponent,
     HistoryComponent,
     SuccessFieldComponent,
     PageNotFoundComponent,
-    TestCardComponent
+    ExamCardComponent,
+    PlainParagraphComponent
   ],
   imports: [
     // Module import order matters

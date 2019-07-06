@@ -22,6 +22,11 @@ export class QuestionBuilder {
     return this;
   }
 
+  withQuestionNumber(questionNumber: number): QuestionBuilder {
+    this._question.questionNumber = questionNumber;
+    return this;
+  }
+
   withChoiceA(choiceA: string): QuestionBuilder {
     this._question.choiceA = choiceA;
     return this;

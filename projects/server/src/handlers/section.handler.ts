@@ -32,6 +32,9 @@ export class SectionHandler {
       };
     }
 
+    // sort by index
+    result.docs.sort((a, b) => a.index < b.index ? -1 : 1);
+
     // Get questions by section id
     const questionsPromise = new Array<Promise<IQuestionsResponse>>();
     result.docs.forEach(sect => {

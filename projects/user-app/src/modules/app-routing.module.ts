@@ -7,7 +7,7 @@ import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
-import { TestPageComponent } from "../components/english-testing/test-page/test-page.component";
+import { ExamPageComponent } from "../components/english-testing/exam-page/exam-page.component";
 import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 
@@ -43,8 +43,8 @@ const routes: Routes = [
     canActivate: [LogInGuard]
   },
   {
-    path: AppRoutesName.testPage,
-    component: TestPageComponent,
+    path: AppRoutesName.examPage,
+    component: ExamPageComponent,
     canActivate: [LogInGuard]
   },
   {

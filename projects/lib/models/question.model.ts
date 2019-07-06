@@ -17,6 +17,7 @@ export class QuestionModel extends BaseModel {
   index: number;
   content: string;
   questionType: QuestionType;
+  questionNumber: number;
   choiceA: string;
   choiceB: string;
   choiceC: string;

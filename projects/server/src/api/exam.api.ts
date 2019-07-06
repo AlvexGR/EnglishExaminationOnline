@@ -9,7 +9,6 @@ const examHandler = new ExamHandler();
 // Get all simple
 router.get(
   `/${HttpHelper.simpleExams}`,
-  verifyAccessToken,
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await examHandler.getAllSimple();
     return res.status(result.statusResponse.status).json(result);
