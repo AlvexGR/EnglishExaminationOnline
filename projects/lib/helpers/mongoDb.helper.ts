@@ -11,6 +11,7 @@ export class MongoDbHelper {
   static sections = "Sections";
   static questions = "Questions";
   static tags = "Tags";
+  static histories = "Histories";
 
   static getMongoClient(): MongoClient {
     return new MongoClient(this.connectionString, {

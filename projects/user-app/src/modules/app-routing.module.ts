@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule, ExtraOptions } from "@angular/router";
 import { AppRoutesName } from "@lib/helpers/utility.helper";
 
+// Components
 import { HomeComponent } from "../components/home/home.component";
 import { LogInComponent } from "../components/log-in/log-in.component";
 import { SignUpComponent } from "../components/sign-up/sign-up.component";
@@ -11,6 +12,7 @@ import { ExamPageComponent } from "../components/english-testing/exam-page/exam-
 import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 
+// Guards
 import { AdminGuard } from "../guards/admin/admin.guard";
 import { LogInGuard } from "../guards/log-in/log-in.guard";
 

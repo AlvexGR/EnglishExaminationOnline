@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this._isAdmin = false;
         } else {
           // User logged in
-          this._isAdmin = currentUser.role === UserRole.admin;
+          this._isAdmin = this._userService.isAdmin;
           this._isLoggedIn = true;
         }
       }

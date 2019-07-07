@@ -5,4 +5,5 @@ export class HttpHelper {
   static readonly logOut = "log-out";
   static readonly simpleExams = "simple";
   static readonly exams = "exams";
+  static readonly histories = "histories";
 }

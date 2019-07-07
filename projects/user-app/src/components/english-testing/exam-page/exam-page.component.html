@@ -14,6 +14,7 @@
             *ngIf="question.questionType == 0"
             [question]="question"
             (answer)="assignAnswer($event)"
+            [showAnswer]="showAnswer"
           >
           </app-multiple-choice>
           <app-plain-paragraph
@@ -24,10 +25,21 @@
           <hr />
         </div>
       </div>
-      <div class="text-right">
-        <button class="btn btn-primary" (click)="checkAnswer()">
-          Xem kết quả
-        </button>
+      <div class="row">
+        <div class="col-8">
+          <span *ngIf="showAnswer" class="text-success" style="font-size: 20px;">
+            Bạn đã trả lời đúng {{correctAnswers}}/{{totalQuestions}} câu
+          </span>
+        </div>
+        <div class="col-4 text-right">
+          <button
+            class="btn btn-primary"
+            (click)="checkAnswer()"
+            [disabled]="showAnswer"
+          >
+            Xem kết quả
+          </button>
+        </div>
       </div>
     </div>
     <div class="col-lg-3"></div>

@@ -8,6 +8,7 @@ import {
 import { UserService } from "../user/user.service";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { StatusCode } from "@lib/helpers/utility.helper";
+import { ExamBuilder } from '@lib/builders/exam.builder';
 
 @Injectable({
   providedIn: "root"
@@ -67,5 +68,21 @@ export class ExamService {
       return err.error;
     }
     return response.body;
+  }
+
+  createFromObj(obj: ExamModel): ExamModel {
+    const examBuilder = new ExamBuilder(obj._id);
+    const exam = examBuilder
+      .withContent(obj.content)
+      .withDifficulty(obj.difficulty)
+      .withIndex(obj.index)
+      .withSectionIds(obj.sectionIds)
+      .withSections(obj.sections)
+      .withSubtitle(obj.subtitle)
+      .withTime(obj.time)
+      .withTitle(obj.title)
+      .build();
+
+    return exam;
   }
 }

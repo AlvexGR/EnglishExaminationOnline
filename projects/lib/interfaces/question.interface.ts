@@ -6,7 +6,7 @@ export interface IQuestionsResponse {
   statusResponse: IStatusResponse;
 }
 
-export interface IAnswerChoice {
+export interface ICorrectChoice {
   questionId: string;
-  answerChoice: AnswerChoice;
+  isCorrect: boolean;
 }

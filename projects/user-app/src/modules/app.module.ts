@@ -11,6 +11,7 @@ import { WebStorage } from "@lib/helpers/utility.helper";
 import { UserService } from "../services/user/user.service";
 import { ExamService } from "../services/exam/exam.service";
 import { LoadingService } from '../services/loading/loading.service';
+import { HistoryService } from '../services/history/history.service';
 
 // Components
 import { HomeComponent } from "../components/home/home.component";
@@ -75,6 +76,7 @@ export function initData(userService: UserService) {
     UserService,
     ExamService,
     LoadingService,
+    HistoryService,
     {
       // APP_INITIALIZER (built-in token) is a function, which will be executed when application is initialized.
       // It means you can set it up as a factory in providers section of your AppModule class

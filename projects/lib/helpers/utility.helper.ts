@@ -1,29 +1,23 @@
 import md5 from "md5";
 import { v4 } from "uuid";
 
+export enum DateType {
+  local,
+  utc
+}
+
 export class UtilityFunctions {
-  static convertLocalToUTC(dateTime: Date): Date {
-    let result: Date;
-    try {
-      result = new Date(
-        dateTime.getUTCFullYear(),
-        dateTime.getUTCMonth(),
-        dateTime.getUTCDate(),
-        dateTime.getUTCHours(),
-        dateTime.getUTCMinutes(),
-        dateTime.getUTCSeconds()
-      );
-    } catch (err) {
-      console.log(err);
-      return null;
+  static convertDateToString(date: Date, dateType: DateType): string {
+    switch (dateType) {
+      case DateType.local: return date.toString();
+      case DateType.utc: return date.toISOString();
     }
-    return result;
   }
 
-  static convertUTCToLocal(UTCDateTime: Date): Date {
+  static convertStringToDate(date: string): Date {
     let result: Date;
     try {
-      result = new Date(UTCDateTime.toString());
+      result = new Date(date);
     } catch (err) {
       console.log(err);
       return null;
@@ -37,6 +31,16 @@ export class UtilityFunctions {
 
   static generateUUID(): string {
     return v4();
+  }
+
+  static getCorrectAnswers(answers: Map<string, boolean>): number {
+    let result = 0;
+
+    answers.forEach(isCorrect => {
+      result += isCorrect ? 1 : 0;
+    });
+
+    return result;
   }
 }
 
