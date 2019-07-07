@@ -10,6 +10,7 @@ import { WebStorage } from "@lib/helpers/utility.helper";
 // Services
 import { UserService } from "../services/user/user.service";
 import { ExamService } from "../services/exam/exam.service";
+import { LoadingService } from '../services/loading/loading.service';
 
 // Components
 import { HomeComponent } from "../components/home/home.component";
@@ -36,7 +37,8 @@ export function initData(userService: UserService) {
     const accessToken = WebStorage.getItemLocal("accessToken");
     if (userId && accessToken) {
       await userService.getThenSet(userId, accessToken);
-      return;
+    } else {
+      WebStorage.clearBoth();
     }
   };
 }
@@ -72,6 +74,7 @@ export function initData(userService: UserService) {
   providers: [
     UserService,
     ExamService,
+    LoadingService,
     {
       // APP_INITIALIZER (built-in token) is a function, which will be executed when application is initialized.
       // It means you can set it up as a factory in providers section of your AppModule class

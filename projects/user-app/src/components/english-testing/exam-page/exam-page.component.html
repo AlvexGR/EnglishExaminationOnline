@@ -1,35 +1,34 @@
 <div class="container-fluid mb-5 min-vh-100">
-  <div class="row">
+  <div *ngIf="!isLoading" class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
-      <h3 class="mb-4 text-center">{{ title }}</h3>
+      <h3 class="mb-4 text-center">{{ exam.title }}</h3>
       <div *ngFor="let section of exam.sections">
         <ins>
-          <h5 class="mb-3 text-underline">
-            {{ section.index }}/ {{ section.title }}
+          <h5 class="mb-3">
+            {{ section.title }}
           </h5>
         </ins>
         <div *ngFor="let question of section.questions">
           <app-multiple-choice
             *ngIf="question.questionType == 0"
             [question]="question"
-          ></app-multiple-choice>
+            (answer)="assignAnswer($event)"
+          >
+          </app-multiple-choice>
           <app-plain-paragraph
             *ngIf="question.questionType == 1"
             [content]="question.content"
-          ></app-plain-paragraph>
+          >
+          </app-plain-paragraph>
           <hr />
         </div>
       </div>
-    </div>
-    <div class="col-lg-3"></div>
-  </div>
-  <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-6 text-right">
-      <button class="btn btn-primary">
-        Xem kết quả
-      </button>
+      <div class="text-right">
+        <button class="btn btn-primary" (click)="checkAnswer()">
+          Xem kết quả
+        </button>
+      </div>
     </div>
     <div class="col-lg-3"></div>
   </div>

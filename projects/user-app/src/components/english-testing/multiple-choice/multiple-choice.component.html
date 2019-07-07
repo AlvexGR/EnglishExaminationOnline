@@ -1,36 +1,60 @@
 <div class="container-fluid">
   <div class="row">
     <div class="d-inline normal-text question-number">
-      {{ questionNumber }}.
+      {{ question.questionNumber }}.
     </div>
     <div class="d-inline normal-text">
-      {{ content }}
+      {{ question.content }}
     </div>
   </div>
   <div class="row">
     <div class="ml-5">
       <div class="form-check">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />A)
-          {{ choiceA }}
+        <label class="form-check-label normal-text">
+          <input
+            type="radio"
+            class="form-check-input"
+            [name]="question._id"
+            value="0"
+            (click)="selectChoice(0)"
+          />
+          A) {{ question.choiceA }}
         </label>
       </div>
       <div class="form-check">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />B)
-          {{ choiceB }}
+        <label class="form-check-label normal-text">
+          <input
+            type="radio"
+            class="form-check-input normal-text"
+            [name]="question._id"
+            value="1"
+            (click)="selectChoice(1)"
+          />
+          B) {{ question.choiceB }}
         </label>
       </div>
       <div class="form-check">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />C)
-          {{ choiceC }}
+        <label class="form-check-label normal-text">
+          <input
+            type="radio"
+            class="form-check-input"
+            [name]="question._id"
+            value="2"
+            (click)="selectChoice(2)"
+          />
+          C) {{ question.choiceC }}
         </label>
       </div>
       <div class="form-check">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="sample" />D)
-          {{ choiceD }}
+        <label class="form-check-label normal-text">
+          <input
+            type="radio"
+            class="form-check-input"
+            [name]="question._id"
+            value="3"
+            (click)="selectChoice(3)"
+          />
+          D) {{ question.choiceD }}
         </label>
       </div>
     </div>

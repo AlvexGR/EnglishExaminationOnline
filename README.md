@@ -8,5 +8,5 @@ In app language: Vietnamese
 - Front-end: Angular 7
 - Back-end: Node, Express, MongoDb
 - Testing: Mocha, Chai, Jasmine, Karma
-- UI/UX: Bootstrap 4
+- UI/UX: Bootstrap 4 and Angular Material
 - Languages: Typescript, HTML, CSS

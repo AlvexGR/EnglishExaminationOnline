@@ -16,6 +16,7 @@ export class PlainParagraphComponent implements OnInit {
   get content(): string {
     return this._content;
   }
+
   constructor() {}
 
   ngOnInit() {}

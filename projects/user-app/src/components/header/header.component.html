@@ -1,110 +1,106 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
-  <a class="navbar-brand brand font-weight-bold" routerLink="/home">
-    English Online Testing
-  </a>
-  <button
-    class="navbar-toggler border-0"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarContent"
-    aria-controls="navbarContent"
-    aria-expanded="true"
-    aria-label="Toggle navigation"
-  >
-    <i class="fas fa-bars toggler-icon"></i>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          routerLink="/home"
-          id="home"
-        >
-          <i class="fas fa-home"></i>
-          <span class="ml-1">Trang chủ</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          routerLink="/test-page"
-          id="test-page"
-        >
-          <i class="fas fa-file-alt"></i>
-          <span class="ml-1">Bài thi</span>
-        </a>
-      </li>
-      <li *ngIf="isAdmin" class="nav-item">
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          routerLink="/admin"
-          id="admin"
-        >
-          <i class="fas fa-user-shield"></i>
-          <span class="ml-1">Admin</span>
-        </a>
-      </li>
-      <li *ngIf="!isLoggedIn" class="nav-item">
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          routerLink="/log-in"
-          id="log-in"
-        >
-          <i class="fas fa-sign-in-alt"></i>
-          <span class="ml-1">Đăng nhập</span>
-        </a>
-      </li>
-      <li *ngIf="!isLoggedIn" class="nav-item">
-        <a
-          class="nav-link"
-          routerLinkActive="active"
-          routerLink="/sign-up"
-          id="sign-up"
-        >
-          <i class="fas fa-user-plus"></i>
-          <span class="ml-1">Đăng kí</span>
-        </a>
-      </li>
-      <li *ngIf="isLoggedIn" class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <i class="fas fa-user"></i>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/profile" id="profile">
-            <i class="far fa-id-card"></i>
-            <span class="ml-1">Trang cá nhân</span>
-          </a>
-          <a class="dropdown-item" routerLink="/history" id="history">
-            <i class="fas fa-history"></i>
-            <span class="ml-1">Lịch sử thi</span>
-          </a>
-          <div class="dropdown-divider"></div>
+<div class="fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <a class="navbar-brand brand font-weight-bold" [routerLink]="homeRoute">
+      English Online Testing
+    </a>
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="true"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars toggler-icon"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
           <a
-            class="dropdown-item"
-            routerLink="/log-in"
-            id="log-out"
-            (click)="logOut()"
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLink]="homeRoute"
+            id="home"
           >
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="ml-1">Đăng xuất</span>
+            <i class="fas fa-home"></i>
+            <span class="ml-1">Trang chủ</span>
           </a>
-        </div>
-      </li>
-    </ul>
-    <!-- <a class="float-right" href="https://github.com/AlvexGR/EnglishOnlineTesting">
-      <i class="fab fa-github text-white"></i>
-    </a> -->
-  </div>
-</nav>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLink]="adminRoute"
+            id="admin"
+          >
+            <i class="fas fa-user-shield"></i>
+            <span class="ml-1">Admin</span>
+          </a>
+        </li>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLink]="logInRoute"
+            id="log-in"
+          >
+            <i class="fas fa-sign-in-alt"></i>
+            <span class="ml-1">Đăng nhập</span>
+          </a>
+        </li>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLink]="signUpRoute"
+            id="sign-up"
+          >
+            <i class="fas fa-user-plus"></i>
+            <span class="ml-1">Đăng kí</span>
+          </a>
+        </li>
+        <li *ngIf="isLoggedIn" class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="profileRoute" id="profile">
+              <i class="far fa-id-card"></i>
+              <span class="ml-1">Trang cá nhân</span>
+            </a>
+            <a class="dropdown-item" [routerLink]="historyRoute" id="history">
+              <i class="fas fa-history"></i>
+              <span class="ml-1">Lịch sử thi</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a
+              class="dropdown-item"
+              [routerLink]="logInRoute"
+              id="log-out"
+              (click)="logOut()"
+            >
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="ml-1">Đăng xuất</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+      <!-- <a class="float-right" href="https://github.com/AlvexGR/EnglishOnlineTesting">
+            <i class="fab fa-github text-white"></i>
+          </a> -->
+    </div>
+  </nav>
+  <mat-progress-bar
+    *ngIf="isLoading"
+    mode="indeterminate"
+    color="warn"
+  ></mat-progress-bar>
+</div>

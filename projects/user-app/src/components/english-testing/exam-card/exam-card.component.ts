@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnChanges, Input } from "@angular/core";
 import { ExamService } from "@app/src/services/exam/exam.service";
 import { ExamModel } from "@lib/models/exam.model";
+import { AppRoutesName } from '@lib/helpers/utility.helper';
 
 @Component({
   selector: "app-exam-card",
   templateUrl: "./exam-card.component.html",
   styleUrls: ["./exam-card.component.css"]
 })
-export class ExamCardComponent implements OnInit {
+export class ExamCardComponent implements OnChanges {
   starOne: boolean;
   starTwo: boolean;
   starThree: boolean;
@@ -22,22 +23,6 @@ export class ExamCardComponent implements OnInit {
 
   private _exam: ExamModel;
 
-  get title(): string {
-    return this._exam.title;
-  }
-
-  get subtitle(): string {
-    return this._exam.subtitle;
-  }
-
-  get content(): string {
-    return this._exam.content;
-  }
-
-  get examId(): string {
-    return this._exam._id;
-  }
-
   get time(): string {
     const hours = this._exam.time / 60;
     const minutes = this._exam.time % 60;
@@ -49,13 +34,22 @@ export class ExamCardComponent implements OnInit {
     return time;
   }
 
-  constructor(private _examService: ExamService) {}
   @Input()
   set exam(exam: ExamModel) {
     this._exam = exam;
   }
 
-  ngOnInit() {
+  get exam(): ExamModel {
+    return this._exam;
+  }
+
+  get examPageRoute(): string {
+    return `/${AppRoutesName.examPage}`;
+  }
+
+  constructor(private _examService: ExamService) {}
+
+  ngOnChanges() {
     this.setUpDifficulty();
   }
 

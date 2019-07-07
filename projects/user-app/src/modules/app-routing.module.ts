@@ -43,7 +43,7 @@ const routes: Routes = [
     canActivate: [LogInGuard]
   },
   {
-    path: AppRoutesName.examPage,
+    path: AppRoutesName.examPage + "/:id",
     component: ExamPageComponent,
     canActivate: [LogInGuard]
   },
