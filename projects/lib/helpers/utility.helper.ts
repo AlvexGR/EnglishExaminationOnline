@@ -1,6 +1,6 @@
 import md5 from "md5";
 import { v4 } from "uuid";
-import { ICorrectChoice } from '@lib/interfaces/question.interface';
+import { IChoice } from "@lib/interfaces/question.interface";
 
 export enum DateType {
   local,
@@ -10,8 +10,10 @@ export enum DateType {
 export class UtilityFunctions {
   static convertDateToString(date: Date, dateType: DateType): string {
     switch (dateType) {
-      case DateType.local: return date.toString();
-      case DateType.utc: return date.toISOString();
+      case DateType.local:
+        return date.toString();
+      case DateType.utc:
+        return date.toISOString();
     }
   }
 
@@ -34,13 +36,29 @@ export class UtilityFunctions {
     return v4();
   }
 
-  static getCorrectAnswers(answers: Map<string, ICorrectChoice>): number {
+  static getCorrectAnswers(answers: Map<string, IChoice>): number {
     let result = 0;
 
     answers.forEach(answer => {
       result += answer.isCorrect ? 1 : 0;
     });
 
+    return result;
+  }
+
+  static mapToArray(map: Map<any, any>): Array<{ key: any; values: any }> {
+    const result = new Array<{ key: any; values: any }>();
+    map.forEach((values, key) => {
+      result.push({ key, values });
+    });
+    return result;
+  }
+
+  static arrayToMap(arr: Array<{ key: any; values: any }>): Map<any, any> {
+    const result = new Map<any, any>();
+    arr.forEach(ele => {
+      result.set(ele.key, ele.values);
+    });
     return result;
   }
 }

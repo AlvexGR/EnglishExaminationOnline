@@ -1,6 +1,6 @@
 import { HistoryModel } from "@lib/models/history.model";
 import { ExamModel } from "@lib/models/exam.model";
-import { ICorrectChoice } from "@lib/interfaces/question.interface";
+import { IChoice, IAnswer } from "@lib/interfaces/question.interface";
 
 export class HistoryBuilder {
   private _history: HistoryModel;
@@ -24,8 +24,23 @@ export class HistoryBuilder {
     return this;
   }
 
-  withAnswer(answers: Map<string, ICorrectChoice>): HistoryBuilder {
+  withTotalQuestions(total: number): HistoryBuilder {
+    this._history.totalQuestions = total;
+    return this;
+  }
+
+  withCorrectAnswers(total: number): HistoryBuilder {
+    this._history.correctAnswers = total;
+    return this;
+  }
+
+  withAnswersArray(answers: Array<IAnswer>): HistoryBuilder {
     this._history.answers = answers;
+    return this;
+  }
+
+  withAnswersMap(answers: Map<string, IChoice>): HistoryBuilder {
+    this._history.answers = this._history.getAnswerArray(answers);
     return this;
   }
 

@@ -8,7 +8,7 @@ import {
 import { UserService } from "../user/user.service";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { StatusCode } from "@lib/helpers/utility.helper";
-import { ExamBuilder } from '@lib/builders/exam.builder';
+import { ExamBuilder } from "@lib/builders/exam.builder";
 
 @Injectable({
   providedIn: "root"
@@ -27,7 +27,9 @@ export class ExamService {
     try {
       response = await this._http
         .get<ISimpleExamsResponse>(
-          `${HttpHelper.endpoint}/${HttpHelper.exams}/${HttpHelper.simpleExams}`,
+          `${HttpHelper.endpoint}/${HttpHelper.exams}/${
+            HttpHelper.simpleExams
+          }`,
           { headers, observe: "response" }
         )
         .toPromise();

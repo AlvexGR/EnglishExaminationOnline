@@ -1,2 +1,40 @@
-<h3>History List</h3>
-<a [routerLink]="[detailRoute, historyId]">go to detail</a>
+<div class="container-fluid min-vh-100">
+  <h3 class="text-center mb-5">Lịch sử thi</h3>
+  <div *ngIf="!isLoading" class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <table class="table table-striped shadow p-3 mb-5 bg-white rounded">
+        <thead>
+          <tr>
+            <th scope="col">Mã bài thi</th>
+            <th scope="col">Ngày và giờ thi</th>
+            <th scope="col">Thành tích</th>
+            <th scope="col">Điểm số</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let history of histories">
+            <td>{{ history?.examId }}</td>
+            <td>{{ history?.date.toLocaleString() }}</td>
+            <td>
+              {{ history?.correctAnswers }}/{{ history?.totalQuestions }} câu
+            </td>
+            <td>
+              {{ (history?.correctAnswers / history?.totalQuestions) * 100 }}
+            </td>
+            <td>
+              <a
+                class="btn btn-primary"
+                [routerLink]="[detailRoute, history?._id]"
+              >
+                Chi tiết
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>

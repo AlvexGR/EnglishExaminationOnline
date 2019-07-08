@@ -10,7 +10,7 @@ import {
   ElementRef
 } from "@angular/core";
 import { QuestionModel, AnswerChoice } from "@lib/models/question.model";
-import { ICorrectChoice } from "@lib/interfaces/question.interface";
+import { IChoice } from "@lib/interfaces/question.interface";
 
 @Component({
   selector: "app-multiple-choice",
@@ -58,7 +58,7 @@ export class MultipleChoiceComponent implements OnInit, OnChanges {
     return this._selectedChoice === this._question.answer;
   }
 
-  @Output() getAnswer = new EventEmitter<ICorrectChoice>();
+  @Output() getAnswer = new EventEmitter<IChoice>();
 
   constructor() {}
 

@@ -22,7 +22,7 @@ export class UserService {
   private _accessToken: string;
   private _userObservable: BehaviorSubject<UserModel>;
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
     this._userObservable = new BehaviorSubject<UserModel>(this._currentUser);
   }
 
@@ -58,7 +58,7 @@ export class UserService {
     });
     let response = new HttpResponse<IUserResponse>();
     try {
-      response = await this.http
+      response = await this._http
         .get<IUserResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}/${userId}`,
           { headers, observe: "response" }
@@ -80,7 +80,7 @@ export class UserService {
     password = UtilityFunctions.hash(password);
 
     try {
-      response = await this.http
+      response = await this._http
         .post<ILogInResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}/${HttpHelper.logIn}`,
           { username, password },
@@ -111,7 +111,7 @@ export class UserService {
     // Hash password before send to Server
     newUser.password = UtilityFunctions.hash(newUser.password);
     try {
-      response = await this.http
+      response = await this._http
         .post<ISignUpResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}`,
           { user: newUser },
@@ -144,7 +144,7 @@ export class UserService {
     currentPassword = currentPassword && UtilityFunctions.hash(currentPassword);
 
     try {
-      response = await this.http
+      response = await this._http
         .put<IUpdateResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}`,
           {
@@ -174,7 +174,7 @@ export class UserService {
     token.token = this._accessToken || WebStorage.getItemLocal("accessToken");
 
     try {
-      response = await this.http
+      response = await this._http
         .post<IStatusResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}/${HttpHelper.logOut}`,
           { token },

@@ -6,8 +6,13 @@ export interface IQuestionsResponse {
   statusResponse: IStatusResponse;
 }
 
-export interface ICorrectChoice {
+export interface IChoice {
   questionId: string;
   selectedChoice: AnswerChoice;
   isCorrect: boolean;
+}
+
+export interface IAnswer {
+  id: string;
+  choice: IChoice;
 }

@@ -27,10 +27,14 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this._loadingService.isLoading = this._isLoading = true;
+    await this.loadExams();
+    this._loadingService.isLoading = this._isLoading = false;
+  }
+
+  async loadExams(): Promise<void> {
     const simpleExams = await this._examService.getAllSimple();
     if (simpleExams.exams) {
       this._exams = simpleExams.exams;
     }
-    this._loadingService.isLoading = this._isLoading = false;
   }
 }

@@ -28,6 +28,7 @@ server.use(cors());
 // APIs
 server.use(`/api/${HttpHelper.users}`, require("./src/api/user.api"));
 server.use(`/api/${HttpHelper.exams}`, require("./src/api/exam.api"));
+server.use(`/api/${HttpHelper.histories}`, require("./src/api/history.api"));
 
 server.listen(PORT, () => {
   console.log(`Server running at ${PORT}`);

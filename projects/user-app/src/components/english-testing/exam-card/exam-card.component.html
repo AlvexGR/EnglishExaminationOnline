@@ -4,9 +4,9 @@
       <h5 class="card-title">{{ exam?.title }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ exam?.subtitle }}</h6>
       <p class="card-text text-justify">{{ exam?.content }}</p>
-      <h6 class="card-subtitle mb-2 text-info">
+      <!-- <h6 class="card-subtitle mb-2 text-info">
         Thời gian làm bài: {{ time }}
-      </h6>
+      </h6> not yet support-->
       <div class="row align-items-center">
         <div class="col-7">
           <a [routerLink]="[examPageRoute, exam?._id]" class="btn btn-primary">Làm bài</a>
