@@ -1,6 +1,6 @@
 import { HistoryModel } from "@lib/models/history.model";
-import { ExamModel } from '@lib/models/exam.model';
-import { ICorrectChoice } from '@lib/interfaces/question.interface';
+import { ExamModel } from "@lib/models/exam.model";
+import { ICorrectChoice } from "@lib/interfaces/question.interface";
 
 export class HistoryBuilder {
   private _history: HistoryModel;

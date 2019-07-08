@@ -26,6 +26,7 @@ export class ExamPageComponent implements OnInit {
   private _isCompleted: boolean;
   private _totalQuestions: number;
   private _correctAnswers: number;
+  private _score: number;
 
   @Input()
   set history(history: HistoryModel) {
@@ -64,6 +65,10 @@ export class ExamPageComponent implements OnInit {
 
   get answers(): Map<string, ICorrectChoice> {
     return this._answers;
+  }
+
+  get score(): number {
+    return this._correctAnswers / this._totalQuestions * 100;
   }
 
   constructor(
@@ -106,6 +111,7 @@ export class ExamPageComponent implements OnInit {
       .withAnswer(this._answers)
       .withDate(new Date())
       .withExamId(this._exam._id)
+      .withExam(this._exam)
       .build();
   }
 }
