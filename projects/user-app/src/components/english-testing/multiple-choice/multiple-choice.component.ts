@@ -48,7 +48,7 @@ export class MultipleChoiceComponent implements OnInit {
     return this._selected === this._question.answer;
   }
 
-  @Output() answer = new EventEmitter<ICorrectChoice>();
+  @Output() getAnswer = new EventEmitter<ICorrectChoice>();
 
   constructor() {}
 
@@ -56,9 +56,10 @@ export class MultipleChoiceComponent implements OnInit {
 
   selectChoice(choice: AnswerChoice): void {
     this._selected = choice;
-    this.answer.emit({
+    this.getAnswer.emit({
       isCorrect: this.isCorrect,
-      questionId: this._question._id
+      questionId: this._question._id,
+      selectedChoice: choice
     });
   }
 

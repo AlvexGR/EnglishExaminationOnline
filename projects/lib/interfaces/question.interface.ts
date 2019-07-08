@@ -8,5 +8,6 @@ export interface IQuestionsResponse {
 
 export interface ICorrectChoice {
   questionId: string;
+  selectedChoice: AnswerChoice;
   isCorrect: boolean;
 }

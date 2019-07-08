@@ -9,12 +9,13 @@ import { SignUpComponent } from "../components/sign-up/sign-up.component";
 import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
 import { ExamPageComponent } from "../components/english-testing/exam-page/exam-page.component";
-import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 
 // Guards
 import { AdminGuard } from "../guards/admin/admin.guard";
 import { LogInGuard } from "../guards/log-in/log-in.guard";
+import { HistoryListComponent } from "../components/english-testing/history-list/history-list.component";
+import { HistoryDetailComponent } from "../components/english-testing/history-detail/history-detail.component";
 
 const routes: Routes = [
   {
@@ -45,17 +46,20 @@ const routes: Routes = [
     canActivate: [LogInGuard]
   },
   {
-    path: AppRoutesName.examPage + "/:id",
+    path: `${AppRoutesName.examPage}/:id`,
     component: ExamPageComponent,
     canActivate: [LogInGuard]
   },
   {
-    path: AppRoutesName.history,
-    component: HistoryComponent,
-    canActivate: [LogInGuard]
+    path: `${AppRoutesName.historyList}/:userId`,
+    component: HistoryListComponent
   },
   {
-    path: "**",
+    path: `${AppRoutesName.historyList}/:userId/${AppRoutesName.historyDetail}/:id`,
+    component: HistoryDetailComponent
+  },
+  {
+    path: AppRoutesName.notFound,
     component: PageNotFoundComponent
   }
 ];

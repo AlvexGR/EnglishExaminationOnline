@@ -1,5 +1,6 @@
 import md5 from "md5";
 import { v4 } from "uuid";
+import { ICorrectChoice } from '@lib/interfaces/question.interface';
 
 export enum DateType {
   local,
@@ -33,7 +34,7 @@ export class UtilityFunctions {
     return v4();
   }
 
-  static getCorrectAnswers(answers: Map<string, boolean>): number {
+  static getCorrectAnswers(answers: Map<string, ICorrectChoice>): number {
     let result = 0;
 
     answers.forEach(isCorrect => {
@@ -124,7 +125,9 @@ export const AppRoutesName = {
   home: "home",
   profile: "profile",
   examPage: "exam-page",
-  history: "history"
+  historyDetail: "detail",
+  historyList: "history/list",
+  notFound: "**"
 };
 
 export enum StatusCode {

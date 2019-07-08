@@ -5,8 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {
   StatusCode,
   AppRoutesName,
-  UtilityFunctions,
-  DateType
+  UtilityFunctions
 } from "@lib/helpers/utility.helper";
 import { ICorrectChoice } from "@lib/interfaces/question.interface";
 import { LoadingService } from "@app/src/services/loading/loading.service";
@@ -20,7 +19,7 @@ import { HistoryService } from "@app/src/services/history/history.service";
 })
 export class ExamPageComponent implements OnInit {
   private _exam: ExamModel;
-  private _answer: Map<string, boolean>;
+  private _answer: Map<string, ICorrectChoice>;
   private _isLoading: boolean;
   private _showAnswer: boolean;
   private _totalQuestions: number;
@@ -53,7 +52,7 @@ export class ExamPageComponent implements OnInit {
     private _loadingService: LoadingService,
     private _historyService: HistoryService
   ) {
-    this._answer = new Map<string, boolean>();
+    this._answer = new Map<string, ICorrectChoice>();
   }
 
   async ngOnInit() {
@@ -69,8 +68,8 @@ export class ExamPageComponent implements OnInit {
     this._loadingService.isLoading = this._isLoading = false;
   }
 
-  assignAnswer(answer: ICorrectChoice): void {
-    this._answer.set(answer.questionId, answer.isCorrect);
+  assignAnswer(questionId: string, correctChoice: ICorrectChoice): void {
+    this._answer.set(questionId, correctChoice);
   }
 
   checkAnswer(): void {

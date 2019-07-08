@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   get historyRoute(): string {
-    return `/${AppRoutesName.history}`;
+    return `/${AppRoutesName.historyList}`;
   }
 
   get adminRoute(): string {
@@ -52,6 +52,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  get userId(): string {
+    return this._userService.userId;
   }
 
   constructor(

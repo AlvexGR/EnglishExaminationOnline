@@ -47,6 +47,10 @@ export class UserService {
     return this._currentUser && this._currentUser.role === UserRole.admin;
   }
 
+  get userId(): string {
+    return this._currentUser && this._currentUser._id;
+  }
+
   async getThenSet(userId: string, accessToken: string): Promise<void> {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",

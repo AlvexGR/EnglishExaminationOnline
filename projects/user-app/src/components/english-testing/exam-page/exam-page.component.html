@@ -13,7 +13,7 @@
           <app-multiple-choice
             *ngIf="question.questionType == 0"
             [question]="question"
-            (answer)="assignAnswer($event)"
+            (getAnswer)="assignAnswer(question._id, $event)"
             [showAnswer]="showAnswer"
           >
           </app-multiple-choice>

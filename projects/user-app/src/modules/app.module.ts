@@ -25,11 +25,12 @@ import { AdminComponent } from "../components/admin/admin.component";
 import { ErrorFieldComponent } from "../components/notification/error-field/error-field.component";
 import { MultipleChoiceComponent } from "../components/english-testing/multiple-choice/multiple-choice.component";
 import { ExamPageComponent } from "../components/english-testing/exam-page/exam-page.component";
-import { HistoryComponent } from "../components/english-testing/history/history.component";
 import { SuccessFieldComponent } from "../components/notification/success-field/success-field.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 import { ExamCardComponent } from "../components/english-testing/exam-card/exam-card.component";
 import { PlainParagraphComponent } from '../components/english-testing/plain-paragraph/plain-paragraph.component';
+import { HistoryDetailComponent } from '../components/english-testing/history-detail/history-detail.component';
+import { HistoryListComponent } from '../components/english-testing/history-list/history-list.component';
 
 export function initData(userService: UserService) {
   return async () => {
@@ -57,12 +58,13 @@ export function initData(userService: UserService) {
     ErrorFieldComponent,
     MultipleChoiceComponent,
     ExamPageComponent,
-    HistoryComponent,
     SuccessFieldComponent,
     PageNotFoundComponent,
     ExamCardComponent,
-    PlainParagraphComponent
-  ],
+    PlainParagraphComponent,
+    HistoryDetailComponent,
+    HistoryListComponent
+    ],
   imports: [
     // Module import order matters
     BrowserModule,
