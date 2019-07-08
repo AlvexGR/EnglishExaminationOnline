@@ -1,6 +1,8 @@
 import {
   Component,
   OnInit,
+  OnChanges,
+  SimpleChanges,
   Input,
   Output,
   EventEmitter,
@@ -15,10 +17,10 @@ import { ICorrectChoice } from "@lib/interfaces/question.interface";
   templateUrl: "./multiple-choice.component.html",
   styleUrls: ["./multiple-choice.component.css"]
 })
-export class MultipleChoiceComponent implements OnInit {
+export class MultipleChoiceComponent implements OnInit, OnChanges {
   private _question: QuestionModel;
-  private _showAnswer: boolean;
-  private _selected: AnswerChoice;
+  private _isCompleted: boolean;
+  private _selectedChoice: AnswerChoice;
 
   @ViewChild("choiceA") choiceA: ElementRef;
   @ViewChild("choiceB") choiceB: ElementRef;
@@ -35,17 +37,25 @@ export class MultipleChoiceComponent implements OnInit {
   }
 
   @Input()
-  set showAnswer(showAnswer: boolean) {
-    this._showAnswer = showAnswer;
-    this.setUpViewForShowAnswer();
+  set isCompleted(isCompleted: boolean) {
+    this._isCompleted = isCompleted;
   }
 
-  get showAnswer(): boolean {
-    return this._showAnswer;
+  get isCompleted(): boolean {
+    return this._isCompleted;
+  }
+
+  @Input()
+  set selectedChoice(selectedChoice: AnswerChoice) {
+    this._selectedChoice = selectedChoice;
+  }
+
+  get selectedChoice(): AnswerChoice {
+    return this._selectedChoice;
   }
 
   get isCorrect(): boolean {
-    return this._selected === this._question.answer;
+    return this._selectedChoice === this._question.answer;
   }
 
   @Output() getAnswer = new EventEmitter<ICorrectChoice>();
@@ -54,8 +64,12 @@ export class MultipleChoiceComponent implements OnInit {
 
   ngOnInit() {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setUpViewForComplete();
+  }
+
   selectChoice(choice: AnswerChoice): void {
-    this._selected = choice;
+    this._selectedChoice = choice;
     this.getAnswer.emit({
       isCorrect: this.isCorrect,
       questionId: this._question._id,
@@ -63,8 +77,8 @@ export class MultipleChoiceComponent implements OnInit {
     });
   }
 
-  setUpViewForShowAnswer(): void {
-    if (!this._showAnswer) {
+  setUpViewForComplete(): void {
+    if (!this._isCompleted) {
       return;
     }
 
@@ -85,16 +99,16 @@ export class MultipleChoiceComponent implements OnInit {
       return;
     }
 
-    if (this._selected === AnswerChoice.A) {
+    if (this._selectedChoice === AnswerChoice.A) {
       this.choiceA.nativeElement.classList.add("text-danger");
     }
-    if (this._selected === AnswerChoice.B) {
+    if (this._selectedChoice === AnswerChoice.B) {
       this.choiceB.nativeElement.classList.add("text-danger");
     }
-    if (this._selected === AnswerChoice.C) {
+    if (this._selectedChoice === AnswerChoice.C) {
       this.choiceC.nativeElement.classList.add("text-danger");
     }
-    if (this._selected === AnswerChoice.D) {
+    if (this._selectedChoice === AnswerChoice.D) {
       this.choiceD.nativeElement.classList.add("text-danger");
     }
   }

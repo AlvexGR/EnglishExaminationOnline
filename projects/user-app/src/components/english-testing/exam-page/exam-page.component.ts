@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { ExamService } from "@app/src/services/exam/exam.service";
 import { ExamModel } from "@lib/models/exam.model";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -11,6 +11,7 @@ import { ICorrectChoice } from "@lib/interfaces/question.interface";
 import { LoadingService } from "@app/src/services/loading/loading.service";
 import { HistoryBuilder } from "@lib/builders/history.builder";
 import { HistoryService } from "@app/src/services/history/history.service";
+import { HistoryModel } from "@lib/models/history.model";
 
 @Component({
   selector: "app-exam-page",
@@ -19,11 +20,27 @@ import { HistoryService } from "@app/src/services/history/history.service";
 })
 export class ExamPageComponent implements OnInit {
   private _exam: ExamModel;
-  private _answer: Map<string, ICorrectChoice>;
+  private _history: HistoryModel;
+  private _answers: Map<string, ICorrectChoice>;
   private _isLoading: boolean;
-  private _showAnswer: boolean;
+  private _isCompleted: boolean;
   private _totalQuestions: number;
   private _correctAnswers: number;
+
+  @Input()
+  set history(history: HistoryModel) {
+    // Set up for history
+    this._history = history;
+    this._exam = this._history.exam;
+    this._answers = this.history.answers;
+    this._isCompleted = true;
+    this._totalQuestions = this._history.exam.getTotalQuestions();
+    this._correctAnswers = UtilityFunctions.getCorrectAnswers(this._answers);
+  }
+
+  get history(): HistoryModel {
+    return this._history;
+  }
 
   get exam(): ExamModel {
     return this._exam;
@@ -33,8 +50,8 @@ export class ExamPageComponent implements OnInit {
     return this._isLoading;
   }
 
-  get showAnswer(): boolean {
-    return this._showAnswer;
+  get isCompleted(): boolean {
+    return this._isCompleted;
   }
 
   get correctAnswers(): number {
@@ -45,6 +62,10 @@ export class ExamPageComponent implements OnInit {
     return this._totalQuestions;
   }
 
+  get answers(): Map<string, ICorrectChoice> {
+    return this._answers;
+  }
+
   constructor(
     private _examService: ExamService,
     private _route: ActivatedRoute,
@@ -52,38 +73,39 @@ export class ExamPageComponent implements OnInit {
     private _loadingService: LoadingService,
     private _historyService: HistoryService
   ) {
-    this._answer = new Map<string, ICorrectChoice>();
+    this._answers = new Map<string, ICorrectChoice>();
   }
 
   async ngOnInit() {
     this._loadingService.isLoading = this._isLoading = true;
-    const id = this._route.snapshot.paramMap.get("id");
-    const result = await this._examService.getById(id);
-    if (result.statusResponse.status !== StatusCode.Ok) {
-      this._router.navigate([`/${AppRoutesName.home}`]);
-      return;
+    // If normal exam => load it from id in URL
+    if (!this._exam) {
+      const id = this._route.snapshot.paramMap.get("id");
+      const result = await this._examService.getById(id);
+      if (result.statusResponse.status !== StatusCode.Ok) {
+        this._router.navigate([`/${AppRoutesName.home}`]);
+        return;
+      }
+      this._exam = this._examService.createFromObj(result.exam);
     }
-    this._exam = this._examService.createFromObj(result.exam);
 
     this._loadingService.isLoading = this._isLoading = false;
   }
 
   assignAnswer(questionId: string, correctChoice: ICorrectChoice): void {
-    this._answer.set(questionId, correctChoice);
+    this._answers.set(questionId, correctChoice);
   }
 
   checkAnswer(): void {
-    this._showAnswer = true;
+    this._isCompleted = true;
     this._totalQuestions = this._exam.getTotalQuestions();
-    this._correctAnswers = UtilityFunctions.getCorrectAnswers(this._answer);
+    this._correctAnswers = UtilityFunctions.getCorrectAnswers(this._answers);
 
     const historyBuilder = new HistoryBuilder();
     const history = historyBuilder
-      .withAnswer(this._answer)
+      .withAnswer(this._answers)
       .withDate(new Date())
       .withExamId(this._exam._id)
       .build();
-
-    console.log(history);
   }
 }

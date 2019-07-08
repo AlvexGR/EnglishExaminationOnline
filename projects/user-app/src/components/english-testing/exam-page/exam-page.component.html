@@ -2,24 +2,25 @@
   <div *ngIf="!isLoading" class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
-      <h3 class="mb-4 text-center">{{ exam.title }}</h3>
-      <div *ngFor="let section of exam.sections">
+      <h3 class="mb-4 text-center">{{ exam?.title }}</h3>
+      <div *ngFor="let section of exam?.sections">
         <ins>
           <h5 class="mb-3">
-            {{ section.title }}
+            {{ section?.title }}
           </h5>
         </ins>
-        <div *ngFor="let question of section.questions">
+        <div *ngFor="let question of section?.questions">
           <app-multiple-choice
-            *ngIf="question.questionType == 0"
+            *ngIf="question?.questionType == 0"
             [question]="question"
-            (getAnswer)="assignAnswer(question._id, $event)"
-            [showAnswer]="showAnswer"
+            [isCompleted]="isCompleted"
+            [selectedChoice]="answers?.get(question?._id)?.selectedChoice"
+            (getAnswer)="assignAnswer(question?._id, $event)"
           >
           </app-multiple-choice>
           <app-plain-paragraph
-            *ngIf="question.questionType == 1"
-            [content]="question.content"
+            *ngIf="question?.questionType == 1"
+            [content]="question?.content"
           >
           </app-plain-paragraph>
           <hr />
@@ -27,15 +28,19 @@
       </div>
       <div class="row">
         <div class="col-8">
-          <span *ngIf="showAnswer" class="text-success" style="font-size: 20px;">
-            Bạn đã trả lời đúng {{correctAnswers}}/{{totalQuestions}} câu
+          <span
+            *ngIf="isCompleted"
+            class="text-success"
+            style="font-size: 20px;"
+          >
+            Bạn đã trả lời đúng {{ correctAnswers }}/{{ totalQuestions }} câu
           </span>
         </div>
         <div class="col-4 text-right">
           <button
             class="btn btn-primary"
             (click)="checkAnswer()"
-            [disabled]="showAnswer"
+            [disabled]="isCompleted"
           >
             Xem kết quả
           </button>

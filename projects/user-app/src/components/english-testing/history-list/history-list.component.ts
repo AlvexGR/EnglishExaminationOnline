@@ -11,7 +11,7 @@ export class HistoryListComponent implements OnInit {
     return `./${AppRoutesName.historyDetail}`;
   }
 
-  get examId(): string {
+  get historyId(): string {
     return "asdf";
   }
 

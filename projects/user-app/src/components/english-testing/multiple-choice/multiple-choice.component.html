@@ -14,10 +14,11 @@
           <input
             type="radio"
             class="form-check-input"
-            [name]="question._id"
+            [name]="question?._id"
             value="0"
             (click)="selectChoice(0)"
-            [disabled]="showAnswer"
+            [disabled]="isCompleted"
+            [checked]="selectedChoice == 0"
           />
           <span #choiceA>A) {{ question.choiceA }}</span>
         </label>
@@ -27,10 +28,11 @@
           <input
             type="radio"
             class="form-check-input normal-text"
-            [name]="question._id"
+            [name]="question?._id"
             value="1"
             (click)="selectChoice(1)"
-            [disabled]="showAnswer"
+            [disabled]="isCompleted"
+            [checked]="selectedChoice == 1"
           />
           <span #choiceB>B) {{ question.choiceB }}</span>
         </label>
@@ -40,10 +42,11 @@
           <input
             type="radio"
             class="form-check-input"
-            [name]="question._id"
+            [name]="question?._id"
             value="2"
             (click)="selectChoice(2)"
-            [disabled]="showAnswer"
+            [disabled]="isCompleted"
+            [checked]="selectedChoice == 2"
           />
           <span #choiceC>C) {{ question.choiceC }}</span>
         </label>
@@ -53,10 +56,11 @@
           <input
             type="radio"
             class="form-check-input"
-            [name]="question._id"
+            [name]="question?._id"
             value="3"
             (click)="selectChoice(3)"
-            [disabled]="showAnswer"
+            [disabled]="isCompleted"
+            [checked]="selectedChoice == 3"
           />
           <span #choiceD>D) {{ question.choiceD }}</span>
         </label>

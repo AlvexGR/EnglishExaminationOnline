@@ -37,8 +37,8 @@ export class UtilityFunctions {
   static getCorrectAnswers(answers: Map<string, ICorrectChoice>): number {
     let result = 0;
 
-    answers.forEach(isCorrect => {
-      result += isCorrect ? 1 : 0;
+    answers.forEach(answer => {
+      result += answer.isCorrect ? 1 : 0;
     });
 
     return result;
