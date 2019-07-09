@@ -1,0 +1,16 @@
+.delete-section-icon:active {
+  color: rgb(236, 65, 65);
+}
+
+.delete-section-icon {
+  font-size: 23px;
+}
+
+.add-question-icon:active {
+  color: rgb(31, 158, 31);
+}
+
+.add-question-icon {
+  font-size: 23px;
+}
+

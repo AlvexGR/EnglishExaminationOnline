@@ -1,0 +1,51 @@
+<div class="container-fluid accordion p-0">
+  <div class="row">
+    <div class="col-lg-12">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title > #{{ index }}: {{ cutTitle }} </mat-panel-title>
+            <i
+              class="delete-section-icon fas fa-times"
+              (click)="deleteSection()"
+              matTooltip="Xoá phân khúc"
+              matTooltipPosition="right"
+            ></i>
+          </mat-expansion-panel-header>
+          <form class="form-group" [formGroup]="sectionForm">
+            <div class="mb-3">
+              <label>Tên phân khúc</label>
+              <input
+                formControlName="title"
+                type="text"
+                class="form-control"
+                placeholder="Choose the best answer | Read the following passage and choose A, B, C, or D to fill in the gaps,..."
+                tabindex="1"
+              />
+              <app-error-field
+                *ngIf="title.invalid && title.touched"
+                [errorMessage]="'Hãy nhập vào Tên phân khúc'"
+              ></app-error-field>
+            </div>
+            <div class="mb-3">
+              <label>Câu hỏi hoặc đoạn văn:</label>
+              <i
+                class="add-question-icon far fa-plus-square ml-2 align-middle"
+                (click)="addQuestion()"
+                matTooltip="Thêm câu hỏi hoặc đoạn văn"
+                matTooltipPosition="right"
+              ></i>
+            </div>
+            <div class="mb-3" *ngFor="let _ of questions; let i = index">
+              <app-question-creator
+                (delete)="deleteQuestion(i)"
+                (update)="updateQuestion(i, $event)"
+                [index]="i + 1"
+              ></app-question-creator>
+            </div>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

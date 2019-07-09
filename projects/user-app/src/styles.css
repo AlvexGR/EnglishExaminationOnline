@@ -22,3 +22,7 @@ button:focus {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.mat-tooltip {
+  font-size: 13px !important;
+}

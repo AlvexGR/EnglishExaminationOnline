@@ -1,0 +1,119 @@
+<div class="container-fluid accordion p-0">
+  <div class="row">
+    <div class="col-lg-12">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              #{{ index }}: {{ title }}
+            </mat-panel-title>
+            <i
+              class="delete-question-icon fas fa-times"
+              (click)="deleteQuestion()"
+              matTooltip="Xoá phân khúc"
+              matTooltipPosition="right"
+            ></i>
+          </mat-expansion-panel-header>
+          <form class="form-group" [formGroup]="questionForm">
+            <div class="mb-3">
+              <label>Nội dung câu hỏi hoặc đoạn văn</label>
+              <textarea
+                formControlName="content"
+                type="text"
+                class="form-control"
+                rows="3"
+                placeholder="What ____ want you for tonight dinner?"
+                tabindex="1"
+              >
+              </textarea>
+              <app-error-field
+                *ngIf="content.invalid && content.touched"
+                [errorMessage]="'Hãy nhập vào Nội dung câu hỏi hoặc đoạn văn'"
+              ></app-error-field>
+            </div>
+            <div class="mb-3">
+              <label>Loại</label>
+              <select
+                formControlName="questionType"
+                class="form-control"
+                tabindex="2"
+              >
+                <option value="0">Câu hỏi trắc nghiệm</option>
+                <option value="1">Đoạn văn</option>
+              </select>
+            </div>
+            <div *ngIf="questionType.value == 0" class="mb-3">
+              <label>Câu A</label>
+              <input
+                formControlName="choiceA"
+                type="text"
+                class="form-control"
+                placeholder="A) does"
+                tabindex="3"
+              />
+              <app-error-field
+                *ngIf="choiceA.invalid && choiceA.touched"
+                [errorMessage]="'Hãy nhập Câu A'"
+              ></app-error-field>
+            </div>
+            <div *ngIf="questionType.value == 0" class="mb-3">
+              <label>Câu B</label>
+              <input
+                formControlName="choiceB"
+                type="text"
+                class="form-control"
+                placeholder="B) do"
+                tabindex="4"
+              />
+              <app-error-field
+                *ngIf="choiceB.invalid && choiceB.touched"
+                [errorMessage]="'Hãy nhập Câu B'"
+              ></app-error-field>
+            </div>
+            <div *ngIf="questionType.value == 0" class="mb-3">
+              <label>Câu C</label>
+              <input
+                formControlName="choiceC"
+                type="text"
+                class="form-control"
+                placeholder="C) did"
+                tabindex="5"
+              />
+              <app-error-field
+                *ngIf="choiceC.invalid && choiceC.touched"
+                [errorMessage]="'Hãy nhập Câu C'"
+              ></app-error-field>
+            </div>
+            <div *ngIf="questionType.value == 0" class="mb-3">
+              <label>Câu D</label>
+              <input
+                formControlName="choiceD"
+                type="text"
+                class="form-control"
+                placeholder="D) will"
+                tabindex="6"
+              />
+              <app-error-field
+                *ngIf="choiceD.invalid && choiceD.touched"
+                [errorMessage]="'Hãy nhập Câu D'"
+              ></app-error-field>
+            </div>
+            <div *ngIf="questionType.value == 0" class="mb-3">
+              <label>Đáp án</label>
+              <select
+                formControlName="answer"
+                class="form-control"
+                tabindex="7"
+              >
+                <option value="0">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+              </select>
+            </div>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

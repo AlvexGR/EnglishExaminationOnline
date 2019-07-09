@@ -7,6 +7,7 @@
         <thead>
           <tr>
             <th scope="col">Mã bài thi</th>
+            <th scope="col">Tựa đề</th>
             <th scope="col">Ngày và giờ thi</th>
             <th scope="col">Thành tích</th>
             <th scope="col">Điểm số</th>
@@ -16,6 +17,7 @@
         <tbody>
           <tr *ngFor="let history of histories">
             <td>{{ history?.examId }}</td>
+            <td>{{ history?.exam.title }}</td>
             <td>{{ history?.date.toLocaleString() }}</td>
             <td>
               {{ history?.correctAnswers }}/{{ history?.totalQuestions }} câu

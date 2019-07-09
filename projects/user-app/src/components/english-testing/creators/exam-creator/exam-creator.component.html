@@ -1,0 +1,123 @@
+<div class="container-fluid min-vh-100">
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6 shadow-sm p-3 mb-5 bg-white rounded">
+      <form
+        class="form-group p-3"
+        [formGroup]="examForm"
+        (ngSubmit)="submitExam()"
+      >
+        <h3 class="text-center">Soạn thảo bài thi</h3>
+        <div class="mb-3">
+          <label>Tựa đề</label>
+          <input
+            formControlName="title"
+            type="text"
+            class="form-control"
+            placeholder="Đề thi tuyển sinh đại học 2019 | University entrance exam 2019"
+            tabindex="1"
+          />
+          <app-error-field
+            *ngIf="title.invalid && title.touched"
+            [errorMessage]="'Hãy nhập tựa đề bài thi'"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Phụ đề</label>
+          <input
+            formControlName="subtitle"
+            type="text"
+            class="form-control"
+            placeholder="Ngày thi: 3/7/2019 - Người soạn: Nguyễn Ngọc Nhân"
+            tabindex="2"
+          />
+          <app-error-field
+            *ngIf="subtitle.invalid && subtitle.touched"
+            [errorMessage]="'Hãy nhập phụ đề bài thi'"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Nội dung</label>
+          <textarea
+            formControlName="content"
+            class="form-control"
+            rows="5"
+            placeholder="Gồm nhiều tự vựng mới, tập trung chủ yếu vào thì, prepositions, if clause,... "
+            tabindex="3"
+          >
+          </textarea>
+          <app-error-field
+            *ngIf="content.invalid && content.touched"
+            [errorMessage]="'Hãy nhập nội dung bài thi'"
+          ></app-error-field>
+        </div>
+        <div class="mb-3">
+          <label>Độ khó</label>
+          <select
+            formControlName="difficulty"
+            class="form-control"
+            tabindex="4"
+          >
+            <option value="0">0</option>
+            <option value="0.5">0.5</option>
+            <option value="1">1</option>
+            <option value="1.5">1.5</option>
+            <option value="2">2</option>
+            <option value="2.5">2.5</option>
+            <option value="3">3</option>
+            <option value="3.5">3.5</option>
+            <option value="4">4</option>
+            <option value="4.5">4.5</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>Phân khúc:</label>
+          <i
+            class="add-section-icon far fa-plus-square ml-2 align-middle"
+            (click)="addSection()"
+            matTooltip="Thêm phân khúc"
+            matTooltipPosition="right"
+          ></i>
+        </div>
+        <div class="mb-3" *ngFor="let _ of sections; let i = index">
+          <app-section-creator
+            (delete)="deleteSection(i)"
+            (update)="updateSection(i, $event)"
+            [index]="i + 1"
+          ></app-section-creator>
+        </div>
+        <div class="mb-3">
+          <button
+            *ngIf="!waitingForResponse"
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="examForm.invalid"
+            tabindex="10000"
+          >
+            Tạo bài thi
+          </button>
+          <button
+            *ngIf="waitingForResponse"
+            class="btn btn-primary btn-block"
+            disabled
+          >
+            <span class="spinner-border spinner-border-sm"></span>
+            Xử lý thông tin...
+          </button>
+        </div>
+        <app-error-field
+          class="mb-3 text-center"
+          *ngIf="errorMessage"
+          [errorMessage]="errorMessage"
+        ></app-error-field>
+        <app-success-field
+          class="text-center"
+          *ngIf="successMessage"
+          [successMessage]="successMessage"
+        ></app-success-field>
+      </form>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>

@@ -10,8 +10,8 @@ import { WebStorage } from "@lib/helpers/utility.helper";
 // Services
 import { UserService } from "../services/user/user.service";
 import { ExamService } from "../services/exam/exam.service";
-import { LoadingService } from '../services/loading/loading.service';
-import { HistoryService } from '../services/history/history.service';
+import { LoadingService } from "../services/loading/loading.service";
+import { HistoryService } from "../services/history/history.service";
 
 // Components
 import { HomeComponent } from "../components/home/home.component";
@@ -28,9 +28,13 @@ import { ExamPageComponent } from "../components/english-testing/exam-page/exam-
 import { SuccessFieldComponent } from "../components/notification/success-field/success-field.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
 import { ExamCardComponent } from "../components/english-testing/exam-card/exam-card.component";
-import { PlainParagraphComponent } from '../components/english-testing/plain-paragraph/plain-paragraph.component';
-import { HistoryDetailComponent } from '../components/english-testing/history-detail/history-detail.component';
-import { HistoryListComponent } from '../components/english-testing/history-list/history-list.component';
+import { PlainParagraphComponent } from "../components/english-testing/plain-paragraph/plain-paragraph.component";
+import { HistoryDetailComponent } from "../components/english-testing/history-detail/history-detail.component";
+import { HistoryListComponent } from "../components/english-testing/history-list/history-list.component";
+import { SectionCreatorComponent } from "../components/english-testing/creators/section-creator/section-creator.component";
+import { QuestionCreatorComponent } from "../components/english-testing/creators/question-creator/question-creator.component";
+import { TagCreatorComponent } from "../components/english-testing/creators/tag-creator/tag-creator.component";
+import { ExamCreatorComponent } from "../components/english-testing/creators/exam-creator/exam-creator.component";
 
 export function initData(userService: UserService) {
   return async () => {
@@ -63,8 +67,12 @@ export function initData(userService: UserService) {
     ExamCardComponent,
     PlainParagraphComponent,
     HistoryDetailComponent,
-    HistoryListComponent
-    ],
+    HistoryListComponent,
+    SectionCreatorComponent,
+    QuestionCreatorComponent,
+    TagCreatorComponent,
+    ExamCreatorComponent
+  ],
   imports: [
     // Module import order matters
     BrowserModule,
