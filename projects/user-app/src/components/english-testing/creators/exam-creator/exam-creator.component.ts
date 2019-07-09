@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit
-} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
@@ -11,6 +8,8 @@ import {
 import { ExamService } from "@app/src/services/exam/exam.service";
 import { ExamBuilder } from "@lib/builders/exam.builder";
 import { SectionModel } from "@lib/models/section.model";
+import { ExamModel } from "@lib/models/exam.model";
+import { StatusCode } from "@lib/helpers/utility.helper";
 
 @Component({
   selector: "app-exam-creator",
@@ -101,5 +100,27 @@ export class ExamCreatorComponent implements OnInit {
     this._sections[index].questions = section.questions;
   }
 
-  async submitExam(): Promise<void> {}
+  processExam(): ExamModel {
+    this._examBuilder
+      .withContent(this.content.value)
+      .withDifficulty(this.difficulty.value)
+      .withSubtitle(this.subtitle.value)
+      .withTitle(this.title.value)
+      .withSections(this._sections);
+
+    return this._examBuilder.build();
+  }
+
+  async submitExam(): Promise<void> {
+    const exam = this.processExam();
+
+    const result = await this._examService.insert(exam);
+
+    this._successMessage = this._errorMessage = "";
+    if (result.status === StatusCode.Ok) {
+      this._successMessage = "Tạo bài thi thành công";
+    } else {
+      this._errorMessage = result.message;
+    }
+  }
 }

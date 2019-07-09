@@ -5,6 +5,8 @@ import {
   ISimpleExamsResponse
 } from "@lib/interfaces/exam.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
+import { ExamModel } from '@lib/models/exam.model';
+import { IStatusResponse } from '@lib/interfaces/base.interface';
 
 export class ExamHandler {
   private _examRepo: ExamRepo;
@@ -45,7 +47,9 @@ export class ExamHandler {
     }
 
     // Get sections by test id
-    const sectionResult = await this._sectionHandler.getByIds(result.doc.sectionIds);
+    const sectionResult = await this._sectionHandler.getByIds(
+      result.doc.sectionIds
+    );
     if (!sectionResult.sections) {
       return {
         exam: null,
@@ -58,5 +62,10 @@ export class ExamHandler {
       exam: result.doc,
       statusResponse: result.statusResponse
     };
+  }
+
+  async insert(exam: ExamModel): Promise<IStatusResponse> {
+    const result = await this._examRepo.insert(exam);
+    return result.statusResponse;
   }
 }

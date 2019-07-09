@@ -93,7 +93,9 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
   }
 
   updateSection(): void {
-    this._sectionBuilder.withTitle(this.title.value);
+    this._sectionBuilder
+      .withTitle(this.title.value)
+      .withQuestions(this._questions);
 
     this.update.emit(this._sectionBuilder.build());
   }
@@ -111,8 +113,8 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
     this.questions[index].choiceD = question.choiceD;
     this.questions[index].content = question.content;
     this.questions[index].questionType = question.questionType;
-    this.questions[index].tagIds = question.tagIds;
-    this.questions[index].tags = question.tags;
+    // this.questions[index].tagIds = question.tagIds;
+    // this.questions[index].tags = question.tags;
   }
 
   deleteQuestion(index: number): void {

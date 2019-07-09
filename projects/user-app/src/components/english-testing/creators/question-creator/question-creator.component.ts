@@ -112,13 +112,12 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
     this._questionBuilder
       .withAnswer(this.answer.value)
       .withContent(this.content.value)
-      .withChoiceA(this.choiceA.value)
-      .withChoiceB(this.choiceB.value)
-      .withChoiceC(this.choiceC.value)
-      .withChoiceD(this.choiceD.value)
+      .withChoiceA(`A) ${this.choiceA.value}`)
+      .withChoiceB(`B) ${this.choiceB.value}`)
+      .withChoiceC(`C) ${this.choiceC.value}`)
+      .withChoiceD(`D) ${this.choiceD.value}`)
       .withQuestionType(this.questionType.value);
     this.update.emit(this._questionBuilder.build());
-    console.log(this.questionType.value);
   }
 
   deleteQuestion(): void {

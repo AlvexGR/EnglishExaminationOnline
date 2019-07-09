@@ -9,6 +9,7 @@ import { UserService } from "../user/user.service";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { StatusCode } from "@lib/helpers/utility.helper";
 import { ExamBuilder } from "@lib/builders/exam.builder";
+import { IStatusResponse } from "@lib/interfaces/base.interface";
 
 @Injectable({
   providedIn: "root"
@@ -63,6 +64,28 @@ export class ExamService {
       response = await this._http
         .get<IExamResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.exams}/${id}`,
+          { headers, observe: "response" }
+        )
+        .toPromise();
+    } catch (err) {
+      return err.error;
+    }
+    return response.body;
+  }
+
+  async insert(exam: ExamModel): Promise<IStatusResponse> {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: this._userService.accessToken
+    });
+
+    let response = new HttpResponse<IStatusResponse>();
+
+    try {
+      response = await this._http
+        .post<IStatusResponse>(
+          `${HttpHelper.endpoint}/${HttpHelper.exams}`,
+          exam,
           { headers, observe: "response" }
         )
         .toPromise();

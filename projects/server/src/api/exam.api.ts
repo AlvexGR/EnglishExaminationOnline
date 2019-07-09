@@ -25,4 +25,14 @@ router.get(
   }
 );
 
+// Insert exam
+router.post(
+  `/`,
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await examHandler.insert(req.body);
+    return res.status(result.status).json(result);
+  }
+);
+
 module.exports = router;
