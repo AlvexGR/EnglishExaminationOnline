@@ -12,7 +12,7 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { QuestionType, QuestionModel } from "@lib/models/question.model";
+import { QuestionType, QuestionModel, AnswerChoice } from "@lib/models/question.model";
 import { QuestionBuilder } from "@lib/builders/question.builder";
 import { Subscription } from "rxjs";
 
@@ -97,8 +97,8 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
 
   initQuestionForm(): void {
     this._questionForm = this._formBuilder.group({
-      content: ["", Validators.required],
-      questionType: [QuestionType.multipleChoice, Validators.required],
+      content: [""],
+      questionType: [QuestionType.multipleChoice],
       choiceA: [null],
       choiceB: [null],
       choiceC: [null],
@@ -110,13 +110,13 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
 
   updateQuestion(): void {
     this._questionBuilder
-      .withAnswer(this.answer.value)
+      .withAnswer(Number(this.answer.value))
       .withContent(this.content.value)
-      .withChoiceA(`A) ${this.choiceA.value}`)
-      .withChoiceB(`B) ${this.choiceB.value}`)
-      .withChoiceC(`C) ${this.choiceC.value}`)
-      .withChoiceD(`D) ${this.choiceD.value}`)
-      .withQuestionType(this.questionType.value);
+      .withChoiceA(this.choiceA.value)
+      .withChoiceB(this.choiceB.value)
+      .withChoiceC(this.choiceC.value)
+      .withChoiceD(this.choiceD.value)
+      .withQuestionType(Number(this.questionType.value));
     this.update.emit(this._questionBuilder.build());
   }
 

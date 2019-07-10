@@ -5,8 +5,10 @@ import {
   ISimpleExamsResponse
 } from "@lib/interfaces/exam.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
-import { ExamModel } from '@lib/models/exam.model';
-import { IStatusResponse } from '@lib/interfaces/base.interface';
+import { ExamModel } from "@lib/models/exam.model";
+import { IStatusResponse } from "@lib/interfaces/base.interface";
+import { ExamBuilder } from "@lib/builders/exam.builder";
+import { QuestionType } from "@lib/models/question.model";
 
 export class ExamHandler {
   private _examRepo: ExamRepo;
@@ -47,16 +49,16 @@ export class ExamHandler {
     }
 
     // Get sections by test id
-    const sectionResult = await this._sectionHandler.getByIds(
-      result.doc.sectionIds
-    );
-    if (!sectionResult.sections) {
-      return {
-        exam: null,
-        statusResponse: sectionResult.statusResponse
-      };
-    }
-    result.doc.sections = sectionResult.sections;
+    // const sectionResult = await this._sectionHandler.getByIds(
+    //   result.doc.sectionIds
+    // );
+    // if (!sectionResult.sections) {
+    //   return {
+    //     exam: null,
+    //     statusResponse: sectionResult.statusResponse
+    //   };
+    // }
+    // result.doc.sections = sectionResult.sections;
 
     return {
       exam: result.doc,
@@ -65,7 +67,40 @@ export class ExamHandler {
   }
 
   async insert(exam: ExamModel): Promise<IStatusResponse> {
-    const result = await this._examRepo.insert(exam);
-    return result.statusResponse;
+    exam = this.assignIndex(exam);
+    return await this._examRepo.insert(exam);
+  }
+
+  assignIndex(exam: ExamModel): ExamModel {
+    let questionNumber = 1;
+    for (let i = 0; i < exam.sections.length; i++) {
+      exam.sections[i].index = i + 1;
+      for (let j = 0; j < exam.sections[i].questions.length; j++) {
+        exam.sections[i].questions[j].index = j + 1;
+        if (
+          exam.sections[i].questions[j].questionType ===
+          QuestionType.multipleChoice
+        ) {
+          exam.sections[i].questions[j].questionNumber = questionNumber++;
+        }
+      }
+    }
+    return exam;
+  }
+
+  createFromObj(obj: any): ExamModel {
+    const examBuilder = new ExamBuilder(obj._id);
+    const exam = examBuilder
+      .withContent(obj.content)
+      .withDifficulty(obj.difficulty)
+      .withIndex(obj.index)
+      .withSectionIds(obj.sectionIds)
+      .withSections(obj.sections)
+      .withSubtitle(obj.subtitle)
+      .withTime(obj.time)
+      .withTitle(obj.title)
+      .build();
+
+    return exam;
   }
 }

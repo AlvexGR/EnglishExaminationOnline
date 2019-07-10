@@ -103,7 +103,7 @@ export class ExamCreatorComponent implements OnInit {
   processExam(): ExamModel {
     this._examBuilder
       .withContent(this.content.value)
-      .withDifficulty(this.difficulty.value)
+      .withDifficulty(Number(this.difficulty.value))
       .withSubtitle(this.subtitle.value)
       .withTitle(this.title.value)
       .withSections(this._sections);
@@ -117,6 +117,7 @@ export class ExamCreatorComponent implements OnInit {
     const result = await this._examService.insert(exam);
 
     this._successMessage = this._errorMessage = "";
+    console.log(result);
     if (result.status === StatusCode.Ok) {
       this._successMessage = "Tạo bài thi thành công";
     } else {

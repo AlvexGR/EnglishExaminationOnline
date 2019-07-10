@@ -2,6 +2,10 @@
   color: rgb(31, 158, 31);
 }
 
+.add-section-icon:hover {
+  cursor: pointer;
+}
+
 .add-section-icon {
   font-size: 23px;
 }

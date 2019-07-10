@@ -52,7 +52,7 @@ export class HistoryHandler {
 
   async insert(history: HistoryModel): Promise<IStatusResponse> {
     const result = await this._historyRepo.insert(history);
-    return result.statusResponse;
+    return result;
   }
 
   createFromObj(obj: any): HistoryModel {

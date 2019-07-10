@@ -14,3 +14,7 @@
   font-size: 23px;
 }
 
+.add-question-icon:hover {
+  cursor: pointer;
+}
+

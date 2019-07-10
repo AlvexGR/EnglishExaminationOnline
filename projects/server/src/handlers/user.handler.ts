@@ -104,7 +104,7 @@ export class UserHandler {
 
   async insert(
     newUser: UserModel
-  ): Promise<{ inserted: boolean; statusResponse: IStatusResponse }> {
+  ): Promise<IStatusResponse> {
     return await this._userRepo.insert(newUser);
   }
 

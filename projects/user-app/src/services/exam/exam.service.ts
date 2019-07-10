@@ -35,10 +35,7 @@ export class ExamService {
         )
         .toPromise();
     } catch (err) {
-      return {
-        exams: null,
-        statusResponse: err.body.statusResponse
-      };
+      return err.error;
     }
     return response.body;
   }

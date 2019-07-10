@@ -192,16 +192,11 @@ export class BaseRepo<T extends BaseModel> {
     };
   }
 
-  async insert(
-    obj: T
-  ): Promise<{ inserted: boolean; statusResponse: IStatusResponse }> {
+  async insert(obj: T): Promise<IStatusResponse> {
     if (!obj) {
       return {
-        inserted: false,
-        statusResponse: {
-          status: StatusCode.BadRequest,
-          message: "Không thành công"
-        }
+        status: StatusCode.BadRequest,
+        message: "Không thành công"
       };
     }
 
@@ -216,22 +211,48 @@ export class BaseRepo<T extends BaseModel> {
       await collection.insertOne(obj);
     } catch (err) {
       return {
-        inserted: false,
-        statusResponse: {
-          status: StatusCode.InternalError,
-          message: "Đã có lỗi xảy ra, xin hãy thử lại"
-        }
+        status: StatusCode.InternalError,
+        message: "Đã có lỗi xảy ra, xin hãy thử lại"
       };
     } finally {
       client.close();
     }
 
     return {
-      inserted: true,
-      statusResponse: {
-        status: StatusCode.Ok,
-        message: "Thành công"
-      }
+      status: StatusCode.Ok,
+      message: "Thành công"
+    };
+  }
+
+  async insertRange(obj: Array<T>): Promise<IStatusResponse> {
+    if (!obj) {
+      return {
+        status: StatusCode.BadRequest,
+        message: "Không thành công"
+      };
+    }
+
+    const client = MongoDbHelper.getMongoClient();
+    try {
+      // Connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+      await collection.insertMany(obj);
+    } catch (err) {
+      return {
+        status: StatusCode.InternalError,
+        message: "Đã có lỗi xảy ra, xin hãy thử lại"
+      };
+    } finally {
+      client.close();
+    }
+
+    return {
+      status: StatusCode.Ok,
+      message: "Thành công"
     };
   }
 

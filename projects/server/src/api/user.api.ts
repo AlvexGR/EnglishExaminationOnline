@@ -100,16 +100,9 @@ router.post(`/`, async (req: Request, res: Response) => {
   }
 
   const insertResult = await userHandler.insert(newUser);
-
-  if (!insertResult.inserted) {
-    return res
-      .status(insertResult.statusResponse.status)
-      .json({ statusResponse: insertResult.statusResponse });
-  }
-
   return res
-    .status(StatusCode.Ok)
-    .json({ statusResponse: insertResult.statusResponse });
+    .status(insertResult.status)
+    .json({ statusResponse: insertResult });
 });
 
 // Update

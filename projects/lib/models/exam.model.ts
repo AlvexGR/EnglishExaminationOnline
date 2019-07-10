@@ -1,6 +1,6 @@
 import { BaseModel } from "./base.model";
-import { SectionModel } from './section.model';
-import { QuestionType } from './question.model';
+import { SectionModel } from "./section.model";
+import { QuestionType } from "./question.model";
 
 export class ExamModel extends BaseModel {
   title: string;
