@@ -7,8 +7,7 @@ import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-admin",
-  templateUrl: "./admin.component.html",
-  styleUrls: ["./admin.component.css"]
+  templateUrl: "./admin.component.html"
 })
 export class AdminComponent implements OnInit {
   private _exams: Array<ExamModel>;

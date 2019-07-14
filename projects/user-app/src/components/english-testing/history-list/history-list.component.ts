@@ -11,8 +11,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-history-list",
-  templateUrl: "./history-list.component.html",
-  styleUrls: ["./history-list.component.css"]
+  templateUrl: "./history-list.component.html"
 })
 export class HistoryListComponent implements OnInit {
   private _isLoading: boolean;

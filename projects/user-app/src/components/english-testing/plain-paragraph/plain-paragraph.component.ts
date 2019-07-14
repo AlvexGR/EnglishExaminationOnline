@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 
 @Component({
   selector: "app-plain-paragraph",
-  templateUrl: "./plain-paragraph.component.html",
-  styleUrls: ["./plain-paragraph.component.css"]
+  templateUrl: "./plain-paragraph.component.html"
 })
 export class PlainParagraphComponent implements OnInit {
   private _content: string;
