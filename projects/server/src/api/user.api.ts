@@ -20,53 +20,17 @@ router.post(
   `/${HttpHelper.logIn}`,
   async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
-    const verifyResult = await userHandler.verifyLogIn(
-      body.username,
-      body.password
-    );
-    if (verifyResult.statusResponse.status !== StatusCode.Ok) {
-      const response: ILogInResponse = {
-        accessToken: null,
-        statusResponse: verifyResult.statusResponse,
-        user: null
-      };
-      return res.status(StatusCode.InternalError).json(response);
-    }
-
-    if (!verifyResult.hasUser) {
-      const response: ILogInResponse = {
-        accessToken: null,
-        statusResponse: verifyResult.statusResponse,
-        user: null
-      };
-      return res.status(StatusCode.BadRequest).json(response);
-    }
-
-    const getByResult = await userHandler.getBy(
+    const result = await userHandler.getBy(
       { username: body.username, password: body.password },
       1
     );
-    if (getByResult.statusResponse.status !== StatusCode.Ok) {
-      const response: ILogInResponse = {
-        accessToken: null,
-        statusResponse: getByResult.statusResponse,
-        user: null
-      };
-      return res.status(StatusCode.InternalError).json(response);
-    }
-    const logInUser = getByResult.users[0];
-    if (!logInUser) {
-      const response: ILogInResponse = {
-        accessToken: null,
-        statusResponse: {
-          status: StatusCode.InternalError,
-          message: "Đã có lỗi xảy ra, xin hãy thử lại"
-        },
-        user: null
-      };
-      return res.status(StatusCode.InternalError).json(response);
+    if (result.statusResponse.status !== StatusCode.Ok) {
+      return res
+        .status(result.statusResponse.status)
+        .json(result.statusResponse);
     }
 
+    const logInUser = result.users[0];
     (req as ILogInExpressRequest).user = logInUser;
     next();
   },
@@ -86,28 +50,23 @@ router.post(
 
 // Sign Up
 router.post(`/`, async (req: Request, res: Response) => {
-  const newUser = userHandler.createFromObj(req.body.user);
+  // Validate new user
+  const validateUserResult = await userHandler.validateNewUser(req.body.user);
 
-  const validateUserResult = await userHandler.validateNewUser(newUser);
+  // Return if can't insert
   if (!validateUserResult.canInsert) {
     const signUpRes = validateUserResult.signUpResponse;
-    if (!signUpRes.statusResponse.status) {
-      return res.status(StatusCode.InternalError).json({
-        statusResponse: signUpRes.statusResponse
-      });
-    }
-    return res.status(StatusCode.BadRequest).json(signUpRes);
+    return res.status(signUpRes.statusResponse.status).json(signUpRes);
   }
 
-  const insertResult = await userHandler.insert(newUser);
-  return res
-    .status(insertResult.status)
-    .json({ statusResponse: insertResult });
+  // Insert new user to db
+  const result = await userHandler.insert(req.body.user);
+  return res.status(result.status).json(result);
 });
 
 // Update
 router.put(`/`, verifyAccessToken, async (req: Request, res: Response) => {
-  const updatedUser = userHandler.createFromObj(req.body.user);
+  const updatedUser = req.body.user;
   const currentUserId = req.body.currentUserId;
   const inputPassword = req.body.inputPassword;
   const validateResult = await userHandler.validateUpdateUser(
@@ -128,17 +87,18 @@ router.put(`/`, verifyAccessToken, async (req: Request, res: Response) => {
 
 // Get by Id
 router.get(`/:id`, verifyAccessToken, async (req: Request, res: Response) => {
-  const result = await userHandler.getBy({ _id: req.params.id }, 1);
+  const result = await userHandler.getById(req.params.id);
 
   return res.status(result.statusResponse.status).json({
     statusResponse: result.statusResponse,
-    user: result.users && result.users[0]
+    user: result.user
   });
 });
 
+// Log out
 router.post(`/${HttpHelper.logOut}`, async (req: Request, res: Response) => {
   const result = await tokenHandler.insert(req.body.token);
-  return res.status(result.statusResponse.status).json(result.statusResponse);
+  return res.status(result.status).json(result);
 });
 
 module.exports = router;

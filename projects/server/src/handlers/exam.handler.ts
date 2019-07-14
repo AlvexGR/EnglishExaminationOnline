@@ -68,7 +68,7 @@ export class ExamHandler {
 
   async insert(exam: ExamModel): Promise<IStatusResponse> {
     exam = this.assignIndex(exam);
-    return await this._examRepo.insert(exam);
+    return await this._examRepo.insertOne(exam);
   }
 
   assignIndex(exam: ExamModel): ExamModel {

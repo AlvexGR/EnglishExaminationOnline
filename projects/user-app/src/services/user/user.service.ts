@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import {
   ILogInResponse,
   ISignUpResponse,
-  IUpdateResponse,
-  IUserResponse
+  IUserResponse,
+  IUserUpdateResponse
 } from "@lib/interfaces/user.interface";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { HttpHelper } from "@lib/helpers/http.helper";
@@ -128,12 +128,12 @@ export class UserService {
   async update(
     updatedUser: UserModel,
     currentPassword?: string
-  ): Promise<IUpdateResponse> {
+  ): Promise<IUserUpdateResponse> {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization: this.accessToken
     });
-    let response = new HttpResponse<IUpdateResponse>();
+    let response = new HttpResponse<IUserUpdateResponse>();
 
     // hash password
     if (updatedUser.password) {
@@ -145,7 +145,7 @@ export class UserService {
 
     try {
       response = await this._http
-        .put<IUpdateResponse>(
+        .put<IUserUpdateResponse>(
           `${HttpHelper.endpoint}/${HttpHelper.users}`,
           {
             user: updatedUser,

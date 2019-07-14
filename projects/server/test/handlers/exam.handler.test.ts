@@ -2,7 +2,7 @@ import { expect, assert, should } from "chai";
 import { ExamHandler } from "@server/src/handlers/exam.handler";
 import { StatusCode } from '@lib/helpers/utility.helper';
 
-describe("get exam handler", () => {
+describe("Test exam handler", () => {
   const examHandler = new ExamHandler();
 
   it("get all simple exams", async () => {

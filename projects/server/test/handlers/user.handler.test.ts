@@ -1,17 +1,8 @@
 import { expect, assert, should } from "chai";
 import { UserHandler } from '@server/src/handlers/user.handler';
 
-describe("Test GetBy", () => {
+describe("Test User handler", () => {
   const userHandler: UserHandler = new UserHandler();
-  it("Username: admin; Password: admin", async () => {
-    const username = "admin";
-    const password = "admin";
-
-    const result = await userHandler.getBy({username, password});
-    const user = result.users[0];
-    expect(user.username).equal(username);
-    expect(user.password).equal(password);
-  });
   it("Username: testUser; Password: testUser", async () => {
     const username = "testUser";
     const password = "testUser";
@@ -22,16 +13,16 @@ describe("Test GetBy", () => {
     expect(user.password).equal(password);
   });
   it("Role admin", async () => {
-    const username = "admin";
-    const password = "admin";
+    const username = "admin1503";
+    const password = "3d9d4ec9bd74ee063732f3f2d9599abf";
 
     const result = await userHandler.getBy({username, password});
     const user = result.users[0];
-    expect(user.role).equal("admin");
+    assert.equal(user.role, 0);
   });
   it("User array should has length 1", async () => {
-    const username = "admin";
-    const password = "admin";
+    const username = "admin1503";
+    const password = "3d9d4ec9bd74ee063732f3f2d9599abf";
 
     const result = await userHandler.getBy({username, password});
     expect(result.users.length).to.equal(1);

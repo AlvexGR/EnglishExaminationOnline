@@ -7,6 +7,11 @@ export interface ILogInResponse {
   statusResponse: IStatusResponse;
 }
 
+export interface IUsersResponse {
+  users: Array<UserModel>;
+  statusResponse: IStatusResponse;
+}
+
 export interface IUserResponse {
   user: UserModel;
   statusResponse: IStatusResponse;
@@ -20,7 +25,7 @@ export interface ISignUpResponse {
   };
 }
 
-export interface IUpdateResponse {
+export interface IUserUpdateResponse {
   statusResponse: IStatusResponse;
   validation: {
     username: boolean;

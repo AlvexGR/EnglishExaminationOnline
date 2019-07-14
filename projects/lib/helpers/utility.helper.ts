@@ -7,6 +7,25 @@ export enum DateType {
   utc
 }
 
+export const AppRoutesName = {
+  logIn: "log-in",
+  signUp: "sign-up",
+  admin: "admin",
+  home: "home",
+  profile: "profile",
+  examPage: "exam-page",
+  historyDetail: "detail",
+  historyList: "history/list",
+  notFound: "**"
+};
+
+export enum StatusCode {
+  Ok = 200,
+  BadRequest = 400,
+  InternalError = 500,
+  Forbidden = 403
+}
+
 export class UtilityFunctions {
   static convertDateToString(date: Date, dateType: DateType): string {
     switch (dateType) {
@@ -56,8 +75,8 @@ export class UtilityFunctions {
 
   static arrayToMap(arr: Array<{ key: any; values: any }>): Map<any, any> {
     const result = new Map<any, any>();
-    arr.forEach(ele => {
-      result.set(ele.key, ele.values);
+    arr.forEach(element => {
+      result.set(element.key, element.values);
     });
     return result;
   }
@@ -134,23 +153,4 @@ export class WebStorage {
     );
     return false;
   }
-}
-
-export const AppRoutesName = {
-  logIn: "log-in",
-  signUp: "sign-up",
-  admin: "admin",
-  home: "home",
-  profile: "profile",
-  examPage: "exam-page",
-  historyDetail: "detail",
-  historyList: "history/list",
-  notFound: "**"
-};
-
-export enum StatusCode {
-  Ok = 200,
-  BadRequest = 400,
-  InternalError = 500,
-  Forbidden = 403
 }

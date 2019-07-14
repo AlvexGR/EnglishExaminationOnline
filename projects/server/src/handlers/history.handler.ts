@@ -51,7 +51,7 @@ export class HistoryHandler {
   }
 
   async insert(history: HistoryModel): Promise<IStatusResponse> {
-    const result = await this._historyRepo.insert(history);
+    const result = await this._historyRepo.insertOne(history);
     return result;
   }
 

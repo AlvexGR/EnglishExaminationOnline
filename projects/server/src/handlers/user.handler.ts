@@ -4,58 +4,46 @@ import { FilterQuery } from "mongodb";
 import { UserRepo } from "../repo/user.repo";
 import {
   ISignUpResponse,
-  IUpdateResponse
+  IUserResponse,
+  IUsersResponse,
+  IUserUpdateResponse
 } from "@lib/interfaces/user.interface";
 import { UserBuilder } from "@lib/builders/user.builder";
 import { StatusCode } from "@lib/helpers/utility.helper";
 
 export class UserHandler {
   private _userRepo: UserRepo;
+
   constructor() {
     this._userRepo = new UserRepo();
   }
-  async verifyLogIn(
-    username: string,
-    password: string
-  ): Promise<{ statusResponse: IStatusResponse; hasUser: boolean }> {
-    const countUser = await this._userRepo.countBy({ username, password });
-    if (countUser.statusResponse.status !== StatusCode.Ok) {
-      return {
-        hasUser: false,
-        statusResponse: countUser.statusResponse
-      };
-    }
 
-    if (countUser.total === 0) {
+  async getById(id: string): Promise<IUserResponse> {
+    if (!id) {
       return {
+        user: null,
         statusResponse: {
           status: StatusCode.BadRequest,
-          message: ""
-        },
-        hasUser: false
+          message: `Invalid: ${id}`
+        }
       };
     }
 
+    const result = await this._userRepo.getById(id);
     return {
-      hasUser: true,
-      statusResponse: {
-        status: StatusCode.Ok,
-        message: ""
-      }
+      user: result.doc,
+      statusResponse: result.statusResponse
     };
   }
 
   async getBy(
     query: FilterQuery<any>,
     limit?: number
-  ): Promise<{ users: Array<UserModel>; statusResponse: IStatusResponse }> {
-    const getResult = await this._userRepo.getBy(query, limit);
+  ): Promise<IUsersResponse> {
+    const result = await this._userRepo.getBy(query, limit);
     return {
-      users:
-        getResult.statusResponse.status === StatusCode.Ok
-          ? getResult.docs
-          : null,
-      statusResponse: getResult.statusResponse
+      users: result.docs,
+      statusResponse: result.statusResponse
     };
   }
 
@@ -67,30 +55,31 @@ export class UserHandler {
       username: newUser.username
     });
 
+    // check fo email
     const countByEmail = this._userRepo.countBy({ email: newUser.email });
 
     const results = await Promise.all([countByUsername, countByEmail]);
 
-    const usernameResult = results[0];
-    const emailResult = results[1];
-
-    for (const result of results) {
-      if (result.statusResponse.status !== StatusCode.Ok) {
+    // Any error => ignore all and return
+    for (const res of results) {
+      if (res.statusResponse.status === StatusCode.InternalError) {
         return {
           canInsert: false,
           signUpResponse: {
-            statusResponse: result.statusResponse,
+            statusResponse: res.statusResponse,
             validation: null
           }
         };
       }
     }
 
+    const usernameResult = results[0];
+    const emailResult = results[1];
+
     const canInsert = usernameResult.total === 0 && emailResult.total === 0;
     const signUpResult: ISignUpResponse = {
       statusResponse: {
-        // TODO: Change to bad request if validation wrong
-        status: StatusCode.Ok,
+        status: canInsert ? StatusCode.Ok : StatusCode.BadRequest,
         message: ""
       },
       validation: {
@@ -102,18 +91,16 @@ export class UserHandler {
     return { canInsert, signUpResponse: signUpResult };
   }
 
-  async insert(
-    newUser: UserModel
-  ): Promise<IStatusResponse> {
-    return await this._userRepo.insert(newUser);
+  async insert(newUser: UserModel): Promise<IStatusResponse> {
+    return await this._userRepo.insertOne(newUser);
   }
 
   async validateUpdateUser(
     currentUserId: string,
     inputPassword: string,
     updatedUser: UserModel
-  ): Promise<{ canUpdate: boolean; updateResponse: IUpdateResponse }> {
-    const getResult = await this.getBy({ _id: currentUserId }, 1);
+  ): Promise<{ canUpdate: boolean; updateResponse: IUserUpdateResponse }> {
+    const getResult = await this.getById(currentUserId);
     if (getResult.statusResponse.status !== StatusCode.Ok) {
       return {
         canUpdate: false,
@@ -123,9 +110,11 @@ export class UserHandler {
         }
       };
     }
-    const currentUser = getResult.users[0];
+
+    const currentUser = getResult.user;
     let canUpdate = true;
-    const updateResponse: IUpdateResponse = {
+    // Init value
+    const updateResponse: IUserUpdateResponse = {
       statusResponse: {
         status: StatusCode.Ok,
         message: ""
@@ -187,10 +176,10 @@ export class UserHandler {
     return { canUpdate, updateResponse };
   }
 
-  async update(updatedUser: UserModel): Promise<IUpdateResponse> {
-    const result = await this._userRepo.update(updatedUser);
+  async update(updatedUser: UserModel): Promise<IUserUpdateResponse> {
+    const result = await this._userRepo.updateOne(updatedUser);
     return {
-      statusResponse: result.statusResponse,
+      statusResponse: result,
       validation: null
     };
   }

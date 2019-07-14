@@ -37,7 +37,7 @@ export class TokenHandler {
     };
   }
 
-  async insert(token: TokenModel): Promise<{ inserted: boolean; statusResponse: IStatusResponse }> {
-    return await this._tokenRepo.insert(token);
+  async insert(token: TokenModel): Promise<IStatusResponse> {
+    return await this._tokenRepo.insertOne(token);
   }
 }
