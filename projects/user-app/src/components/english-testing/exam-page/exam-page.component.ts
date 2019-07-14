@@ -7,7 +7,7 @@ import {
   AppRoutesName,
   UtilityFunctions
 } from "@lib/helpers/utility.helper";
-import { IChoice, IAnswer } from "@lib/interfaces/question.interface";
+import { IChoice } from "@lib/interfaces/question.interface";
 import { LoadingService } from "@app/src/services/loading/loading.service";
 import { HistoryBuilder } from "@lib/builders/history.builder";
 import { HistoryService } from "@app/src/services/history/history.service";

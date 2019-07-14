@@ -8,16 +8,14 @@ import {
 import { UserService } from "@app/src/services/user/user.service";
 import {
   StatusCode,
-  AppRoutesName,
-  WebStorage
+  AppRoutesName
 } from "@lib/helpers/utility.helper";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-log-in",
-  templateUrl: "./log-in.component.html",
-  styleUrls: ["./log-in.component.css"]
+  templateUrl: "./log-in.component.html"
 })
 export class LogInComponent implements OnInit {
   logInForm: FormGroup;

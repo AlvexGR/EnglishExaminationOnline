@@ -14,8 +14,7 @@ import {
 } from "@angular/forms";
 import {
   QuestionType,
-  QuestionModel,
-  AnswerChoice
+  QuestionModel
 } from "@lib/models/question.model";
 import { QuestionBuilder } from "@lib/builders/question.builder";
 import { Subscription } from "rxjs";

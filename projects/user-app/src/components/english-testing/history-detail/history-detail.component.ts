@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { ExamService } from "@app/src/services/exam/exam.service";
-import { IChoice, IAnswer } from "@lib/interfaces/question.interface";
-import { AnswerChoice } from "@lib/models/question.model";
 import { HistoryModel } from "@lib/models/history.model";
 import {
-  UtilityFunctions,
   StatusCode,
   AppRoutesName
 } from "@lib/helpers/utility.helper";
@@ -14,8 +10,7 @@ import { LoadingService } from "@app/src/services/loading/loading.service";
 
 @Component({
   selector: "app-history-detail",
-  templateUrl: "./history-detail.component.html",
-  styleUrls: ["./history-detail.component.css"]
+  templateUrl: "./history-detail.component.html"
 })
 export class HistoryDetailComponent implements OnInit {
   private _history: HistoryModel;

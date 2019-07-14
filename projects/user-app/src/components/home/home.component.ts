@@ -5,8 +5,7 @@ import { LoadingService } from "@app/src/services/loading/loading.service";
 
 @Component({
   selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"]
+  templateUrl: "./home.component.html"
 })
 export class HomeComponent implements OnInit {
   private _exams: Array<ExamModel>;

@@ -2,8 +2,7 @@ import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "app-error-field",
-  templateUrl: "./error-field.component.html",
-  styleUrls: ["./error-field.component.css"]
+  templateUrl: "./error-field.component.html"
 })
 export class ErrorFieldComponent {
   private _errorMessage: string;

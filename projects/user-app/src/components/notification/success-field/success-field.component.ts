@@ -2,8 +2,7 @@ import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "app-success-field",
-  templateUrl: "./success-field.component.html",
-  styleUrls: ["./success-field.component.css"]
+  templateUrl: "./success-field.component.html"
 })
 export class SuccessFieldComponent {
   private _successMessage: string;

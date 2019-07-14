@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "@app/src/services/user/user.service";
 import { Subscription } from "rxjs";
-import { UserRole } from "@lib/models/user.model";
 import { AppRoutesName } from "@lib/helpers/utility.helper";
 import { LoadingService } from "@app/src/services/loading/loading.service";
 
