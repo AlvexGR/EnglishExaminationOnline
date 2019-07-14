@@ -10,6 +10,7 @@ import { ProfileComponent } from "../components/profile/profile.component";
 import { AdminComponent } from "../components/admin/admin.component";
 import { ExamPageComponent } from "../components/english-testing/exam-page/exam-page.component";
 import { PageNotFoundComponent } from "../components/notification/page-not-found/page-not-found.component";
+import { ExamCreatorComponent } from '../components/english-testing/creators/exam-creator/exam-creator.component';
 
 // Guards
 import { AdminGuard } from "../guards/admin/admin.guard";
@@ -57,6 +58,16 @@ const routes: Routes = [
   {
     path: `${AppRoutesName.historyList}/:userId/${AppRoutesName.historyDetail}/:id`,
     component: HistoryDetailComponent
+  },
+  {
+    path: AppRoutesName.newExam,
+    component: ExamCreatorComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: `${AppRoutesName.editExam}/:id`,
+    component: ExamCreatorComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: AppRoutesName.notFound,

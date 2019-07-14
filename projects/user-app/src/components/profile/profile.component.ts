@@ -45,6 +45,10 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.initProfileForm();
+  }
+
+  initProfileForm() {
     if (!this.userService.currentUser) {
       this.router.navigate([`/${AppRoutesName.logIn}`]);
       return;

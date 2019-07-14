@@ -92,6 +92,27 @@ export class ExamService {
     return response.body;
   }
 
+  async delete(id: string): Promise<IStatusResponse> {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: this._userService.accessToken
+    });
+
+    let response = new HttpResponse<IStatusResponse>();
+
+    try {
+      response = await this._http
+        .delete<IStatusResponse>(
+          `${HttpHelper.endpoint}/${HttpHelper.exams}/${id}`,
+          { headers, observe: "response" }
+        )
+        .toPromise();
+    } catch (err) {
+      return err.error;
+    }
+    return response.body;
+  }
+
   createFromObj(obj: ExamModel): ExamModel {
     const examBuilder = new ExamBuilder(obj._id);
     const exam = examBuilder

@@ -1,3 +1,26 @@
 <div class="container-fluid min-vh-100">
-  <app-exam-creator></app-exam-creator>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-9 mb-3">
+          <h4>Danh sách bài thi</h4>
+        </div>
+        <div class="col-lg-3 text-right">
+          <a class="btn btn-success" [routerLink]="newExamRoute">
+            <i class="fas fa-file-medical"></i>
+            <span class="ml-2">Tạo mới bài thi</span>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="!isLoading">
+        <app-exam-card
+          *ngFor="let exam of exams"
+          [exam]="exam"
+          (delete)="deleteThenReloadExams($event)"
+        ></app-exam-card>
+      </div>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
 </div>

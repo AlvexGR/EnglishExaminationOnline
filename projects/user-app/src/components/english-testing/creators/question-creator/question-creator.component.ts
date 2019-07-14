@@ -12,7 +12,11 @@ import {
   Validators,
   AbstractControl
 } from "@angular/forms";
-import { QuestionType, QuestionModel, AnswerChoice } from "@lib/models/question.model";
+import {
+  QuestionType,
+  QuestionModel,
+  AnswerChoice
+} from "@lib/models/question.model";
 import { QuestionBuilder } from "@lib/builders/question.builder";
 import { Subscription } from "rxjs";
 
@@ -33,7 +37,7 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
 
   get title(): string {
     let content = this.content.value;
-    if (content.length > 50) {
+    if (content && content.length > 50) {
       content = content.substring(0, 47) + "...";
     }
     return content;
@@ -76,6 +80,22 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
     return this._index;
   }
 
+  @Input()
+  set question(value: QuestionModel) {
+    this._questionBuilder = new QuestionBuilder(value._id);
+
+    this._questionBuilder
+      .withAnswer(value.answer)
+      .withChoiceA(value.choiceA)
+      .withChoiceB(value.choiceB)
+      .withChoiceC(value.choiceC)
+      .withChoiceD(value.choiceD)
+      .withContent(value.content)
+      .withQuestionType(value.questionType);
+
+    this.initQuestionForm();
+  }
+
   @Output() delete = new EventEmitter();
 
   @Output() update = new EventEmitter<QuestionModel>();
@@ -96,14 +116,15 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
   }
 
   initQuestionForm(): void {
+    const question = this._questionBuilder.build();
     this._questionForm = this._formBuilder.group({
-      content: [""],
-      questionType: [QuestionType.multipleChoice],
-      choiceA: [null],
-      choiceB: [null],
-      choiceC: [null],
-      choiceD: [null],
-      answer: [null]
+      content: [question.content],
+      questionType: [question.questionType || QuestionType.multipleChoice],
+      choiceA: [question.choiceA],
+      choiceB: [question.choiceB],
+      choiceC: [question.choiceC],
+      choiceD: [question.choiceD],
+      answer: [question.answer]
       // tags: [[]]
     });
   }

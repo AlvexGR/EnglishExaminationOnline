@@ -35,4 +35,14 @@ router.post(
   }
 );
 
+// Delete exam
+router.delete(
+  `/:id`,
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await examHandler.delete(req.params.id);
+    return res.status(result.status).json(result);
+  }
+);
+
 module.exports = router;

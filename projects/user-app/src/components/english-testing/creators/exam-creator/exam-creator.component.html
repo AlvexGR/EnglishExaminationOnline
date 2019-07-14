@@ -80,8 +80,9 @@
             matTooltipPosition="right"
           ></i>
         </div>
-        <div class="mb-3" *ngFor="let _ of sections; let i = index">
+        <div class="mb-3" *ngFor="let section of sections; let i = index">
           <app-section-creator
+            [section]="section"
             (delete)="deleteSection(i)"
             (update)="updateSection(i, $event)"
             [index]="i + 1"
@@ -95,7 +96,8 @@
             [disabled]="examForm.invalid"
             tabindex="10000"
           >
-            Tạo bài thi
+            <span *ngIf="isNew">Tạo bài thi</span>
+            <span *ngIf="!isNew">Sửa bài thi</span>
           </button>
           <button
             *ngIf="waitingForResponse"

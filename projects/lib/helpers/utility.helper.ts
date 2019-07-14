@@ -1,6 +1,7 @@
 import md5 from "md5";
 import { v4 } from "uuid";
 import { IChoice } from "@lib/interfaces/question.interface";
+import { MatSnackBarConfig } from "@angular/material";
 
 export enum DateType {
   local,
@@ -16,6 +17,8 @@ export const AppRoutesName = {
   examPage: "exam-page",
   historyDetail: "detail",
   historyList: "history/list",
+  newExam: "new-exam",
+  editExam: "edit-exam",
   notFound: "**"
 };
 

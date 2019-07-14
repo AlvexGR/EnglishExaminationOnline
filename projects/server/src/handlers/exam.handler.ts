@@ -71,6 +71,14 @@ export class ExamHandler {
     return await this._examRepo.insertOne(exam);
   }
 
+  async update(): Promise<IStatusResponse> {
+    return null;
+  }
+
+  async delete(id: string): Promise<IStatusResponse> {
+    return await this._examRepo.deleteById(id);
+  }
+
   assignIndex(exam: ExamModel): ExamModel {
     let questionNumber = 1;
     for (let i = 0; i < exam.sections.length; i++) {

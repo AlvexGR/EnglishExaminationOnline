@@ -43,7 +43,7 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
 
   get cutTitle(): string {
     let title = this.title.value;
-    if (title.length > 50) {
+    if (title && title.length > 50) {
       title = title.substring(0, 47) + "...";
     }
     return title;
@@ -56,6 +56,14 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
 
   get index(): number {
     return this._index;
+  }
+
+  @Input()
+  set section(value: SectionModel) {
+    this._sectionBuilder = new SectionBuilder(value._id);
+    this._sectionBuilder.withTitle(value.title).withQuestions(value.questions);
+    this._questions = value.questions || new Array<QuestionModel>();
+    this.initSectionForm();
   }
 
   get sectionId(): string {
@@ -83,8 +91,9 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
   }
 
   initSectionForm(): void {
+    const section = this._sectionBuilder.build();
     this._sectionForm = this._formBuilder.group({
-      title: ["", Validators.required]
+      title: [section.title, Validators.required]
     });
   }
 
@@ -113,6 +122,7 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
     this.questions[index].choiceD = question.choiceD;
     this.questions[index].content = question.content;
     this.questions[index].questionType = question.questionType;
+    this.questions[index].sectionId = this._sectionBuilder.build()._id;
     // this.questions[index].tagIds = question.tagIds;
     // this.questions[index].tags = question.tags;
   }

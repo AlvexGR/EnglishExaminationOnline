@@ -295,11 +295,11 @@ export class BaseRepo<T extends BaseModel> {
     };
   }
 
-  async deleteById(id: string): Promise<IStatusResponse> {
-    if (!id) {
+  async deleteById(_id: string): Promise<IStatusResponse> {
+    if (!_id) {
       return {
         status: StatusCode.BadRequest,
-        message: `Invalid: ${id}`
+        message: `Invalid: ${_id}`
       };
     }
 
@@ -312,9 +312,9 @@ export class BaseRepo<T extends BaseModel> {
         .db(MongoDbHelper.databaseName)
         .collection(this.collectionName);
 
-      await collection.deleteOne({ _id: id });
+      await collection.deleteOne({ _id });
     } catch (error) {
-      console.log(`id: ${id} causes delete failed: ${error}`);
+      console.log(`id: ${_id} causes delete failed: ${error}`);
       return {
         status: StatusCode.InternalError,
         message: "Đã có lỗi xảy ra. Xin hãy thử lại"

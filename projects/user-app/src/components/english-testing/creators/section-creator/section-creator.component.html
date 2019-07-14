@@ -36,8 +36,9 @@
                 matTooltipPosition="right"
               ></i>
             </div>
-            <div class="mb-3" *ngFor="let _ of questions; let i = index">
+            <div class="mb-3" *ngFor="let question of questions; let i = index">
               <app-question-creator
+                [question]="question"
                 (delete)="deleteQuestion(i)"
                 (update)="updateQuestion(i, $event)"
                 [index]="i + 1"

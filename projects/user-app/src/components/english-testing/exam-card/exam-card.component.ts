@@ -1,7 +1,13 @@
-import { Component, OnChanges, Input } from "@angular/core";
+import {
+  Component,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { ExamService } from "@app/src/services/exam/exam.service";
 import { ExamModel } from "@lib/models/exam.model";
-import { AppRoutesName } from '@lib/helpers/utility.helper';
+import { AppRoutesName } from "@lib/helpers/utility.helper";
 
 @Component({
   selector: "app-exam-card",
@@ -22,6 +28,7 @@ export class ExamCardComponent implements OnChanges {
   halfStar: boolean;
 
   private _exam: ExamModel;
+  private _isHome: boolean;
 
   get time(): string {
     const hours = this._exam.time / 60;
@@ -32,6 +39,15 @@ export class ExamCardComponent implements OnChanges {
     }
     time += `${minutes} phút`;
     return time;
+  }
+
+  @Input()
+  set isHome(value: boolean) {
+    this._isHome = value;
+  }
+
+  get isHome(): boolean {
+    return this._isHome;
   }
 
   @Input()
@@ -46,6 +62,12 @@ export class ExamCardComponent implements OnChanges {
   get examPageRoute(): string {
     return `/${AppRoutesName.examPage}`;
   }
+
+  get editExamRoute(): string {
+    return `/${AppRoutesName.editExam}`;
+  }
+
+  @Output() delete = new EventEmitter<string>();
 
   constructor(private _examService: ExamService) {}
 
@@ -75,5 +97,9 @@ export class ExamCardComponent implements OnChanges {
     this.noStarThree = difficulty <= 2;
     this.noStarFour = difficulty <= 3;
     this.noStarFive = difficulty <= 4;
+  }
+
+  deleteExam(): void {
+    this.delete.emit(this._exam._id);
   }
 }
