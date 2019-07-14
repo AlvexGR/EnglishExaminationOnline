@@ -35,6 +35,16 @@ router.post(
   }
 );
 
+// Update exam
+router.put(
+  `/`,
+  verifyAccessToken,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await examHandler.update();
+    return res.status(result.status).json(result);
+  }
+);
+
 // Delete exam
 router.delete(
   `/:id`,

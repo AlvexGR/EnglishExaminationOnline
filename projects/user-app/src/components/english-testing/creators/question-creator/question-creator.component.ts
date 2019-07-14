@@ -81,7 +81,7 @@ export class QuestionCreatorComponent implements OnInit, OnDestroy {
 
   @Input()
   set question(value: QuestionModel) {
-    this._questionBuilder = new QuestionBuilder(value._id);
+    this._questionBuilder = new QuestionBuilder(value._id !== "temp" ? value._id : null);
 
     this._questionBuilder
       .withAnswer(value.answer)

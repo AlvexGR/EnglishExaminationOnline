@@ -3,7 +3,6 @@ import { QuestionHandler } from "./question.handler";
 import { ISectionsResponse } from "@lib/interfaces/section.interface";
 import { IQuestionsResponse } from "@lib/interfaces/question.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
-import { SectionModel } from "@lib/models/section.model";
 
 export class SectionHandler {
   private _sectionRepo: SectionRepo;
@@ -54,13 +53,5 @@ export class SectionHandler {
       sections: result.docs,
       statusResponse: result.statusResponse
     };
-  }
-
-  assignIndex(section: SectionModel): SectionModel {
-    section.questionIds = section.questions.map(question => question._id);
-    section.questions.forEach((question, index) => {
-      section.questions[index].sectionId = section._id;
-    });
-    return section;
   }
 }

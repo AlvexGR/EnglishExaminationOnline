@@ -11,7 +11,8 @@ export class BaseRepo<T extends BaseModel> {
   }
 
   async getById(
-    _id: string
+    _id: string,
+    projection?: any
   ): Promise<{
     doc: T;
     statusResponse: IStatusResponse;
@@ -37,7 +38,7 @@ export class BaseRepo<T extends BaseModel> {
         .db(MongoDbHelper.databaseName)
         .collection(this.collectionName);
 
-      result = await collection.findOne<T>({ _id });
+      result = await collection.findOne<T>({ _id }, { projection });
     } catch (err) {
       return {
         doc: null,
@@ -60,7 +61,8 @@ export class BaseRepo<T extends BaseModel> {
   }
 
   async getByIds(
-    ids: Array<string>
+    ids: Array<string>,
+    projection?: any
   ): Promise<{
     docs: Array<T>;
     statusResponse: IStatusResponse;
@@ -88,6 +90,8 @@ export class BaseRepo<T extends BaseModel> {
 
       const cursor = await collection.find<T>({ _id: { $in: ids } });
 
+      cursor.project(projection);
+
       results = await cursor.toArray();
     } catch (err) {
       return {
@@ -113,7 +117,8 @@ export class BaseRepo<T extends BaseModel> {
 
   async getBy(
     query: FilterQuery<any>,
-    limit: number = 50
+    limit: number = 50,
+    projection?: any
   ): Promise<{
     docs: Array<T>;
     statusResponse: IStatusResponse;
@@ -129,9 +134,7 @@ export class BaseRepo<T extends BaseModel> {
         .collection(this.collectionName);
       const cursor = await collection.find<T>(query);
 
-      if (limit) {
-        cursor.limit(limit);
-      }
+      cursor.limit(limit).project(projection);
 
       results = await cursor.toArray();
     } catch (err) {
@@ -305,7 +308,7 @@ export class BaseRepo<T extends BaseModel> {
 
     const client = MongoDbHelper.getMongoClient();
     try {
-      // connect to mong server
+      // connect to Mongo server
       await client.connect();
 
       const collection = client
@@ -315,6 +318,32 @@ export class BaseRepo<T extends BaseModel> {
       await collection.deleteOne({ _id });
     } catch (error) {
       console.log(`id: ${_id} causes delete failed: ${error}`);
+      return {
+        status: StatusCode.InternalError,
+        message: "Đã có lỗi xảy ra. Xin hãy thử lại"
+      };
+    } finally {
+      client.close();
+    }
+
+    return {
+      status: StatusCode.Ok,
+      message: ""
+    };
+  }
+  async deleteMany(query: FilterQuery<any>): Promise<IStatusResponse> {
+    const client = MongoDbHelper.getMongoClient();
+    try {
+      // connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+
+      await collection.deleteMany(query);
+    } catch (error) {
+      console.log(`Query: ${query} causes delete failed: ${error}`);
       return {
         status: StatusCode.InternalError,
         message: "Đã có lỗi xảy ra. Xin hãy thử lại"

@@ -60,7 +60,7 @@ export class SectionCreatorComponent implements OnInit, OnDestroy {
 
   @Input()
   set section(value: SectionModel) {
-    this._sectionBuilder = new SectionBuilder(value._id);
+    this._sectionBuilder = new SectionBuilder(value._id !== "temp" ? value._id : null);
     this._sectionBuilder.withTitle(value.title).withQuestions(value.questions);
     this._questions = value.questions || new Array<QuestionModel>();
     this.initSectionForm();

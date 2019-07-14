@@ -49,16 +49,16 @@ export class ExamHandler {
     }
 
     // Get sections by test id
-    // const sectionResult = await this._sectionHandler.getByIds(
-    //   result.doc.sectionIds
-    // );
-    // if (!sectionResult.sections) {
-    //   return {
-    //     exam: null,
-    //     statusResponse: sectionResult.statusResponse
-    //   };
-    // }
-    // result.doc.sections = sectionResult.sections;
+    const sectionResult = await this._sectionHandler.getByIds(
+      result.doc.sectionIds
+    );
+    if (!sectionResult.sections) {
+      return {
+        exam: null,
+        statusResponse: sectionResult.statusResponse
+      };
+    }
+    result.doc.sections = sectionResult.sections;
 
     return {
       exam: result.doc,
@@ -68,7 +68,8 @@ export class ExamHandler {
 
   async insert(exam: ExamModel): Promise<IStatusResponse> {
     exam = this.assignIndex(exam);
-    return await this._examRepo.insertOne(exam);
+    exam = this.assignIds(exam);
+    return await this._examRepo.insert(exam);
   }
 
   async update(): Promise<IStatusResponse> {
@@ -76,7 +77,7 @@ export class ExamHandler {
   }
 
   async delete(id: string): Promise<IStatusResponse> {
-    return await this._examRepo.deleteById(id);
+    return await this._examRepo.delete(id);
   }
 
   assignIndex(exam: ExamModel): ExamModel {
@@ -93,6 +94,16 @@ export class ExamHandler {
         }
       }
     }
+    return exam;
+  }
+
+  assignIds(exam: ExamModel): ExamModel {
+    exam.sectionIds = exam.sections.map(section => section._id);
+    exam.sections.forEach((section, index) => {
+      exam.sections[index].questionIds = section.questions.map(
+        question => question._id
+      );
+    });
     return exam;
   }
 
