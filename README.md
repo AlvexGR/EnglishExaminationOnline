@@ -15,9 +15,9 @@ In app language: Vietnamese
 
 ### Application Structure: MVC
 In projects folder, there are 3 sub folders with name following:
-- lib: contains models, utility functions, shared code,... for both server and client app can use.
-- server: connects to database, handles API and business logic
-- user-app: displays user interface, sends request to server, receives response and reacts the view corresponding to the new data
+- **lib**: contains models, utility functions, shared code,... for both server and client app can use.
+- **server**: connects to database, handles API and business logic
+- **user-app**: displays user interface, sends request to server, receives response and reacts the view corresponding to the new data
 
 ### Technologies:
 - Front-end: Angular 7
