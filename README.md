@@ -13,7 +13,7 @@ Functionality:
 
 In app language: Vietnamese
 
-# Technologies:
+## Technologies:
 - Front-end: Angular 7
 - Back-end: Node, Express, MongoDb
 - Testing: Mocha and Chai
