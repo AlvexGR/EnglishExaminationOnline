@@ -16,6 +16,6 @@ In app language: Vietnamese
 # Technologies:
 - Front-end: Angular 7
 - Back-end: Node, Express, MongoDb
-- Testing: Mocha, Chai, Jasmine, Karma
+- Testing: Mocha and Chai
 - UI/UX: Bootstrap 4 and Angular Material
 - Languages: Typescript, HTML, CSS
