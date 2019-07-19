@@ -72,8 +72,8 @@ export class ExamHandler {
     return await this._examRepo.insert(exam);
   }
 
-  async update(): Promise<IStatusResponse> {
-    return null;
+  async update(exam: ExamModel): Promise<IStatusResponse> {
+    return await this._examRepo.update(exam);
   }
 
   async delete(id: string): Promise<IStatusResponse> {

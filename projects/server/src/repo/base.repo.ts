@@ -331,6 +331,7 @@ export class BaseRepo<T extends BaseModel> {
       message: ""
     };
   }
+
   async deleteMany(query: FilterQuery<any>): Promise<IStatusResponse> {
     const client = MongoDbHelper.getMongoClient();
     try {

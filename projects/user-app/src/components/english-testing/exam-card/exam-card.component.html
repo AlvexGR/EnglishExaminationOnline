@@ -8,7 +8,7 @@
         Thời gian làm bài: {{ time }}
       </h6> not yet support-->
       <div class="row">
-        <div class="col-7">
+        <div class="col-6">
           <a
             *ngIf="isHome"
             [routerLink]="[examPageRoute, exam?._id]"
@@ -34,7 +34,19 @@
             <span class="ml-2">Xoá bài thi</span>
           </button>
         </div>
-        <div class="col-5 text-right">
+        <div class="col-3">
+          <div class="row">
+            <div class="col-6">
+              <i class="fas fa-thumbs-up thump-up mr-2"></i>
+              <span class="vote">100</span>
+            </div>
+            <div class="col-6">
+              <i class="fas fa-thumbs-down thump-down mr-2"></i>
+              <span class="vote">20</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 text-right">
           <i *ngIf="starOne" class="fas fa-star star"></i>
           <i *ngIf="starTwo" class="fas fa-star star"></i>
           <i *ngIf="starThree" class="fas fa-star star"></i>

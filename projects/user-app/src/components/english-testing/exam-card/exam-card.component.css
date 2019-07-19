@@ -2,3 +2,21 @@
   color: #fdd006;
   font-size: 25px;
 }
+
+.thump-up {
+  color: #3982f7;
+  font-size: 25px;
+}
+
+.thump-up:hover, .thump-down:hover {
+  cursor: pointer;
+}
+
+.thump-down {
+  color: red;
+  font-size: 24px;
+}
+
+.vote {
+  font-size: 16px;
+}

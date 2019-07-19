@@ -11,6 +11,8 @@ export class ExamModel extends BaseModel {
   difficulty: number;
   sections: Array<SectionModel>;
   sectionIds: Array<string>;
+  like: number;
+  dislike: number;
 
   constructor(id?: string) {
     super(id);

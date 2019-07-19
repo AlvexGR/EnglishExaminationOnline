@@ -2,53 +2,63 @@ import { ExamModel } from "@lib/models/exam.model";
 import { SectionModel } from "@lib/models/section.model";
 
 export class ExamBuilder {
-  private _test: ExamModel;
+  private _exam: ExamModel;
 
   constructor(id?: string) {
-    this._test = new ExamModel(id);
+    this._exam = new ExamModel(id);
   }
 
   withIndex(index: number): ExamBuilder {
-    this._test.index = index;
+    this._exam.index = index;
     return this;
   }
 
   withTitle(title: string): ExamBuilder {
-    this._test.title = title;
+    this._exam.title = title;
     return this;
   }
 
   withSubtitle(subtitle: string): ExamBuilder {
-    this._test.subtitle = subtitle;
+    this._exam.subtitle = subtitle;
     return this;
   }
 
   withContent(content: string): ExamBuilder {
-    this._test.content = content;
+    this._exam.content = content;
     return this;
   }
 
   withTime(time: number): ExamBuilder {
-    this._test.time = time;
+    this._exam.time = time;
     return this;
   }
 
   withDifficulty(difficulty: number): ExamBuilder {
-    this._test.difficulty = difficulty;
+    this._exam.difficulty = difficulty;
     return this;
   }
 
   withSections(sections: Array<SectionModel>): ExamBuilder {
-    this._test.sections = sections;
+    this._exam.sections = sections;
     return this;
   }
 
   withSectionIds(ids: Array<string>): ExamBuilder {
-    this._test.sectionIds = ids;
+    this._exam.sectionIds = ids;
+    return this;
+  }
+
+  withLike(like: number): ExamBuilder {
+    this._exam.like = like;
+    return this;
+  }
+
+  withDislike(dislike: number): ExamBuilder {
+    this._exam.dislike = dislike;
     return this;
   }
 
   build(): ExamModel {
-    return this._test;
+    return this._exam;
   }
 }
