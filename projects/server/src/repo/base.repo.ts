@@ -22,7 +22,7 @@ export class BaseRepo<T extends BaseModel> {
         doc: null,
         statusResponse: {
           status: StatusCode.BadRequest,
-          message: "Id không hợp lệ"
+          message: `Invalid: ${_id}`
         }
       };
     }
@@ -72,7 +72,7 @@ export class BaseRepo<T extends BaseModel> {
         docs: null,
         statusResponse: {
           status: StatusCode.BadRequest,
-          message: "Ids không hợp lệ"
+          message: `Invalid: ${ids}`
         }
       };
     }
@@ -199,7 +199,7 @@ export class BaseRepo<T extends BaseModel> {
     if (!obj) {
       return {
         status: StatusCode.BadRequest,
-        message: `Invalid: ${obj}`
+        message: `Invalid: ${JSON.stringify(obj)}`
       };
     }
 
@@ -235,7 +235,7 @@ export class BaseRepo<T extends BaseModel> {
     if (!obj || obj.length === 0) {
       return {
         status: StatusCode.BadRequest,
-        message: `Invalid: ${obj}`
+        message: `Invalid: ${JSON.stringify(obj)}`
       };
     }
 
@@ -267,10 +267,10 @@ export class BaseRepo<T extends BaseModel> {
   }
 
   async updateOne(obj: T): Promise<IStatusResponse> {
-    if (!obj) {
+    if (!obj || !obj._id) {
       return {
         status: StatusCode.BadRequest,
-        message: "Không thành công"
+        message: `Invalid: ${JSON.stringify(obj)}`
       };
     }
     const client = MongoDbHelper.getMongoClient();

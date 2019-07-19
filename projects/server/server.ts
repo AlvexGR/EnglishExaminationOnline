@@ -10,14 +10,14 @@ const PORT = process.env.PORT || 1503;
 // Parse json
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(
-  session({
-    secret:
-      "234jskldf98271lkjxcvlksjefr28374skljdf284asjfl298374123qlkajfzovciu",
-    saveUninitialized: false,
-    resave: false
-  })
-);
+// server.use(
+//   session({
+//     secret:
+//       "234jskldf98271lkjxcvlksjefr28374skljdf284asjfl298374123qlkajfzovciu",
+//     saveUninitialized: false,
+//     resave: false
+//   })
+// );
 // server.use(express.static(path.join(__dirname, "../../dist/user-app")));
 server.use(cors());
 
@@ -29,6 +29,7 @@ server.use(cors());
 server.use(`/api/${HttpHelper.users}`, require("./src/api/user.api"));
 server.use(`/api/${HttpHelper.exams}`, require("./src/api/exam.api"));
 server.use(`/api/${HttpHelper.histories}`, require("./src/api/history.api"));
+server.use(`/api/${HttpHelper.examVotes}`, require("./src/api/exam-vote.api"));
 
 server.listen(PORT, () => {
   console.log(`Server running at ${PORT}`);
