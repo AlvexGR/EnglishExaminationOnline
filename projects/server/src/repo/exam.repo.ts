@@ -56,8 +56,8 @@ export class ExamRepo extends BaseRepo<ExamModel> {
 
     const results = await Promise.all([
       super.deleteById(id),
-      this._sectionRepo.deleteMany({ _id: { $in: sectionIds } }),
-      this._questionRepo.deleteMany({ _id: { $in: questionsIds } })
+      this._sectionRepo.deleteBy({ _id: { $in: sectionIds } }),
+      this._questionRepo.deleteBy({ _id: { $in: questionsIds } })
     ]);
 
     for (const result of results) {

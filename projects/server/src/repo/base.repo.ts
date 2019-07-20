@@ -298,6 +298,35 @@ export class BaseRepo<T extends BaseModel> {
     };
   }
 
+  async updateBy(
+    query: FilterQuery<any>,
+    operators: any
+  ): Promise<IStatusResponse> {
+    const client = MongoDbHelper.getMongoClient();
+
+    try {
+      // Connect to Mongo server
+      await client.connect();
+
+      const collection = client
+        .db(MongoDbHelper.databaseName)
+        .collection(this.collectionName);
+      await collection.updateMany(query, operators);
+    } catch (err) {
+      return {
+        status: StatusCode.InternalError,
+        message: "Đã có lỗi xảy ra, xin hãy thử lại"
+      };
+    } finally {
+      client.close();
+    }
+
+    return {
+      status: StatusCode.Ok,
+      message: "Thành công"
+    };
+  }
+
   async deleteById(_id: string): Promise<IStatusResponse> {
     if (!_id) {
       return {
@@ -332,7 +361,7 @@ export class BaseRepo<T extends BaseModel> {
     };
   }
 
-  async deleteMany(query: FilterQuery<any>): Promise<IStatusResponse> {
+  async deleteBy(query: FilterQuery<any>): Promise<IStatusResponse> {
     const client = MongoDbHelper.getMongoClient();
     try {
       // connect to Mongo server

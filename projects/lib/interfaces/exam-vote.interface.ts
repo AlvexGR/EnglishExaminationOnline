@@ -10,3 +10,14 @@ export interface IExamVoteResponse {
   examVote: ExamVoteModel;
   statusResponse: IStatusResponse;
 }
+
+export enum Action {
+  insert,
+  delete,
+  update
+}
+
+export interface IAction {
+  action: Action;
+  statusResponse: IStatusResponse;
+}

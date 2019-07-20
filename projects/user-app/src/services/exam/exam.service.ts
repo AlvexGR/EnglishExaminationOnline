@@ -124,6 +124,8 @@ export class ExamService {
       .withSubtitle(obj.subtitle)
       .withTime(obj.time)
       .withTitle(obj.title)
+      .withLike(obj.like)
+      .withDislike(obj.dislike)
       .build();
 
     return exam;

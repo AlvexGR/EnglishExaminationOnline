@@ -119,7 +119,9 @@ export class ExamCreatorComponent implements OnInit {
       .withSections(exam.sections)
       .withSubtitle(exam.subtitle)
       // .withTime(exam.time)
-      .withTitle(exam.title);
+      .withTitle(exam.title)
+      .withLike(0)
+      .withDislike(0);
 
     this._sections = exam.sections || new Array<SectionModel>();
 
@@ -163,7 +165,9 @@ export class ExamCreatorComponent implements OnInit {
       .withDifficulty(Number(this.difficulty.value))
       .withSubtitle(this.subtitle.value)
       .withTitle(this.title.value)
-      .withSections(this._sections);
+      .withSections(this._sections)
+      .withLike(0)
+      .withDislike(0);
 
     return this._examBuilder.build();
   }

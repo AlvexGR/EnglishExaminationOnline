@@ -7,7 +7,13 @@ import {
 } from "@angular/core";
 import { ExamService } from "@app/src/services/exam/exam.service";
 import { ExamModel } from "@lib/models/exam.model";
-import { AppRoutesName } from "@lib/helpers/utility.helper";
+import { AppRoutesName, StatusCode } from "@lib/helpers/utility.helper";
+import { ExamVoteModel, Vote } from "@lib/models/exam-vote.model";
+import { ExamVoteService } from "@app/src/services/exam-vote/exam-vote.service";
+import { UserService } from "@app/src/services/user/user.service";
+import { ExamVoteBuilder } from "@lib/builders/exam-vote.builder";
+import { ILikeAndDislikeResponse } from "@lib/interfaces/exam.interface";
+import { Action } from "@lib/interfaces/exam-vote.interface";
 
 @Component({
   selector: "app-exam-card",
@@ -28,6 +34,7 @@ export class ExamCardComponent implements OnChanges {
   halfStar: boolean;
 
   private _exam: ExamModel;
+  private _examVote: ExamVoteModel;
   private _isHome: boolean;
 
   get time(): string {
@@ -59,6 +66,15 @@ export class ExamCardComponent implements OnChanges {
     return this._exam;
   }
 
+  @Input()
+  set examVote(examVote: ExamVoteModel) {
+    this._examVote = examVote;
+  }
+
+  get examVote(): ExamVoteModel {
+    return this._examVote;
+  }
+
   get examPageRoute(): string {
     return `/${AppRoutesName.examPage}`;
   }
@@ -67,9 +83,27 @@ export class ExamCardComponent implements OnChanges {
     return `/${AppRoutesName.editExam}`;
   }
 
+  get isLike(): boolean {
+    if (!this._examVote) {
+      return false;
+    }
+    return this._examVote.vote === Vote.like;
+  }
+
+  get isDislike(): boolean {
+    if (!this._examVote) {
+      return false;
+    }
+    return this._examVote.vote === Vote.dislike;
+  }
+
   @Output() delete = new EventEmitter<string>();
 
-  constructor(private _examService: ExamService) {}
+  constructor(
+    private _examService: ExamService,
+    private _examVoteService: ExamVoteService,
+    private _userService: UserService
+  ) {}
 
   ngOnChanges() {
     this.setUpDifficulty();
@@ -101,5 +135,40 @@ export class ExamCardComponent implements OnChanges {
 
   deleteExam(): void {
     this.delete.emit(this._exam._id);
+  }
+
+  async changeVote(isLike: boolean): Promise<void> {
+    if (!this._examVote) {
+      const evBuilder = new ExamVoteBuilder();
+      evBuilder
+        .withExamId(this._exam._id)
+        .withUserId(this._userService.userId)
+        .withVote(isLike ? Vote.like : Vote.dislike);
+      this._examVote = evBuilder.build();
+    } else {
+      this._examVote.vote = isLike ? Vote.like : Vote.dislike;
+    }
+    const changeVoteResult = await this._examVoteService.changeVote(
+      this._examVote
+    );
+    this.updateLikeAndDislike(changeVoteResult);
+  }
+
+  updateLikeAndDislike(likeAndDislikeRes: ILikeAndDislikeResponse): void {
+    if (
+      !likeAndDislikeRes ||
+      (likeAndDislikeRes &&
+        likeAndDislikeRes.statusResponse &&
+        likeAndDislikeRes.statusResponse.status !== StatusCode.Ok)
+    ) {
+      return;
+    }
+
+    if (likeAndDislikeRes.action === Action.delete) {
+      this._examVote = null;
+    }
+
+    this._exam.like = likeAndDislikeRes.like;
+    this._exam.dislike = likeAndDislikeRes.dislike;
   }
 }
