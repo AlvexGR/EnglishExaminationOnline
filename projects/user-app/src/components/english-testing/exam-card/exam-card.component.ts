@@ -5,7 +5,6 @@ import {
   Output,
   EventEmitter
 } from "@angular/core";
-import { ExamService } from "@app/src/services/exam/exam.service";
 import { ExamModel } from "@lib/models/exam.model";
 import { AppRoutesName, StatusCode } from "@lib/helpers/utility.helper";
 import { ExamVoteModel, Vote } from "@lib/models/exam-vote.model";
@@ -100,7 +99,6 @@ export class ExamCardComponent implements OnChanges {
   @Output() delete = new EventEmitter<string>();
 
   constructor(
-    private _examService: ExamService,
     private _examVoteService: ExamVoteService,
     private _userService: UserService
   ) {}

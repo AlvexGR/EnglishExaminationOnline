@@ -36,11 +36,11 @@ export class HttpHelper {
     return url;
   }
 
-  static appendParams(params: Array<{ key: string; value: string }>): string {
-    let result = "";
+  static appendParams(params: Array<string>): string {
+    let result = "/";
 
     params.forEach((param, idx) => {
-      result += `${param.key}=${param.value}`;
+      result += param;
       if (idx !== params.length - 1) {
         result += "&";
       }

@@ -15,24 +15,23 @@ import { IStatusResponse } from "@lib/interfaces/base.interface";
   providedIn: "root"
 })
 export class ExamService {
-  private _exam: ExamModel;
   constructor(private _http: HttpClient, private _userService: UserService) {}
 
-  async getAllSimple(): Promise<ISimpleExamsResponse> {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json"
-    });
+  async getAllSimple(userId?: string): Promise<ISimpleExamsResponse> {
+    const headers = HttpHelper.createHeaders([
+      { key: "Content-Type", value: "application/json" }
+    ]);
 
-    let response = new HttpResponse<ISimpleExamsResponse>();
+    let response = HttpHelper.createResponse<ISimpleExamsResponse>();
 
     try {
+      let url = HttpHelper.createUrl([
+        HttpHelper.exams,
+        HttpHelper.simpleExams
+      ]);
+      url += HttpHelper.appendParams([userId]);
       response = await this._http
-        .get<ISimpleExamsResponse>(
-          `${HttpHelper.endpoint}/${HttpHelper.exams}/${
-            HttpHelper.simpleExams
-          }`,
-          { headers, observe: "response" }
-        )
+        .get<ISimpleExamsResponse>(url, { headers, observe: "response" })
         .toPromise();
     } catch (err) {
       return err.error;

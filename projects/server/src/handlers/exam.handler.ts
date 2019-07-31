@@ -13,6 +13,17 @@ import { QuestionType } from "@lib/models/question.model";
 import { Vote } from "@lib/models/exam-vote.model";
 import { Action } from "@lib/interfaces/exam-vote.interface";
 
+export class ExamHandlerSingleton {
+  private static _examHandler: ExamHandler;
+
+  static getInstance(): ExamHandler {
+    if (!this._examHandler) {
+      this._examHandler = new ExamHandler();
+    }
+    return this._examHandler;
+  }
+}
+
 export class ExamHandler {
   private _examRepo: ExamRepo;
   private _sectionHandler: SectionHandler;
@@ -22,11 +33,10 @@ export class ExamHandler {
   }
 
   async getAllSimple(): Promise<ISimpleExamsResponse> {
-    // Get all without sections
     const result = await this._examRepo.getBy({});
-
     return {
       exams: result.docs,
+      votes: null,
       statusResponse: result.statusResponse
     };
   }

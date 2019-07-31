@@ -8,6 +8,7 @@
       <app-exam-card
         *ngFor="let exam of exams"
         [exam]="exam"
+        [examVote]="examVote(exam._id)"
         [isHome]="'true'"
       ></app-exam-card>
     </div>

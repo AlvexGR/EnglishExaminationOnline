@@ -3,6 +3,17 @@ import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
 import { TokenModel } from '@lib/models/token.model';
 
+export class TokenHandlerSingleton {
+  private static _tokenHandler: TokenHandler;
+
+  static getInstance(): TokenHandler {
+    if (!this._tokenHandler) {
+      this._tokenHandler = new TokenHandler();
+    }
+    return this._tokenHandler;
+  }
+}
+
 export class TokenHandler {
   private _tokenRepo: TokenRepo;
   constructor() {

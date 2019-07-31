@@ -11,6 +11,17 @@ import {
 import { UserBuilder } from "@lib/builders/user.builder";
 import { StatusCode } from "@lib/helpers/utility.helper";
 
+export class UserHandlerSingleton {
+  private static _userHandler: UserHandler;
+
+  static getInstance(): UserHandler {
+    if (!this._userHandler) {
+      this._userHandler = new UserHandler();
+    }
+    return this._userHandler;
+  }
+}
+
 export class UserHandler {
   private _userRepo: UserRepo;
 

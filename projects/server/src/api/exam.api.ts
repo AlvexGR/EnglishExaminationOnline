@@ -1,58 +1,41 @@
-import express, { Request, Response, NextFunction } from "express";
-import { ExamHandler } from "../handlers/exam.handler";
+import express, { Request, Response } from "express";
 import { HttpHelper } from "@lib/helpers/http.helper";
 import { verifyAccessToken } from "../middleware/authentication.middleware";
+import {
+  getAllSimpleExam,
+  getExamById,
+  insertExam,
+  updateExam,
+  deleteExam,
+  getExamVoteByUserId
+} from "../middleware/exam.middleware";
+import { ISimpleExamsRequest } from "@lib/interfaces/express.interface";
+import { ISimpleExamsResponse } from "@lib/interfaces/exam.interface";
 
 const router = express.Router();
-const examHandler = new ExamHandler();
 
-// Get all simple
 router.get(
-  `/${HttpHelper.simpleExams}`,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const result = await examHandler.getAllSimple();
-    return res.status(result.statusResponse.status).json(result);
+  `/${HttpHelper.simpleExams}/:userId`,
+  getAllSimpleExam,
+  getExamVoteByUserId,
+  (req: Request, res: Response) => {
+    const result = req as ISimpleExamsRequest;
+    const simpleExamsResponse: ISimpleExamsResponse = {
+      exams: result.exams,
+      statusResponse: result.statusResponse,
+      votes: result.votes
+    };
+
+    return res.status(result.statusResponse.status).json(simpleExamsResponse);
   }
 );
 
-// Get by id
-router.get(
-  "/:id",
-  verifyAccessToken,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const result = await examHandler.getById(req.params.id);
-    return res.status(result.statusResponse.status).json(result);
-  }
-);
+router.get("/:id", verifyAccessToken, getExamById);
 
-// Insert exam
-router.post(
-  `/`,
-  verifyAccessToken,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const result = await examHandler.insert(req.body);
-    return res.status(result.status).json(result);
-  }
-);
+router.post(`/`, verifyAccessToken, insertExam);
 
-// Update exam
-router.put(
-  `/`,
-  verifyAccessToken,
-  async (req: Request, res: Response, next: NextFunction) => {
-    // const result = await examHandler.update();
-    // return res.status(result.status).json(result);
-  }
-);
+router.put(`/`, verifyAccessToken, updateExam);
 
-// Delete exam
-router.delete(
-  `/:id`,
-  verifyAccessToken,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const result = await examHandler.delete(req.params.id);
-    return res.status(result.status).json(result);
-  }
-);
+router.delete(`/:id`, verifyAccessToken, deleteExam);
 
 module.exports = router;

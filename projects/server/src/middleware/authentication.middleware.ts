@@ -2,11 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { ILogInExpressRequest } from "@lib/interfaces/express.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
-import { TokenHandler } from "../handlers/token.handler";
+import { TokenHandlerSingleton } from "../handlers/token.handler";
 
 const userLogInPrivateKey =
   "!EnglishOnlineTesting_UserLogIn_Authentication_PrivateKey!";
-const tokenHandler = new TokenHandler();
+const tokenHandler = TokenHandlerSingleton.getInstance();
 
 export async function verifyAccessToken(
   req: Request,
@@ -54,7 +54,7 @@ export async function verifyAccessToken(
   next();
 }
 
-export function signAccessToken(
+export function generateAccessToken(
   req: Request,
   res: Response,
   next: NextFunction

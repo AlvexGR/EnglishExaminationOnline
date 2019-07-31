@@ -10,6 +10,18 @@ import {
 } from "@lib/interfaces/exam-vote.interface";
 import { ExamHandler } from "./exam.handler";
 import { ILikeAndDislikeResponse } from "@lib/interfaces/exam.interface";
+import { FilterQuery } from 'mongodb';
+
+export class ExamVoteHandlerSingleton {
+  private static _examVoteHandler: ExamVoteHandler;
+
+  static getInstance(): ExamVoteHandler {
+    if (!this._examVoteHandler) {
+      this._examVoteHandler = new ExamVoteHandler();
+    }
+    return this._examVoteHandler;
+  }
+}
 
 export class ExamVoteHandler {
   private _examVoteRepo: ExamVoteRepo;
@@ -19,28 +31,10 @@ export class ExamVoteHandler {
     this._examHandler = new ExamHandler();
   }
 
-  async getAll(): Promise<IExamVotesResponse> {
-    const result = await this._examVoteRepo.getBy({});
+  async getBy(query: FilterQuery<any>): Promise<IExamVotesResponse> {
+    const result = await this._examVoteRepo.getBy(query);
     return {
       examVotes: result.docs,
-      statusResponse: result.statusResponse
-    };
-  }
-
-  async getById(id: string): Promise<IExamVoteResponse> {
-    if (!id) {
-      return {
-        examVote: null,
-        statusResponse: {
-          status: StatusCode.BadRequest,
-          message: `Invalid: ${id}`
-        }
-      };
-    }
-
-    const result = await this._examVoteRepo.getById(id);
-    return {
-      examVote: result.doc,
       statusResponse: result.statusResponse
     };
   }

@@ -47,6 +47,10 @@ export class UserService {
     return this._currentUser && this._currentUser.role === UserRole.admin;
   }
 
+  get isLoggedIn(): boolean {
+    return !!this._currentUser;
+  }
+
   get userId(): string {
     return this._currentUser && this._currentUser._id;
   }

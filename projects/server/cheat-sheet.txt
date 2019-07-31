@@ -1,0 +1,17 @@
+Server structure cheat sheet:
+- Only use lower level classes (api => middleware => handler => repo)
+- api: 
+  + Only for interacting with front-end => Receives request, sends back response.
+  + Do not write any logic here
+  + Display the whole flow by calling the middlewares with as meaningful as possible names
+- middleware:
+  + Call handlers only
+  + Handle logic
+- handler:
+  + Call repos only
+  + Handle logic
+- repo: 
+  + Only for interacting with the database => Open connection, do operations, close it.
+  + Use the result to interact with database without handling anymore logic.
+- Handler and repo classes are applied singleton pattern
+- Apis are applied template pattern
