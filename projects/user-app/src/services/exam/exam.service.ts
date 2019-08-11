@@ -19,7 +19,8 @@ export class ExamService {
 
   async getAllSimple(userId?: string): Promise<ISimpleExamsResponse> {
     const headers = HttpHelper.createHeaders([
-      { key: "Content-Type", value: "application/json" }
+      { key: "Content-Type", value: "application/json" },
+      { key: "Authorization", value: this._userService.accessToken }
     ]);
 
     let response = HttpHelper.createResponse<ISimpleExamsResponse>();
@@ -70,10 +71,10 @@ export class ExamService {
   }
 
   async insert(exam: ExamModel): Promise<IStatusResponse> {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      Authorization: this._userService.accessToken
-    });
+    const headers = HttpHelper.createHeaders([
+      { key: "Content-Type", value: "application/json" },
+      { key: "Authorization", value: this._userService.accessToken }
+    ]);
 
     let response = new HttpResponse<IStatusResponse>();
 
@@ -91,11 +92,35 @@ export class ExamService {
     return response.body;
   }
 
+  async update(exam: ExamModel): Promise<IStatusResponse> {
+    const headers = HttpHelper.createHeaders([
+      { key: "Content-Type", value: "application/json" },
+      { key: "Authorization", value: this._userService.accessToken }
+    ]);
+
+    let response = HttpHelper.createResponse<IStatusResponse>();
+
+    try {
+      const url = HttpHelper.createUrl([HttpHelper.exams]);
+
+      response = await this._http
+        .put<IStatusResponse>(url, exam, {
+          headers,
+          observe: "response"
+        })
+        .toPromise();
+    } catch (err) {
+      return err.error;
+    }
+
+    return response.body;
+  }
+
   async delete(id: string): Promise<IStatusResponse> {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      Authorization: this._userService.accessToken
-    });
+    const headers = HttpHelper.createHeaders([
+      { key: "Content-Type", value: "application/json" },
+      { key: "Authorization", value: this._userService.accessToken }
+    ]);
 
     let response = new HttpResponse<IStatusResponse>();
 

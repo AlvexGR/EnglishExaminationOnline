@@ -185,7 +185,6 @@ export class ExamCreatorComponent implements OnInit {
 
   async createExam(): Promise<void> {
     const exam = this.processExam();
-
     const result = await this._examService.insert(exam);
 
     this._successMessage = this._errorMessage = "";
@@ -197,5 +196,16 @@ export class ExamCreatorComponent implements OnInit {
     }
   }
 
-  async updateExam(): Promise<void> {}
+  async updateExam(): Promise<void> {
+    const exam = this.processExam();
+    const result = await this._examService.update(exam);
+
+    this._successMessage = this._errorMessage = "";
+
+    if (result.status === StatusCode.Ok) {
+      this._successMessage = "Cập nhật bài thi thành công";
+    } else {
+      this._errorMessage = result.message;
+    }
+  }
 }

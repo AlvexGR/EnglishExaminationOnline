@@ -27,6 +27,7 @@ export class ExamHandlerSingleton {
 export class ExamHandler {
   private _examRepo: ExamRepo;
   private _sectionHandler: SectionHandler;
+
   constructor() {
     this._sectionHandler = new SectionHandler();
     this._examRepo = new ExamRepo();
@@ -99,7 +100,14 @@ export class ExamHandler {
         message: `Invalid: ${exam}`
       };
     }
-    return await this._examRepo.update(exam);
+
+    const deleteResult = await this.delete(exam._id);
+    if (deleteResult.status !== StatusCode.Ok) {
+      return deleteResult;
+    }
+
+    const result = await this.insert(exam);
+    return result;
   }
 
   async delete(id: string): Promise<IStatusResponse> {

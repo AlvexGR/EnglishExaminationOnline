@@ -71,12 +71,4 @@ export class ExamRepo extends BaseRepo<ExamModel> {
       message: ""
     };
   }
-
-  async update(exam: ExamModel): Promise<IStatusResponse> {
-
-    return {
-      status: StatusCode.Ok,
-      message: ""
-    };
-  }
 }

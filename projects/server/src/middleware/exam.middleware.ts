@@ -43,8 +43,8 @@ export async function insertExam(req: Request, res: Response) {
 }
 
 export async function updateExam(req: Request, res: Response) {
-  // const result = await examHandler.update();
-  // return res.status(result.status).json(result);
+   const result = await examHandler.update(req.body);
+   return res.status(result.status).json(result);
 }
 
 export async function deleteExam(req: Request, res: Response) {
