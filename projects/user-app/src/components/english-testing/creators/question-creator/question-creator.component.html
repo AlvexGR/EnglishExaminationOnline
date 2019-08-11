@@ -23,7 +23,6 @@
                 class="form-control"
                 rows="3"
                 placeholder="What ____ want you for tonight dinner?"
-                tabindex="1"
               >
               </textarea>
               <app-error-field
@@ -36,7 +35,6 @@
               <select
                 formControlName="questionType"
                 class="form-control"
-                tabindex="2"
               >
                 <option value="0">Câu hỏi trắc nghiệm</option>
                 <option value="1">Đoạn văn</option>
@@ -49,7 +47,6 @@
                 type="text"
                 class="form-control"
                 placeholder="does"
-                tabindex="3"
               />
               <app-error-field
                 *ngIf="choiceA.invalid && choiceA.touched"
@@ -63,7 +60,6 @@
                 type="text"
                 class="form-control"
                 placeholder="do"
-                tabindex="4"
               />
               <app-error-field
                 *ngIf="choiceB.invalid && choiceB.touched"
@@ -77,7 +73,6 @@
                 type="text"
                 class="form-control"
                 placeholder="did"
-                tabindex="5"
               />
               <app-error-field
                 *ngIf="choiceC.invalid && choiceC.touched"
@@ -91,7 +86,6 @@
                 type="text"
                 class="form-control"
                 placeholder="will"
-                tabindex="6"
               />
               <app-error-field
                 *ngIf="choiceD.invalid && choiceD.touched"
@@ -103,7 +97,6 @@
               <select
                 formControlName="answer"
                 class="form-control"
-                tabindex="7"
               >
                 <option value="0">A</option>
                 <option value="1">B</option>
