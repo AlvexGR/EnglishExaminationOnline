@@ -1,4 +1,4 @@
-import { TokenRepo } from "../repo/token.repo";
+import { TokenRepo, TokenRepoSingleton } from "../repo/token.repo";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
 import { TokenModel } from '@lib/models/token.model';
@@ -17,7 +17,7 @@ export class TokenHandlerSingleton {
 export class TokenHandler {
   private _tokenRepo: TokenRepo;
   constructor() {
-    this._tokenRepo = new TokenRepo();
+    this._tokenRepo = TokenRepoSingleton.getInstance();
   }
 
   async verifyToken(

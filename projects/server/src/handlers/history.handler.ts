@@ -1,4 +1,4 @@
-import { HistoryRepo } from "../repo/history.repo";
+import { HistoryRepo, HistoryRepoSingleton } from "../repo/history.repo";
 import {
   IHistoriesResponse,
   IHistoryResponse
@@ -12,7 +12,7 @@ export class HistoryHandler {
   private _historyRepo: HistoryRepo;
 
   constructor() {
-    this._historyRepo = new HistoryRepo();
+    this._historyRepo = HistoryRepoSingleton.getInstance();
   }
 
   async getById(id: string): Promise<IHistoryResponse> {

@@ -1,19 +1,30 @@
 import { ExamModel } from "@lib/models/exam.model";
 import { MongoDbHelper } from "@lib/helpers/mongoDb.helper";
 import { BaseRepo } from "./base.repo";
-import { SectionRepo } from "./section.repo";
-import { QuestionRepo } from "./question.repo";
+import { SectionRepo, SectionRepoSingleton } from "./section.repo";
+import { QuestionRepo, QuestionRepoSingleton } from "./question.repo";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { QuestionModel } from "@lib/models/question.model";
 import { StatusCode } from "@lib/helpers/utility.helper";
+
+export class ExamRepoSingleton {
+  private static _examRepo: ExamRepo;
+
+  static getInstance(): ExamRepo {
+    if (!this._examRepo) {
+      this._examRepo = new ExamRepo();
+    }
+    return this._examRepo;
+  }
+}
 
 export class ExamRepo extends BaseRepo<ExamModel> {
   private _sectionRepo: SectionRepo;
   private _questionRepo: QuestionRepo;
   constructor() {
     super(MongoDbHelper.exams);
-    this._sectionRepo = new SectionRepo();
-    this._questionRepo = new QuestionRepo();
+    this._sectionRepo = SectionRepoSingleton.getInstance();
+    this._questionRepo = QuestionRepoSingleton.getInstance();
   }
 
   async insert(exam: ExamModel): Promise<IStatusResponse> {

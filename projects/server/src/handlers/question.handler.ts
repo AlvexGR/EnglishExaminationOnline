@@ -1,4 +1,4 @@
-import { QuestionRepo } from "../repo/question.repo";
+import { QuestionRepo, QuestionRepoSingleton } from "../repo/question.repo";
 import { IQuestionsResponse } from "@lib/interfaces/question.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
 import { ITagsResponse } from "@lib/interfaces/tag.interface";
@@ -9,7 +9,7 @@ export class QuestionHandler {
   private _questionRepo: QuestionRepo;
   constructor() {
     this._tagHandler = new TagHandler();
-    this._questionRepo = new QuestionRepo();
+    this._questionRepo = QuestionRepoSingleton.getInstance();
   }
 
   async getByIds(ids: Array<string>): Promise<IQuestionsResponse> {

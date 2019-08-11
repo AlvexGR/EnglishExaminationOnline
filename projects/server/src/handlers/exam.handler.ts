@@ -1,5 +1,5 @@
 import { SectionHandler } from "./section.handler";
-import { ExamRepo } from "../repo/exam.repo";
+import { ExamRepo, ExamRepoSingleton } from "../repo/exam.repo";
 import {
   IExamResponse,
   ISimpleExamsResponse,
@@ -30,7 +30,7 @@ export class ExamHandler {
 
   constructor() {
     this._sectionHandler = new SectionHandler();
-    this._examRepo = new ExamRepo();
+    this._examRepo = ExamRepoSingleton.getInstance();
   }
 
   async getAllSimple(): Promise<ISimpleExamsResponse> {

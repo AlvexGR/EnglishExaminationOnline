@@ -1,10 +1,8 @@
-import { ExamVoteRepo } from "../repo/exam-vote.repo";
+import { ExamVoteRepo, ExamVoteRepoSingleton } from "../repo/exam-vote.repo";
 import { ExamVoteModel } from "@lib/models/exam-vote.model";
-import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { StatusCode } from "@lib/helpers/utility.helper";
 import {
   IExamVotesResponse,
-  IExamVoteResponse,
   IAction,
   Action
 } from "@lib/interfaces/exam-vote.interface";
@@ -27,7 +25,7 @@ export class ExamVoteHandler {
   private _examVoteRepo: ExamVoteRepo;
   private _examHandler: ExamHandler;
   constructor() {
-    this._examVoteRepo = new ExamVoteRepo();
+    this._examVoteRepo = ExamVoteRepoSingleton.getInstance();
     this._examHandler = new ExamHandler();
   }
 

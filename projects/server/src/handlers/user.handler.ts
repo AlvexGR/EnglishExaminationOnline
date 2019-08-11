@@ -1,7 +1,7 @@
 import { UserModel } from "@lib/models/user.model";
 import { IStatusResponse } from "@lib/interfaces/base.interface";
 import { FilterQuery } from "mongodb";
-import { UserRepo } from "../repo/user.repo";
+import { UserRepo, UserRepoSingleton } from "../repo/user.repo";
 import {
   ISignUpResponse,
   IUserResponse,
@@ -26,7 +26,7 @@ export class UserHandler {
   private _userRepo: UserRepo;
 
   constructor() {
-    this._userRepo = new UserRepo();
+    this._userRepo = UserRepoSingleton.getInstance();
   }
 
   async getById(id: string): Promise<IUserResponse> {

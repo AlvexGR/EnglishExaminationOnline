@@ -1,4 +1,4 @@
-import { SectionRepo } from "../repo/section.repo";
+import { SectionRepo, SectionRepoSingleton } from "../repo/section.repo";
 import { QuestionHandler } from "./question.handler";
 import { ISectionsResponse } from "@lib/interfaces/section.interface";
 import { IQuestionsResponse } from "@lib/interfaces/question.interface";
@@ -8,7 +8,7 @@ export class SectionHandler {
   private _sectionRepo: SectionRepo;
   private _questionHandler: QuestionHandler;
   constructor() {
-    this._sectionRepo = new SectionRepo();
+    this._sectionRepo = SectionRepoSingleton.getInstance();
     this._questionHandler = new QuestionHandler();
   }
 
